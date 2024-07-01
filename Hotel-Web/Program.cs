@@ -1,6 +1,9 @@
 using Hotel_DataLayer.Context;
+using Hotel_IoC;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +16,19 @@ builder.Services.AddDbContext<HotelContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("HotelDbConnection"));
 });
+
+#endregion
+
+#region LoC
+
+DependencyContainer.RejosterService(builder.Services);
+
+#endregion
+
+#region Encoder 
+
+builder.Services.AddSingleton<HtmlEncoder>(
+    HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.All })); //translate For Notifications
 
 #endregion
 
