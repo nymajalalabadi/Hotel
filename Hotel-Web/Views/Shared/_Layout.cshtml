@@ -4,7 +4,7 @@
     <partial name="_MetaTag" />
     <title>@ViewData["Title"]</title>
     <partial name="_HeaderRefrences" />
-    @RenderSection("styles", required: false)
+    @RenderSection("styles", false)
 </head>
 <body>
    
@@ -16,7 +16,9 @@
 
     <partial name="_FooterRefrences" />
 
-    @RenderSection("Scripts", required:false)
+    <partial name="_SiteMessages" />
+
+    @RenderSection("Scripts", false)
 </body>
 </html>
 
