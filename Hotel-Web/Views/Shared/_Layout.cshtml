@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+    <partial name="_MetaTag" />
+    <title>@ViewData["Title"]</title>
+    <partial name="_HeaderRefrences" />
+    @RenderSection("styles", required: false)
+</head>
+<body>
+    @if (TempData["mainPage"] != null)
+    {
+        <partial name="_PartialHeader" />
+    }
+    else
+    {
+        <partial name="_PartialSecoundHeader" />
+    }
+
+    @RenderBody()
+
+    <partial name="_PartialFooter" />
+
+    <partial name="_FooterRefrences" />
+
+    @RenderSection("Scripts", required:false)
+</body>
+</html>
+
