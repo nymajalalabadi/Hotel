@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hotel_Domain.ViewModels.Account;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,11 @@ namespace Hotel_Application.Services.Interface
     {
         #region Methods
 
+        #region register
 
+        Task<RegisterResult> RegisterUser(RegisterViewModel register);
+
+        #endregion
 
         #endregion
     }

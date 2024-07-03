@@ -1,5 +1,7 @@
 ﻿using Hotel_DataLayer.Context;
+using Hotel_Domain.Entities.Account;
 using Hotel_Domain.InterFaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +25,30 @@ namespace Hotel_DataLayer.Repositories
 
         #region Methods
 
+        public async Task<bool> IsExistUserByEmail(string email)
+        {
+            return await _context.Users.AnyAsync(u => u.Email.Equals(email));
+        }
 
+        public async Task<User?> GetUserById(long userId)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.Id.Equals(userId));
+        }
+
+        public async Task CreateUser(User user)
+        {
+            await _context.Users.AddAsync(user);
+        }
+
+        public  void UpdateUser(User user)
+        {
+            _context.Users.Update(user);    
+        }
+
+        public async Task SaveChanges()
+        {
+            await _context.SaveChangesAsync();
+        }
 
         #endregion
     }

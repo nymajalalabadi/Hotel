@@ -11,10 +11,10 @@
     <Folder Include="Extensions\" />
     <Folder Include="Generators\" />
     <Folder Include="Statics\" />
-    <Folder Include="Security\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="HtmlSanitizer" Version="8.0.865" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
   </ItemGroup>
 

@@ -1,3 +1,5 @@
+using GoogleReCaptcha.V3.Interface;
+using GoogleReCaptcha.V3;
 using Hotel_DataLayer.Context;
 using Hotel_IoC;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -16,6 +18,12 @@ builder.Services.AddDbContext<HotelContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("HotelDbConnection"));
 });
+
+#endregion
+
+#region reCAPTCHA 
+
+builder.Services.AddHttpClient<ICaptchaValidator, GoogleReCaptchaValidator>();
 
 #endregion
 
