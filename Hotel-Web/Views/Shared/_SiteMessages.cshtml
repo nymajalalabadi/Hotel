@@ -1,38 +1,47 @@
-﻿@if (TempData["SuccessMessage"] != null ||
-TempData["WarningMessage"] != null ||
-TempData["ErrorMessage"] != null ||
-TempData["InfoMessage"] != null)
+﻿@if (TempData["SuccessMessage"] != null)
 {
-    @if (TempData["SuccessMessage"] != null)
-    {
-        <script>
-            $(document).ready(function () {
-                ShowMessage('پیام موفقیت', "@TempData["SuccessMessage"]", 'success');
-            })
-        </script>
-    }
-    @if (TempData["WarningMessage"] != null)
-    {
-        <script>
-            $(document).ready(function () {
-                ShowMessage('پیام اخطار', "@TempData["WarningMessage"]", 'warning');
-            })
-        </script>
-    }
-    @if (TempData["ErrorMessage"] != null)
-    {
-        <script>
-            $(document).ready(function () {
-                ShowMessage('پیام خطا', "@TempData["ErrorMessage"]", 'error');
-            })
-        </script>
-    }
-    @if (TempData["InfoMessage"] != null)
-    {
-        <script>
-            $(document).ready(function () {
-                ShowMessage('پیام اطلاعیه', "@TempData["InfoMessage"]", 'info');
-            })
-        </script>
-    }
+    <script>
+        swal({
+            title: "اعلان",
+            text: "@TempData["SuccessMessage"]",
+            icon: "success",
+            button: "باشه"
+        });
+    </script>
+}
+
+@if (TempData["WarningMessage"] != null)
+{
+    <script>
+        swal({
+            title: "اعلان",
+            text: "@TempData["WarningMessage"]",
+            icon: "warning",
+            button: "باشه"
+        });
+    </script>
+}
+
+@if (TempData["InfoMessage"] != null)
+{
+    <script>
+        swal({
+            title: "اعلان",
+            text: "@TempData["InfoMessage"]",
+            icon: "info",
+            button: "باشه"
+        });
+    </script>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <script>
+        swal({
+            title: "خطا",
+            text: "@TempData["ErrorMessage"]",
+            icon: "error",
+            button: "باشه"
+        });
+    </script>
 }

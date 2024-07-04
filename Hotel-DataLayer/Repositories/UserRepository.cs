@@ -27,12 +27,17 @@ namespace Hotel_DataLayer.Repositories
 
         public async Task<bool> IsExistUserByEmail(string email)
         {
-            return await _context.Users.AnyAsync(u => u.Email.Equals(email));
+            return await _context.Users.AnyAsync(u => u.Email.Equals(email.ToLower().Trim()));
         }
 
         public async Task<User?> GetUserById(long userId)
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.Id.Equals(userId));
+        }
+
+        public async Task<User?> GetUserByEmail(string email)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.Email.Equals(email.ToLower().Trim()));
         }
 
         public async Task CreateUser(User user)

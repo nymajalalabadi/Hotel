@@ -1,4 +1,5 @@
-﻿using Hotel_Domain.ViewModels.Account;
+﻿using Hotel_Domain.Entities.Account;
+using Hotel_Domain.ViewModels.Account;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,14 @@ namespace Hotel_Application.Services.Interface
         #region register
 
         Task<RegisterResult> RegisterUser(RegisterViewModel register);
+
+        #endregion
+
+        #region login
+
+        Task<LoginResult> LoginUser(LoginViewModel login);
+
+        Task<User?> GetUserByEmail(string email);
 
         #endregion
 

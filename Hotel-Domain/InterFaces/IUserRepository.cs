@@ -15,6 +15,8 @@ namespace Hotel_Domain.InterFaces
 
         Task<User?> GetUserById(long userId);
 
+        Task<User?> GetUserByEmail(string email);
+
         Task CreateUser(User user);
 
         void UpdateUser(User user);

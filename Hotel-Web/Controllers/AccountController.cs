@@ -2,8 +2,12 @@
 using Hotel_Application.Services.Interface;
 using Hotel_Domain.Entities.Account;
 using Hotel_Domain.ViewModels.Account;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 
 namespace Hotel_Web.Controllers
 {
@@ -55,6 +59,78 @@ namespace Hotel_Web.Controllers
             }
 
             return View(register);
+        }
+
+        #endregion
+
+        #region Login
+
+        [HttpGet]
+        [Route("Login")]
+        public IActionResult Login(string ReturnUrl = "")
+        {
+            var result = new LoginViewModel();
+
+            if (!string.IsNullOrEmpty(ReturnUrl))
+            {
+                result.ReturnUrl = ReturnUrl;
+            }
+
+            return View(result);
+        }
+
+        [HttpPost]
+        [Route("Login")]
+        public async Task<IActionResult> Login(LoginViewModel login)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(login);
+            }
+
+            var result = await _userService.LoginUser(login);
+
+            switch (result)
+            {
+                case LoginResult.UserIsBan:
+                    TempData[WarningMessage] = "دسترسی شما به سایت مسدود می باشد .";
+                    break;
+
+                case LoginResult.UserNotFound:
+                    TempData[ErrorMessage] = "کاربر مورد نظر یافت نشد .";
+                    break;
+
+                case LoginResult.Success:
+
+                    var user = await _userService.GetUserByEmail(login.Email);
+
+                    #region Login User
+
+                    var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Name, user!.Email),
+                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    };
+
+                    var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var principal = new ClaimsPrincipal(identity);
+                    var properties = new AuthenticationProperties { IsPersistent = login.IsRemeberMe };
+
+                    await HttpContext.SignInAsync(principal, properties);
+
+                    #endregion
+
+                    TempData[SuccessMessage] = "خوش آمدید";
+
+                    if (!string.IsNullOrEmpty(login.ReturnUrl))
+                    {
+                        return Redirect(login.ReturnUrl);
+                    }
+
+                    return Redirect("/");
+            }
+
+            return View(login);
         }
 
         #endregion

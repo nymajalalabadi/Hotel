@@ -26,6 +26,8 @@ namespace Hotel_Application.Services.Implementation
 
         #region Methods
 
+        #region register
+
         public async Task<RegisterResult> RegisterUser(RegisterViewModel register)
         {
             if (await _userRepository.IsExistUserByEmail(register.Email.ToLower().Trim()))
@@ -44,6 +46,41 @@ namespace Hotel_Application.Services.Implementation
 
             return RegisterResult.Success;
         }
+
+        #endregion
+
+        #region login
+
+        public async Task<LoginResult> LoginUser(LoginViewModel login)
+        {
+            var user = await _userRepository.GetUserByEmail(login.Email);
+
+            if (user == null)
+            {
+                return LoginResult.UserNotFound;
+            }
+
+            var hashPassword = PasswordHelper.EncodePasswordMd5(login.Password.SanitizeText().ToLower().Trim());
+
+            if (user.Password != hashPassword)
+            {
+                return LoginResult.UserNotFound;
+            }
+
+            if (user.IsDelete)
+            {
+                return LoginResult.UserIsBan;
+            }
+
+            return LoginResult.Success;
+        }
+
+        public async Task<User?> GetUserByEmail(string email)
+        {
+            return await _userRepository.GetUserByEmail(email.ToLower().Trim());    
+        }
+
+        #endregion
 
         #endregion
     }
