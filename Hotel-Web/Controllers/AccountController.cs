@@ -134,5 +134,18 @@ namespace Hotel_Web.Controllers
         }
 
         #endregion
+
+        #region Logout
+
+        [Route("/Logout")]
+        public IActionResult Logout()
+        {
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("login");
+        }
+
+        #endregion
+
+
     }
 }
