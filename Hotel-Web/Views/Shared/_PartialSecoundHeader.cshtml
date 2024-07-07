@@ -30,29 +30,36 @@
                         </li>
                     </ul>
 
-                    <div class="row">
-                        <div class="dropdown col-lg-5 col-md-5 col-sm-5 account-sm">
-                            <button class="btn btn-danger rounded-pill dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                حساب کاربری
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" asp-controller="Account" asp-action="UserDashboard">داشبورد</a></li>
-                                <li><a class="dropdown-item" href="#"> سفارشات </a></li>
-                                <li><a class="dropdown-item" asp-controller="Account" asp-action="logout"> خروج </a></li>
-                            </ul>
+                    @if (User.Identity!.IsAuthenticated)
+                    {
+                        <div class="row">
+                            <div class="dropdown col-lg-5 col-md-5 col-sm-5 account-sm">
+                                <button class="btn btn-danger rounded-pill dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    حساب کاربری
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-controller="Account" asp-action="UserDashboard">داشبورد</a></li>
+                                    <li><a class="dropdown-item" href="#"> سفارشات </a></li>
+                                    <li><a class="dropdown-item" asp-controller="Account" asp-action="logout"> خروج </a></li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-5 ms-3">
+                                <a asp-controller="Store" asp-action="Basket" class="btn btn-danger rounded-pill">
+                                    سبد خرید <i class="bi bi-basket ps-2 "></i>
+                                </a>
+                            </div>
+
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-5 ms-3">
-                            <a asp-controller="Store" asp-action="Basket" class="btn btn-danger rounded-pill">
+                    }
+                    else
+                    {
+                        <div>
+                            <a asp-controller="Account" asp-action="Register" class="btn btn-danger rounded-pill"> ورود / ثبت نام </a>
+                            <a href="bascket.html" class="btn btn-danger rounded-pill ms-3">
                                 سبد خرید <i class="bi bi-basket ps-2 "></i>
                             </a>
                         </div>
-                    </div>
-                    <div>
-                        <a asp-controller="Account" asp-action="Register" class="btn btn-danger rounded-pill"> ورود / ثبت نام </a>
-                        <a href="bascket.html" class="btn btn-danger rounded-pill ms-3">
-                            سبد خرید <i class="bi bi-basket ps-2 "></i>
-                        </a>
-                    </div>
+                    }
                 </div>
             </nav>
         </div>

@@ -34,6 +34,8 @@
                             <a class="nav-link" asp-area="Admin" asp-controller="Dashboard" asp-action="AdminDashboard">ادمین</a>
                         </li>
                     </ul>
+                    @if (User.Identity!.IsAuthenticated)
+                    {
                         <div class="row">
                             <div class="dropdown col-lg-5 col-md-5 col-sm-5 account-sm">
                                 <button class="btn btn-danger rounded-pill dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -52,12 +54,16 @@
                             </div>
 
                         </div>
+                    }
+                    else
+                    {
                         <div>
                             <a asp-controller="Account" asp-action="Register" class="btn btn-danger rounded-pill"> ورود / ثبت نام </a>
                             <a href="bascket.html" class="btn btn-danger rounded-pill ms-3">
                                 سبد خرید <i class="bi bi-basket ps-2 "></i>
                             </a>
                         </div>
+                    }
                 </div>
             </nav>
             <div class="row align-content-center text-white">
