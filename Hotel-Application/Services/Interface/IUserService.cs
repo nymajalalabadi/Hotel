@@ -32,6 +32,8 @@ namespace Hotel_Application.Services.Interface
 
         Task<EditUserProfileResult> EditUserProfile(EditUserProfileViewModel editUser);
 
+        Task<ChangePasswordResult> ChangePassword(long userId, ChangePasswordViewModel changePassword);
+
         #endregion
 
         #endregion
