@@ -82,6 +82,47 @@ namespace Hotel_Application.Services.Implementation
 
         #endregion
 
+        #region Methods
+
+        public async Task<EditUserProfileViewModel> GetUserProfileForEdit(long userId)
+        {
+            var user = await _userRepository.GetUserById(userId);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            return new EditUserProfileViewModel()
+            {
+                UserId = user.Id,
+                Email = user.Email,
+                LastName = user.LastName!,
+                Name = user.Name!
+            };
+        }
+
+        public async Task<EditUserProfileResult> EditUserProfile(EditUserProfileViewModel editUser)
+        {
+            var user = await _userRepository.GetUserById(editUser.UserId);
+
+            if (user == null)
+            {
+                return EditUserProfileResult.NotFound;
+            }
+
+            user.Name = editUser.Name;
+            user.Email = editUser.Email!; 
+            user.LastName = editUser.LastName;
+
+            _userRepository.UpdateUser(user);
+            await _userRepository.SaveChanges();
+
+            return EditUserProfileResult.Success;
+        }
+
+        #endregion
+
         #endregion
     }
 }

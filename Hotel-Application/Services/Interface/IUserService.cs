@@ -26,6 +26,14 @@ namespace Hotel_Application.Services.Interface
 
         #endregion
 
+        #region Methods
+
+        Task<EditUserProfileViewModel> GetUserProfileForEdit(long userId);
+
+        Task<EditUserProfileResult> EditUserProfile(EditUserProfileViewModel editUser);
+
+        #endregion
+
         #endregion
     }
 }
