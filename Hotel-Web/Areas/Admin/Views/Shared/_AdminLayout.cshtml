@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+    <partial name="_AdminHeaderRefrences" />
+</head>
+<body>
+
+    <partial name="_PartialAdminHeader" />
+    <main class="container-fluid">
+        <div class="row">
+            <partial name="_PartialAdminSideBar" />
+            <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                @RenderBody()
+            </div>
+        </div>
+    </main>
+    <partial name="_AdminFooterRefrences" />
+</body>
+</html>
+
+
