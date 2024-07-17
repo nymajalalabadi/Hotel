@@ -27,7 +27,7 @@ namespace Hotel_DataLayer.Repositories
 
         public async Task<IQueryable<FisrtBaner>> GetFisrtBaners()
         {
-            return await _context.FisrtBaners.Where(b => !b.IsDelete).AsQueryable();
+            return _context.FisrtBaners.Where(b => !b.IsDelete).AsQueryable();
         }
 
         public async Task AddBaner(FisrtBaner baner)
