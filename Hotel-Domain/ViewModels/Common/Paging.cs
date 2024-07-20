@@ -13,7 +13,7 @@ namespace Hotel_Domain.ViewModels.Common
         {
             CurrentPage = 1;
             HowManyShowBeforeAfter = 3;
-            TakeEntity = 10;
+            TakeEntity = 5;
             Entities = new List<T>();
         }
 

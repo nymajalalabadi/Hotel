@@ -40,9 +40,9 @@ namespace Hotel_DataLayer.Repositories
             _context.FisrtBaners.Update(baner);
         }
 
-        public async Task<FisrtBaner?> GetFisrtBanerById(int id)
+        public async Task<FisrtBaner?> GetBanerById(long id)
         {
-            return await _context.FisrtBaners.FirstOrDefaultAsync(b => b.Equals(id));
+            return await _context.FisrtBaners.FirstOrDefaultAsync(b => b.Id.Equals(id));
         }
 
         public async Task SaveChanges()

@@ -10,5 +10,6 @@ namespace Hotel_Domain.ViewModels.Baner
 {
     public class FilterBanerViewModel : Paging<FisrtBaner>
     {
+        public string? TitleBanner { get; set; }
     }
 }

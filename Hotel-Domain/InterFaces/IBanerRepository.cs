@@ -17,7 +17,7 @@ namespace Hotel_Domain.InterFaces
 
         void UpdateBaner(FisrtBaner baner);
 
-        Task<FisrtBaner?> GetFisrtBanerById(int id);
+        Task<FisrtBaner?> GetBanerById(long id);
 
         Task SaveChanges();
 

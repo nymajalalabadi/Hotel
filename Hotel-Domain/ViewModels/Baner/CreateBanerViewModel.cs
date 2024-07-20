@@ -13,6 +13,14 @@ namespace Hotel_Domain.ViewModels.Baner
         [Required(ErrorMessage = "لطفا {0} را کامل کنید")]
         public string BanerButton { get; set; }
 
-        public IFormFile ImageName { get; set; }
+        [Display(Name = "عکس")]
+        [Required(ErrorMessage = "لطفا {0} را کامل کنید")]
+        public IFormFile AvatarImage { get; set; }
+    }
+
+    public enum CreateBanerResult
+    {
+        Success,
+        Failure
     }
 }
