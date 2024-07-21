@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@ViewData["Title"]</title>
     <partial name="_AdminHeaderRefrences" />
+    @RenderSection("styles", false)
 </head>
 <body>
 
@@ -18,6 +19,7 @@
         </div>
     </main>
     <partial name="_AdminFooterRefrences" />
+    @RenderSection("Scripts", false)
 </body>
 </html>
 

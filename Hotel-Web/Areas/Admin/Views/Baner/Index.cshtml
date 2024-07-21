@@ -6,11 +6,27 @@
     ViewData["Title"] = "لیست بنرها";
 }
 
+<div class="container">
+    <h2 class="py-3">بنرها</h2>
+    <form asp-action="Index" asp-controller="Baner" asp-area="admin" method="get" id="filter-search">
+        <div class="col-12 w-50">
+            <input type="hidden" asp-for="CurrentPage" />
+            <div class="mb-3">
+                <label asp-for="TitleBanner" class="form-label"></label>
+                <input type="text" asp-for="TitleBanner" class="form-control text-start" placeholder="تایتل">
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-success">جست جو کردن </button>
+            </div>
+        </div>
+    </form>
+</div>
+
 <div class="mx-3">
     <h2 class="py-3">لیست بنرها</h2>
     <div class="row">
         <div class="col-12 pb-3">
-            <a asp-action="CreateBaner" class="btn btn-outline-primary">ایجاد بنر </a>
+            <a asp-action="CreateBaner" asp-controller="Baner" asp-area="admin" class="btn btn-outline-primary">ایجاد بنر </a>
         </div>
         <div class="col-12">
             <div class="admin-table">
@@ -28,7 +44,7 @@
                         {
                             <tr>
                                 <td class="col-4">
-                                    <img class="img-thumbnail baner-img" src="@(SiteTools.HotelImageName + item.ImageName)" alt="">
+                                    <img class="border" src="@(SiteTools.HotelImageName + item.ImageName)" alt="@item.BanerTitle"  width="120px" height="120px">
                                 </td>
                                 <td>@item.BanerTitle</td>
                                 <td>@item.BanerButton</td>
@@ -42,7 +58,6 @@
                 </table>
             </div>
         </div>
-        <partial name="_AdminPagination" model="Model.GetPaging()" />
     </div>
 </div>
 

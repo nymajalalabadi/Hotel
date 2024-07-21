@@ -18,12 +18,14 @@ namespace Hotel_IoC
             #region service
 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IBanerService, BanerService>();
 
             #endregion
 
             #region repository
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IBanerRepository, BanerRepository>();
 
             #endregion
         }
