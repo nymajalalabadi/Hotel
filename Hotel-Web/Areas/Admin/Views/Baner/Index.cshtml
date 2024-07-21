@@ -50,7 +50,7 @@
                                 <td>@item.BanerButton</td>
                                 <td>
                                     <a asp-area="admin" asp-controller="baner" asp-action="EditBaner" asp-route-banerId="@item.Id" class="btn btn-sm btn-outline-warning">ویرایش</a>
-                                    <a asp-controller="MiniBaner" asp-action="RemoveBaner" asp-route-Id="@item.Id" class="btn btn-sm btn-outline-danger ms-2">حذف</a>
+                                    <a asp-area="admin" asp-controller="baner" asp-action="DeleteBaner" asp-route-banerId="@item.Id" class="btn btn-sm btn-outline-danger ms-2">حذف</a>
                                 </td>
                             </tr>
                         }

@@ -107,6 +107,27 @@ namespace Hotel_Web.Areas.Admin.Controllers
 
         #endregion
 
+        #region Delete Baner
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteBaner(long banerId)
+        {
+            var result = await _banerService.DeleteBaner(banerId);
+
+            if (result)
+            {
+                TempData[SuccessMessage] = "عملیات با موفقیت انجام شد";
+            }
+            else
+            {
+                TempData[SuccessMessage] = "عملیات با شکست مواجه شد";
+            }
+
+            return RedirectToAction("index");
+        }
+
+        #endregion
+
         #endregion
     }
 }
