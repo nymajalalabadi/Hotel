@@ -17,12 +17,9 @@ namespace Hotel_Web.Controllers
 
         private readonly IUserService _userService;
 
-        private ICaptchaValidator _captchaValidator;
-
-        public AccountController(IUserService userService, ICaptchaValidator captchaValidator)
+        public AccountController(IUserService userService)
         {
             _userService = userService;
-            _captchaValidator = captchaValidator;
         }
 
         #endregion
