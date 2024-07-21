@@ -1,0 +1,37 @@
+﻿@using Hotel_Application.Statics
+@using Hotel_Domain.ViewModels.Baner
+@model EditBanerViewModel
+
+@{
+    ViewData["Title"] = "ویرایش ینر";
+}
+
+
+<div class="container">
+    <h2 class="py-3"> ویرایش بنر</h2>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <form asp-action="EditBaner" asp-controller="Baner" asp-area="admin" method="post" enctype="multipart/form-data">
+        <div class="col-12 w-50">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="ImageName" />
+            <div class="mb-3">
+                <label asp-for="AvatarImage" class="form-label"></label>
+                <input type="file" asp-for="AvatarImage" class="form-control">
+                <img src="@(SiteTools.HotelImageName + Model.ImageName)" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="BanerTitle" class="form-label"></label>
+                <input type="text" asp-for="BanerTitle" class="form-control text-start" placeholder="مثال : تخفیف بگیرید">
+                <span asp-validation-for="BanerTitle" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="BanerButton" class="form-label"></label>
+                <input type="text" asp-for="BanerButton" class="form-control text-start" placeholder="مثال : خرید کنید">
+                <span asp-validation-for="BanerButton" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-warning"> ویرایش بنر </button>
+            </div>
+        </div>
+    </form>
+</div>

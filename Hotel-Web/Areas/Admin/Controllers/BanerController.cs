@@ -66,6 +66,47 @@ namespace Hotel_Web.Areas.Admin.Controllers
 
         #endregion
 
+        #region Edit Baner
+
+        [HttpGet]
+        public async Task<IActionResult> EditBaner(long banerId)
+        {
+            var baner = await _banerService.GetEditBaner(banerId);
+
+            if (baner == null)
+            {
+                return NotFound();
+            }
+
+            return View(baner);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditBaner(EditBanerViewModel editBaner)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(editBaner);
+            }
+
+            var result = await _banerService.EditBaner(editBaner);
+
+            switch (result)
+            {
+                case EditBanerResult.Success:
+                    TempData[SuccessMessage] = "عملیات با موفقیت انجام شد";
+                    return RedirectToAction("index");
+
+                case EditBanerResult.Failure:
+                    TempData[SuccessMessage] = "عملیات با شکست مواجه شد";
+                    break;
+            }
+
+            return View(editBaner);
+        }
+
+        #endregion
+
         #endregion
     }
 }
