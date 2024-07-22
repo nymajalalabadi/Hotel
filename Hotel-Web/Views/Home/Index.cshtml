@@ -1,6 +1,10 @@
-﻿<!-- Baner-section -->
+﻿@using Hotel_Application.Statics
+@using Hotel_Domain.ViewModels.Baner
+
 @{
     ViewData["Title"] = "صفحه اصلی";
+
+    var baners = ViewData["baner"] as List<DetailsBanerViewModel>;
 }
 
 @section Header
@@ -9,23 +13,29 @@
 }
 
 <div class="container">
-    <div class="row baner-section  align-items-center justify-content-center">
-        
-            <div class="col-md-12 col-lg-6 position-relative baner">
-                <div class="px-5 tiny-baner">
-                    <div class="img-section rounded-4">
-                    <img src="/asset/img/hotel/almas.jpg" alt="right-baner" />
+    @if (baners!.Any() && baners != null)
+    {
+        <div class="row baner-section  align-items-center justify-content-center">
+            @foreach (var item in baners)
+            {
+                <div class="col-md-12 col-lg-6 position-relative baner">
+                    <div class="px-5 tiny-baner">
+                        <div class="img-section rounded-4">
+                            <img src="@(SiteTools.BanerImageName + item.ImageName)" alt="@item.BanerTitle" />
+                        </div>
+                    </div>
+
+                    <div class="position-absolute text-baner text-center">
+                        <p class="text-dark fs-4 fw-600 baner-title">
+
+                            @item.BanerTitle
+                        </p>
+                        <button class="btn w-75 btn-danger"> @item.BanerButton </button>
                     </div>
                 </div>
-
-                <div class="position-absolute text-baner text-center">
-                    <p class="text-dark fs-4 fw-600 baner-title">
-
-                    </p>
-                    <button class="btn w-75 btn-danger"> </button>
-                </div>
-            </div>
-    </div>
+            }
+        </div>
+    }
 </div>
 
 <!--End Baner-section -->

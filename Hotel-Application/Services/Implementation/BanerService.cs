@@ -29,7 +29,7 @@ namespace Hotel_Application.Services.Implementation
 
         public async Task<FilterBanerViewModel> FilterBaner(FilterBanerViewModel filter)
         {
-            var query = await _banerRepository.GetFisrtBaners();
+            var query = await _banerRepository.GetBaners();
 
             #region filter
 
@@ -64,7 +64,7 @@ namespace Hotel_Application.Services.Implementation
             }
 
             string imageName = Guid.NewGuid() + Path.GetExtension(createBaner.AvatarImage.FileName);
-            createBaner.AvatarImage.AddImageToServer(imageName, SiteTools.HotelImageName);
+            createBaner.AvatarImage.AddImageToServer(imageName, SiteTools.BanerImageName);
 
             var baner = new FisrtBaner()
             {
@@ -109,10 +109,10 @@ namespace Hotel_Application.Services.Implementation
                 }
 
                 string newImageName = Guid.NewGuid() + Path.GetExtension(editBaner.AvatarImage.FileName);
-                editBaner.AvatarImage.AddImageToServer(newImageName, SiteTools.HotelImageName, null, null, SiteTools.HotelImageName);
+                editBaner.AvatarImage.AddImageToServer(newImageName, SiteTools.BanerImageName, null, null, null, currentBanerAvatar.ImageName);
 
-                currentBanerAvatar.BanerTitle = editBaner.BanerTitle;
-                currentBanerAvatar.BanerButton = editBaner.BanerButton;
+                currentBanerAvatar.BanerTitle = editBaner.BanerTitle!;
+                currentBanerAvatar.BanerButton = editBaner.BanerButton!;
                 currentBanerAvatar.ImageName = newImageName;
 
                 _banerRepository.UpdateBaner(currentBanerAvatar);
@@ -128,8 +128,8 @@ namespace Hotel_Application.Services.Implementation
                 return EditBanerResult.HasNotBaner;
             }
 
-            currentBaner.BanerTitle = editBaner.BanerTitle;
-            currentBaner.BanerButton = editBaner.BanerButton;
+            currentBaner.BanerTitle = editBaner.BanerTitle!;
+            currentBaner.BanerButton = editBaner.BanerButton!;
 
             _banerRepository.UpdateBaner(currentBaner);
             await _banerRepository.SaveChanges();
@@ -152,6 +152,19 @@ namespace Hotel_Application.Services.Implementation
             await _banerRepository.SaveChanges();
 
             return true;
+        }
+
+        public async Task<List<DetailsBanerViewModel>> GetDetailsBaners()
+        {
+            var baners = await _banerRepository.GetBaners();
+
+            return baners.Select(b => new DetailsBanerViewModel 
+            { 
+                Id = b.Id,
+                BanerTitle = b.BanerTitle,
+                BanerButton = b.BanerButton,
+                ImageName = b.ImageName,
+            }).ToList();
         }
 
         #endregion

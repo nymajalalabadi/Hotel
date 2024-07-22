@@ -21,6 +21,8 @@ namespace Hotel_Application.Services.Interface
 
         Task<bool> DeleteBaner(long id);
 
+        Task<List<DetailsBanerViewModel>> GetDetailsBaners();
+
         #endregion
     }
 }

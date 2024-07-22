@@ -1,18 +1,25 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Hotel_Application.Services.Interface;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel_Web.Controllers
 {
     public class HomeController : BaseController
     {
-        private readonly ILogger<HomeController> _logger;
+        #region Constructor
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IBanerService _banerService;
+
+        public HomeController(IBanerService banerService)
         {
-            _logger = logger;
+            _banerService = banerService;
         }
 
-        public IActionResult Index()
+        #endregion
+
+        public async Task<IActionResult> Index()
         {
+            ViewData["baner"] = await _banerService.GetDetailsBaners();
+
             return View();
         }
     }

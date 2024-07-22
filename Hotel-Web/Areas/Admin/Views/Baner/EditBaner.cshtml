@@ -17,7 +17,7 @@
             <div class="mb-3">
                 <label asp-for="AvatarImage" class="form-label"></label>
                 <input type="file" asp-for="AvatarImage" class="form-control">
-                <img src="@(SiteTools.HotelImageName + Model.ImageName)" class="form-control" />
+                <img src="@(SiteTools.BanerImageName + Model.ImageName)" class="border" width="150px" height="150px" />
             </div>
             <div class="mb-3">
                 <label asp-for="BanerTitle" class="form-label"></label>

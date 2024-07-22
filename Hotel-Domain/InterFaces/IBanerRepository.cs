@@ -11,7 +11,7 @@ namespace Hotel_Domain.InterFaces
     {
         #region Methods
 
-        Task<IQueryable<FisrtBaner>> GetFisrtBaners();
+        Task<IQueryable<FisrtBaner>> GetBaners();
 
         Task AddBaner(FisrtBaner baner);
 
