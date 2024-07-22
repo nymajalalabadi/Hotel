@@ -1,5 +1,6 @@
 ﻿using Hotel_Domain.Entities.Account;
 using Hotel_Domain.Entities.Baner;
+using Hotel_Domain.Entities.Hotels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,8 @@ namespace Hotel_DataLayer.Context
         public DbSet<User> Users { get; set; }
 
         public DbSet<FisrtBaner> FisrtBaners { get; set; }
+
+        public DbSet<Hotel> Hotels { get; set; }
 
         #endregion
     }
