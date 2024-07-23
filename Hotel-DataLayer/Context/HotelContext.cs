@@ -33,6 +33,8 @@ namespace Hotel_DataLayer.Context
 
         public DbSet<HotelGallery> HotelGalleries { get; set; }
 
+        public DbSet<HotelRoom> HotelRooms { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

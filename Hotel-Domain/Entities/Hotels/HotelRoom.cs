@@ -8,51 +8,53 @@ using System.Threading.Tasks;
 
 namespace Hotel_Domain.Entities.Hotels
 {
-    public class Hotel : BaseEntity
+    public class HotelRoom : BaseEntity
     {
         #region Propertis
 
+        public long HotelId { get; set; }
+
+        [Display(Name = "تصویر اتاق")]
+        [Required(ErrorMessage = "لطفا {0} را کامل کنید")]
+        public string ImageName { get; set; }
+
         [Display(Name = "عنوان")]
         [Required(ErrorMessage = "لطفا {0} را کامل کنید")]
-        [MaxLength(50, ErrorMessage = "تعداد کاراکتر ها نمیتواند بیشتر از {1} باشد")]
+        [MaxLength(100, ErrorMessage = "تعداد کاراکتر ها نمیتواند بیشتر از {1} باشد")]
         [MinLength(2, ErrorMessage = "تعداد کاراکتر ها نمیتواند کمتر از {1} باشد")]
         public string Title { get; set; }
 
         [Display(Name = "توضیحات")]
         [Required(ErrorMessage = "لطفا {0} را کامل کنید")]
         [MaxLength(500, ErrorMessage = "تعداد کاراکتر ها نمیتواند بیشتر از {1} باشد")]
-        [MinLength(20, ErrorMessage = "تعداد کاراکتر ها نمیتواند کمتر از {1} باشد")]
+        [MinLength(2, ErrorMessage = "تعداد کاراکتر ها نمیتواند کمتر از {1} باشد")]
         public string Description { get; set; }
 
-        [Display(Name = "تعداد اتاق")]
-        public int? RoomCount { get; set; }
-
-        [Display(Name = "تعداد طبقه")]
-        public int? StageCount { get; set; }
-
-        [Display(Name = "زمان ورود")]
+        [Display(Name = "قیمت")]
         [Required(ErrorMessage = "لطفا {0} را کامل کنید")]
-        public string EntryTime { get; set; }
+        public int RoomPrice { get; set; }
 
-        [Display(Name = "زمان خروج")]
+        [Display(Name = "تعداد")]
         [Required(ErrorMessage = "لطفا {0} را کامل کنید")]
-        public string ExitTime { get; set; }
+        public int Count { get; set; }
 
-        [Display(Name = "تاریخ ثبت")]
-        public DateTime? dateTime { get; set; }
+        [Display(Name = "ظرفیت")]
+        [Required(ErrorMessage = "لطفا {0} را کامل کنید")]
+        public int Capacity { get; set; }
+
+        [Display(Name = "تعداد تخت")]
+        [Required(ErrorMessage = "لطفا {0} را کامل کنید")]
+        public int BedCount { get; set; }
 
         [Display(Name = "وضعیت")]
+        [Required(ErrorMessage = "لطفا {0} را کامل کنید")]
         public bool IsActive { get; set; }
 
         #endregion
 
         #region Relations
 
-        public HotelAddress hotelAddress { get; set; }
-
-        public ICollection<HotelGallery> hotelGalleries { get; set; }
-
-        public ICollection<HotelRoom> hotelRooms { get; set; }
+        public Hotel Hotel { get; set; }
 
         #endregion
     }
