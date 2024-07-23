@@ -1,6 +1,7 @@
 ﻿using Hotel_Domain.Entities.Account;
 using Hotel_Domain.Entities.Baner;
 using Hotel_Domain.Entities.Hotels;
+using Hotel_Domain.Entities.Reserve;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -36,6 +37,8 @@ namespace Hotel_DataLayer.Context
         public DbSet<HotelRoom> HotelRooms { get; set; }
 
         public DbSet<HotelRule> HotelRules { get; set; }
+
+        public DbSet<ReserveDate> ReserveDates { get; set; }
 
         #endregion
 
