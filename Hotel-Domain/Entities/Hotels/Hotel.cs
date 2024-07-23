@@ -48,11 +48,11 @@ namespace Hotel_Domain.Entities.Hotels
 
         #region Relations
 
-        public HotelAddress hotelAddress { get; set; }
+        public HotelAddress HotelAddress { get; set; }
 
-        public ICollection<HotelGallery> hotelGalleries { get; set; }
+        public ICollection<HotelGallery> HotelGalleries { get; set; }
 
-        public ICollection<HotelRoom> hotelRooms { get; set; }
+        public ICollection<HotelRoom> HotelRooms { get; set; }
 
         public ICollection<HotelRule> HotelRules { get; set; }
 

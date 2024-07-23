@@ -1,4 +1,5 @@
-﻿using Hotel_Domain.Entities.Common;
+﻿using Hotel_Domain.Entities.Advantage;
+using Hotel_Domain.Entities.Common;
 using Hotel_Domain.Entities.Reserve;
 using System;
 using System.Collections.Generic;
@@ -57,7 +58,9 @@ namespace Hotel_Domain.Entities.Hotels
 
         public Hotel Hotel { get; set; }
 
-        public ICollection<ReserveDate> reserveDates { get; set; }
+        public ICollection<ReserveDate> ReserveDates { get; set; }
+
+        public ICollection<SelectedRoomToAdvantage> SelectedRoomToAdvantages { get; set; }
 
         #endregion
     }

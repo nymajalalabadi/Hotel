@@ -1,4 +1,5 @@
 ﻿using Hotel_Domain.Entities.Account;
+using Hotel_Domain.Entities.Advantage;
 using Hotel_Domain.Entities.Baner;
 using Hotel_Domain.Entities.Hotels;
 using Hotel_Domain.Entities.Reserve;
@@ -40,6 +41,10 @@ namespace Hotel_DataLayer.Context
 
         public DbSet<ReserveDate> ReserveDates { get; set; }
 
+        public DbSet<AdvantageRoom> AdvantageRooms { get; set; }
+
+        public DbSet<SelectedRoomToAdvantage> SelectedRoomToAdvantages { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -48,7 +53,7 @@ namespace Hotel_DataLayer.Context
 
             modelBuilder.Entity<HotelAddress>()
                 .HasOne(a => a.Hotel)
-                .WithOne(a => a.hotelAddress)
+                .WithOne(a => a.HotelAddress)
                 .HasForeignKey<HotelAddress>(a => a.HotelId)
                 .OnDelete(DeleteBehavior.Restrict);
 
