@@ -1,4 +1,5 @@
-﻿using Hotel_Domain.Entities.Hotels;
+﻿using Hotel_Domain.Entities.Common;
+using Hotel_Domain.Entities.Hotels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,12 +10,9 @@ using System.Threading.Tasks;
 
 namespace Hotel_Domain.Entities.Advantage
 {
-    public class SelectedRoomToAdvantage
+    public class SelectedRoomToAdvantage : BaseEntity
     {
         #region Properties
-
-        [Key]
-        public long Id { get; set; }
 
         public long HotelRoomId { get; set; }
 

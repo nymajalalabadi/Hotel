@@ -19,6 +19,8 @@ namespace Hotel_IoC
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IBanerService, BanerService>();
+            services.AddScoped<IHotelService, HotelService>();
+            services.AddScoped<IAdvantageService, AdvantageService>();
 
             #endregion
 
@@ -26,6 +28,8 @@ namespace Hotel_IoC
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IBanerRepository, BanerRepository>();
+            services.AddScoped<IHotelRepository, HotelRepository>();
+            services.AddScoped<IAdvantageRepository, AdvantageRepository>();
 
             #endregion
         }
