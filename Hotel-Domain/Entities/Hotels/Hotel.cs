@@ -54,6 +54,8 @@ namespace Hotel_Domain.Entities.Hotels
 
         public ICollection<HotelRoom> hotelRooms { get; set; }
 
+        public ICollection<HotelRule> HotelRules { get; set; }
+
         #endregion
     }
 }
