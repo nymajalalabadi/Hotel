@@ -29,6 +29,21 @@ namespace Hotel_DataLayer.Context
 
         public DbSet<Hotel> Hotels { get; set; }
 
+        public DbSet<HotelAddress> HotelAddresses { get; set; }
+
         #endregion
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            #region Hotel Address
+
+            modelBuilder.Entity<HotelAddress>()
+                .HasOne(a => a.Hotel)
+                .WithOne(a => a.hotelAddress)
+                .HasForeignKey<HotelAddress>(a => a.HotelId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            #endregion
+        }
     }
 }

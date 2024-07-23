@@ -10,6 +10,8 @@ namespace Hotel_Domain.Entities.Hotels
 {
     public class Hotel : BaseEntity
     {
+        #region Propertis
+
         [Display(Name = "عنوان")]
         [Required(ErrorMessage = "لطفا {0} را کامل کنید")]
         [MaxLength(50, ErrorMessage = "تعداد کاراکتر ها نمیتواند بیشتر از {1} باشد")]
@@ -41,5 +43,13 @@ namespace Hotel_Domain.Entities.Hotels
 
         [Display(Name = "وضعیت")]
         public bool IsActive { get; set; }
+
+        #endregion
+
+        #region Relations
+
+        public HotelAddress hotelAddress { get; set; }
+
+        #endregion
     }
 }
