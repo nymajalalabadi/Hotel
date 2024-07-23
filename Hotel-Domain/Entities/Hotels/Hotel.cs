@@ -50,6 +50,8 @@ namespace Hotel_Domain.Entities.Hotels
 
         public HotelAddress hotelAddress { get; set; }
 
+        public ICollection<HotelGallery> hotelGalleries { get; set; }
+
         #endregion
     }
 }
