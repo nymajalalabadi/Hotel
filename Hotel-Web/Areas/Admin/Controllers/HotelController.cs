@@ -112,6 +112,26 @@ namespace Hotel_Web.Areas.Admin.Controllers
 
         #endregion
 
+        #region Delete Hotel
+
+        public async Task<IActionResult> DeleteHotel(long Id)
+        {
+            var result = await _hotelService.DeleteHotel(Id);
+
+            if (result == true)
+            {
+                TempData[SuccessMessage] = "عملیات با موفقیت انجام شد";
+            }
+            else
+            {
+                TempData[SuccessMessage] = "عملیات با شکست مواجه شد";
+            }
+
+            return RedirectToAction("FilterHotels");
+        }
+
+        #endregion
+
         #endregion
 
         #endregion
