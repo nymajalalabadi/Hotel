@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hotel_Domain.ViewModels.Hotels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,16 @@ namespace Hotel_Application.Services.Interface
         #region Methods
 
         #region Hotel
+
+        Task<FilterHotelViewModel> FilterHotel(FilterHotelViewModel filterViewModel);
+
+        Task<CreateHotelResult> CreateHotel(CreateHotelViewModel createHotel);
+
+        Task<EditHotelViewModel> GetHotelForEdit(long hotelId);
+
+        Task<EditHotelResult> EditHotel(EditHotelViewModel editHotel);
+
+        Task<bool> DeleteHotel(long hotelId);
 
         #endregion
 

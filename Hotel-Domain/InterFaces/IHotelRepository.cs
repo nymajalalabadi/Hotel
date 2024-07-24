@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hotel_Domain.Entities.Hotels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,24 @@ namespace Hotel_Domain.InterFaces
         #region Methods
 
         #region Hotel
+
+        Task<IQueryable<Hotel>> GetAllHotels();
+
+        Task<Hotel?> GetHotelById(long id);
+
+        Task AddHotel(Hotel hotel);
+
+        void UpdateHotel(Hotel hotel);
+
+        #region Hotel Address
+
+        Task<HotelAddress?> GetHotelAddressById(long id);
+
+        Task AddHotelAddress(HotelAddress hotelAddress);
+
+        void UpdateHotelAddress(HotelAddress hotelAddress);
+
+        #endregion
 
         #endregion
 
@@ -25,6 +44,8 @@ namespace Hotel_Domain.InterFaces
         #region Hotel Room
 
         #endregion
+
+        Task SaveChanges();
 
         #endregion
     }

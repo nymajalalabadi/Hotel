@@ -38,9 +38,6 @@ namespace Hotel_Domain.Entities.Hotels
         [Required(ErrorMessage = "لطفا {0} را کامل کنید")]
         public string ExitTime { get; set; }
 
-        [Display(Name = "تاریخ ثبت")]
-        public DateTime? dateTime { get; set; }
-
         [Display(Name = "وضعیت")]
         public bool IsActive { get; set; }
 
