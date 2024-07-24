@@ -67,6 +67,51 @@ namespace Hotel_Web.Areas.Admin.Controllers
 
         #endregion
 
+        #region Edit Hotel
+
+        [HttpGet]
+        public async Task<IActionResult> EditHotel(long Id)
+        {
+            var hotel = await _hotelService.GetHotelForEdit(Id);
+
+            if (hotel == null)
+            {
+                return NotFound();
+            }
+
+            return View(hotel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditHotel(EditHotelViewModel editHotel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(editHotel);
+            }
+
+            var result = await _hotelService.EditHotel(editHotel);
+
+            switch (result)
+            {
+                case EditHotelResult.Success:
+                    TempData[SuccessMessage] = "عملیات با موفقیت انجام شد";
+                    return RedirectToAction("FilterHotels");
+
+                case EditHotelResult.Failure:
+                    TempData[SuccessMessage] = "عملیات با شکست مواجه شد";
+                    break;
+
+                case EditHotelResult.HasNotFound:
+                    TempData[SuccessMessage] = "هتل مورد نظر پیدا نشد";
+                    break;
+            }
+
+            return View(editHotel);
+        }
+
+        #endregion
+
         #endregion
 
         #endregion

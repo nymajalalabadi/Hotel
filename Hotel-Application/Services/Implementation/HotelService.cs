@@ -124,7 +124,7 @@ namespace Hotel_Application.Services.Implementation
                StageCount = currentHotel.StageCount!.Value,
                Address = currentHotel.HotelAddress.Address,
                City = currentHotel.HotelAddress.City,
-               PostalCode = currentHotel?.HotelAddress.PostalCode,
+               PostalCode = currentHotel.HotelAddress.PostalCode,
                State = currentHotel!.HotelAddress.State,
             };
         }

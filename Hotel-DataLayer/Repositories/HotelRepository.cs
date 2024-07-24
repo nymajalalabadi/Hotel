@@ -36,7 +36,9 @@ namespace Hotel_DataLayer.Repositories
 
         public async Task<Hotel?> GetHotelById(long id)
         {
-            return await _context.Hotels.Where(h => !h.IsDelete).FirstOrDefaultAsync(h => h.Id.Equals(id));
+            return await _context.Hotels.Where(h => !h.IsDelete)
+                .Include(h => h.HotelAddress)
+                .FirstOrDefaultAsync(h => h.Id.Equals(id));
         }
 
         public async Task AddHotel(Hotel hotel)
