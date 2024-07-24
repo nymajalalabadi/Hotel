@@ -1,4 +1,5 @@
 ﻿using Hotel_Application.Services.Interface;
+using Hotel_Domain.ViewModels.Baner;
 using Hotel_Domain.ViewModels.Hotels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,12 +22,50 @@ namespace Hotel_Web.Areas.Admin.Controllers
 
         #region Hotel
 
+        #region Filter Hotels
+
         public async Task<IActionResult> FilterHotels(FilterHotelViewModel filterHotel)
         {
             var result = await _hotelService.FilterHotel(filterHotel);
 
             return View(result);
         }
+
+        #endregion
+
+        #region Create Hotel
+
+        [HttpGet]
+        public async Task<IActionResult> CreateHotel()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateHotel(CreateHotelViewModel createHotel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(createHotel);
+            }
+
+            var result = await _hotelService.CreateHotel(createHotel);
+
+            switch (result)
+            {
+                case CreateHotelResult.Success:
+                    TempData[SuccessMessage] = "عملیات با موفقیت انجام شد";
+                    return RedirectToAction("FilterHotels");
+
+                case CreateHotelResult.Failure:
+                    TempData[SuccessMessage] = "عملیات با شکست مواجه شد";
+                    break;
+            }
+
+            return View(createHotel);
+        }
+
+        #endregion
 
         #endregion
 

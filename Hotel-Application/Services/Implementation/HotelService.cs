@@ -55,6 +55,7 @@ namespace Hotel_Application.Services.Implementation
                 PostalCode = h.HotelAddress.PostalCode,
                 Address = h.HotelAddress.Address,
                 City = h.HotelAddress.City,
+                IsActive = h.IsActive
             });
 
             #region paging
