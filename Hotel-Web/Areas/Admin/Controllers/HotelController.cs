@@ -237,6 +237,22 @@ namespace Hotel_Web.Areas.Admin.Controllers
 
         #region delete Hotel Gallery
 
+        public async Task<IActionResult> DeleteHotelGallery(long Id)
+        {
+            var result = await _hotelService.DeleteHotelGallery(Id);
+
+            if (result == true)
+            {
+                TempData[SuccessMessage] = "عملیات با موفقیت انجام شد";
+            }
+            else
+            {
+                TempData[ErrorMessage] = "عملیات با شکست مواجه شد";
+            }
+
+            return RedirectToAction("FilterHotels");
+        }
+
         #endregion
 
         #endregion
