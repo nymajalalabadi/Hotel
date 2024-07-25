@@ -59,7 +59,7 @@ namespace Hotel_Web.Areas.Admin.Controllers
                     return RedirectToAction("FilterHotels");
 
                 case CreateHotelResult.Failure:
-                    TempData[SuccessMessage] = "عملیات با شکست مواجه شد";
+                    TempData[ErrorMessage] = "عملیات با شکست مواجه شد";
                     break;
             }
 
@@ -100,11 +100,11 @@ namespace Hotel_Web.Areas.Admin.Controllers
                     return RedirectToAction("FilterHotels");
 
                 case EditHotelResult.Failure:
-                    TempData[SuccessMessage] = "عملیات با شکست مواجه شد";
+                    TempData[ErrorMessage] = "عملیات با شکست مواجه شد";
                     break;
 
                 case EditHotelResult.HasNotFound:
-                    TempData[SuccessMessage] = "هتل مورد نظر پیدا نشد";
+                    TempData[WarningMessage] = "هتل مورد نظر پیدا نشد";
                     break;
             }
 
@@ -125,7 +125,7 @@ namespace Hotel_Web.Areas.Admin.Controllers
             }
             else
             {
-                TempData[SuccessMessage] = "عملیات با شکست مواجه شد";
+                TempData[ErrorMessage] = "عملیات با شکست مواجه شد";
             }
 
             return RedirectToAction("FilterHotels");
@@ -182,7 +182,7 @@ namespace Hotel_Web.Areas.Admin.Controllers
                     return RedirectToAction("FilterHotels");
 
                 case CreateHoteGallerylResult.Failure:
-                    TempData[SuccessMessage] = "عملیات با شکست مواجه شد";
+                    TempData[ErrorMessage] = "عملیات با شکست مواجه شد";
                     break;
             }
 
@@ -192,6 +192,46 @@ namespace Hotel_Web.Areas.Admin.Controllers
         #endregion
 
         #region edit Hotel Gallery
+
+        [HttpGet]
+        public async Task<IActionResult> EditHotelGallery(int id)
+        {
+            var model = await _hotelService.GetHotelGalleryForEdit(id);
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditHotelGallery(EditHotelGalleryViewHtml edit)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(edit);
+            }
+
+            var result = await _hotelService.EditHotelGallery(edit);
+
+            switch (result)
+            {
+                case EditHoteGallerylResult.Success:
+                    TempData[SuccessMessage] = "عملیات با موفقیت انجام شد";
+                    return RedirectToAction("FilterHotels");
+
+                case EditHoteGallerylResult.Failure:
+                    TempData[ErrorMessage] = "عملیات با شکست مواجه شد";
+                    break;
+                case EditHoteGallerylResult.HasNotFound:
+                    TempData[WarningMessage] = "هتل مورد نظر یافت نشد";
+                    break;
+            }
+
+            return View(edit);
+        }
 
         #endregion
 

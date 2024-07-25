@@ -251,8 +251,7 @@ namespace Hotel_Application.Services.Implementation
             return new EditHotelGalleryViewHtml()
             {
                 ImageName = hotelGallery.ImageName,
-                Id = hotelGallery.Id,
-                HotelId= hotelGallery.Id
+                Id = hotelGallery.Id
             };
         }
 

@@ -1,0 +1,28 @@
+﻿@using Hotel_Application.Statics
+@using Hotel_Domain.ViewModels.HotelGalleries
+@model EditHotelGalleryViewHtml
+
+@{
+    ViewData["Title"] = "ویرایش تصویر ";
+}
+
+<div class="container">
+    <h2 class="py-3"> افزودن تصویر </h2>
+    <form asp-area="Admin" asp-controller="Hotel" asp-action="EditHotelGallery" method="post" enctype="multipart/form-data">
+        <input asp-for="Id" type="hidden" />
+        <input asp-for="ImageName" type="hidden" />
+        <div class="row ">
+            <div class="mb-3 col-6">
+                <label asp-for="AvatarImage" class="form-label"></label>
+                <input asp-for="AvatarImage" class="form-control">
+                <img src="@(SiteTools.HotelImageName + Model.ImageName)" class="border" width="150px" height="150px" />
+                <span asp-validation-for="AvatarImage" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <button type="submit" class="btn btn-warning"> ویرایش تصویر </button>
+            </div>
+        </div>
+    </form>
+
+</div>

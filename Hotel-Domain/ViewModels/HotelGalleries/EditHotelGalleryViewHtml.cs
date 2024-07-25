@@ -12,8 +12,6 @@ namespace Hotel_Domain.ViewModels.HotelGalleries
     {
         public long Id { get; set; }
 
-        public long HotelId { get; set; }
-
         [Display(Name = "اسم تصویر")]
         public string ImageName { get; set; }
 
