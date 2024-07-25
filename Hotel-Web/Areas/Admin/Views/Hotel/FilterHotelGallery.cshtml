@@ -1,0 +1,55 @@
+﻿@using Hotel_Application.Statics
+@using Hotel_Domain.Entities.Hotels
+@using Hotel_Domain.ViewModels.HotelGalleries
+@model FilterHotelGalleriesViewHtml
+
+@{
+    ViewData["Title"] = "لیست تصاویر هتل";
+
+    var hotel = ViewBag.Hotel as Hotel;
+}
+
+<div class="mx-3">
+    <h2 class="py-3">لیست تصاویر هتل</h2>
+    <div class="row">
+        <div class="col-12 w-50">
+            <div class="mb-3">
+                <label asp-for="@hotel!.Title" class="form-label"></label>
+                <input type="text" asp-for="@hotel!.Title" class="form-control text-start" placeholder="تایتل">
+            </div>
+            <div class="mb-3">
+                <label asp-for="@hotel!.HotelAddress.Address" class="form-label"></label>
+                <input type="text" asp-for="@hotel!.HotelAddress.Address" class="form-control text-start" placeholder="تایتل">
+            </div>
+        </div>
+        <div class="col-12 pb-3">
+            <a asp-area="Admin" asp-controller="Hotel" asp-action="CreateHotelGallery" asp-route-id="@Model.HotelId" class="btn btn-outline-primary">افزودن تصویر</a>
+        </div>
+        <div class="col-12">
+            <div class="admin-table">
+                <table class="table">
+                    <thead>
+                        <tr class="table-secondary">
+                            <th>تصویر</th>
+                            <th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Entities)
+                        {
+                            <tr>
+                                <td class="col-4">
+                                    <img class="border" src=@(SiteTools.HotelImageName + item.ImageName) alt="item.ImageName" width="120px" height="120px">
+                                </td>
+                                <td>
+                                    <a asp-area="Admin" asp-controller="Hotel" asp-action="EditHotelGallery" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning">ویرایش</a>
+                                    <a asp-area="Admin" asp-controller="Hotel" asp-action="DeleteHotelGallery" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger ms-2">حذف</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

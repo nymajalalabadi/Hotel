@@ -1,5 +1,6 @@
 ﻿using Hotel_Application.Services.Interface;
 using Hotel_Domain.ViewModels.Baner;
+using Hotel_Domain.ViewModels.HotelGalleries;
 using Hotel_Domain.ViewModels.Hotels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -129,6 +130,72 @@ namespace Hotel_Web.Areas.Admin.Controllers
 
             return RedirectToAction("FilterHotels");
         }
+
+        #endregion
+
+        #endregion
+
+        #region Hotel Gallery
+
+        #region Filter Hotel Gallery
+
+        public async Task<IActionResult> FilterHotelGallery(int id, FilterHotelGalleriesViewHtml filter)
+        {
+            ViewBag.Hotel = await _hotelService.GetHotelById(id);
+
+            filter.HotelId = id;
+
+            var result = await _hotelService.FilterHotelGalleries(filter);
+
+            return View(result);
+        }
+
+        #endregion
+
+        #region create Hotel Gallery
+
+        [HttpGet]
+        public async Task<IActionResult> CreateHotelGallery(int id)
+        {
+            var model = new CreateHotelGalleryViewHtml()
+            {
+                HotelId = id,
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateHotelGallery(CreateHotelGalleryViewHtml create)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(create);
+            }
+
+            var result = await _hotelService.CreateHotelGallery(create);
+
+            switch (result)
+            {
+                case CreateHoteGallerylResult.Success:
+                    TempData[SuccessMessage] = "عملیات با موفقیت انجام شد";
+                    return RedirectToAction("FilterHotels");
+
+                case CreateHoteGallerylResult.Failure:
+                    TempData[SuccessMessage] = "عملیات با شکست مواجه شد";
+                    break;
+            }
+
+            return View(create);
+        }
+
+        #endregion
+
+        #region edit Hotel Gallery
+
+        #endregion
+
+        #region delete Hotel Gallery
 
         #endregion
 

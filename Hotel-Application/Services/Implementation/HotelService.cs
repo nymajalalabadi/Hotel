@@ -187,6 +187,11 @@ namespace Hotel_Application.Services.Implementation
             return true;
         }
 
+        public async Task<Hotel?> GetHotelById(long hotelId)
+        {
+            return await _hotelRepository.GetHotelById(hotelId);
+        }
+
         #endregion
 
         #region Hotel Gallery

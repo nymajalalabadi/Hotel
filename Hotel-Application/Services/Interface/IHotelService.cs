@@ -1,4 +1,5 @@
-﻿using Hotel_Domain.ViewModels.HotelGalleries;
+﻿using Hotel_Domain.Entities.Hotels;
+using Hotel_Domain.ViewModels.HotelGalleries;
 using Hotel_Domain.ViewModels.Hotels;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,8 @@ namespace Hotel_Application.Services.Interface
         Task<EditHotelResult> EditHotel(EditHotelViewModel editHotel);
 
         Task<bool> DeleteHotel(long hotelId);
+
+        Task<Hotel?> GetHotelById(long hotelId);
 
         #endregion
 
