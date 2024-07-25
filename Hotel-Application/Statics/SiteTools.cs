@@ -14,9 +14,15 @@ namespace Hotel_Application.Statics
 
         #endregion
 
-        #region Hotel
+        #region baner
 
         public static string BanerImageName { get; set; } = "/asset/img/baner/";
+
+        #endregion
+
+        #region hotel
+
+        public static string HotelImageName { get; set; } = "/asset/img/HotelImage/";
 
         #endregion
     }

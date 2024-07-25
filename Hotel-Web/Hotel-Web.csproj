@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\asset\img\custom\" />
+    <Folder Include="wwwroot\asset\img\HotelImage\" />
   </ItemGroup>
 
 </Project>
