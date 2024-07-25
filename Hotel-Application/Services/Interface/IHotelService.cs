@@ -1,4 +1,5 @@
-﻿using Hotel_Domain.ViewModels.Hotels;
+﻿using Hotel_Domain.ViewModels.HotelGalleries;
+using Hotel_Domain.ViewModels.Hotels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,16 @@ namespace Hotel_Application.Services.Interface
         #endregion
 
         #region Hotel Gallery
+
+        Task<FilterHotelGalleriesViewHtml> FilterHotelGalleries(FilterHotelGalleriesViewHtml filterViewModel);
+
+        Task<CreateHoteGallerylResult> CreateHotelGallery(CreateHotelGalleryViewHtml create);
+
+        Task<EditHotelGalleryViewHtml> GetHotelGalleryForEdit(long id);
+
+        Task<EditHoteGallerylResult> EditHotelGallery(EditHotelGalleryViewHtml edit);
+
+        Task<bool> DeleteHotelGallery(long id);
 
         #endregion
 

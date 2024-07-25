@@ -14,6 +14,9 @@ namespace Hotel_Domain.ViewModels.HotelGalleries
 
         public long HotelId { get; set; }
 
+        [Display(Name = "اسم تصویر")]
+        public string ImageName { get; set; }
+
         [Display(Name = "تصویر")]
         [Required(ErrorMessage = "لطفا {0} را کامل کنید")]
         public IFormFile AvatarImage { get; set; }

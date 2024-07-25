@@ -35,6 +35,14 @@ namespace Hotel_Domain.InterFaces
 
         #region Hotel Gallery
 
+        Task<IQueryable<HotelGallery>> GetAllHotelGalleries();
+
+        Task<HotelGallery?> GetHotelGalleryById(long id);
+
+        Task AddHotelGallery(HotelGallery hotelGallery);
+
+        void UpdateHotelGallery(HotelGallery hotelGallery);
+
         #endregion
 
         #region Hotel Rule

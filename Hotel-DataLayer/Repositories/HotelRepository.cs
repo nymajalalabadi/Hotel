@@ -74,6 +74,30 @@ namespace Hotel_DataLayer.Repositories
 
         #region Hotel Gallery
 
+        public async Task<IQueryable<HotelGallery>> GetAllHotelGalleries()
+        {
+            return _context.HotelGalleries.Include(g => g.Hotel)
+                .Where(g => !g.IsDelete)
+                .AsQueryable();
+        }
+
+        public async Task<HotelGallery?> GetHotelGalleryById(long id)
+        {
+            return await _context.HotelGalleries.Include(g => g.Hotel)
+                .Where(g => !g.IsDelete)
+                .FirstOrDefaultAsync(c => c.Id.Equals(id));
+        }
+
+        public async Task AddHotelGallery(HotelGallery hotelGallery)
+        {
+            await _context.HotelGalleries.AddAsync(hotelGallery);
+        }
+
+        public void UpdateHotelGallery(HotelGallery hotelGallery)
+        {
+            _context.HotelGalleries.Update(hotelGallery);
+        }
+
         #endregion
 
         #region Hotel Rule

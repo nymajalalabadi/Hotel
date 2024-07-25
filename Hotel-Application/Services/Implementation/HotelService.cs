@@ -1,6 +1,9 @@
-﻿using Hotel_Application.Services.Interface;
+﻿using Hotel_Application.Generators;
+using Hotel_Application.Services.Interface;
+using Hotel_Application.Statics;
 using Hotel_Domain.Entities.Hotels;
 using Hotel_Domain.InterFaces;
+using Hotel_Domain.ViewModels.HotelGalleries;
 using Hotel_Domain.ViewModels.Hotels;
 using System;
 using System.Collections.Generic;
@@ -187,6 +190,108 @@ namespace Hotel_Application.Services.Implementation
         #endregion
 
         #region Hotel Gallery
+
+        public async Task<FilterHotelGalleriesViewHtml> FilterHotelGalleries(FilterHotelGalleriesViewHtml filterViewModel)
+        {
+            var query = await _hotelRepository.GetAllHotelGalleries();
+
+            #region filter
+
+            query = query.Where(c => c.HotelId.Equals(filterViewModel.HotelId)); 
+
+            #endregion
+
+            query = query.OrderByDescending(g => g.CreateDate);
+
+            #region paging
+
+            await filterViewModel.SetPaging(query);
+
+            #endregion
+
+            return filterViewModel;
+        }
+
+        public async Task<CreateHoteGallerylResult> CreateHotelGallery(CreateHotelGalleryViewHtml create)
+        {
+            if (create.AvatarImage != null)
+            {
+                string imageName = Guid.NewGuid() + Path.GetExtension(create.AvatarImage.FileName);
+                create.AvatarImage.AddImageToServer(imageName, SiteTools.HotelImageName);
+
+                var hotelGallery = new HotelGallery()
+                {
+                    HotelId = create.HotelId,
+                    ImageName = imageName,
+                };
+
+                await _hotelRepository.AddHotelGallery(hotelGallery);
+                await _hotelRepository.SaveChanges();
+
+                return CreateHoteGallerylResult.Success;
+            }
+
+            return CreateHoteGallerylResult.Failure;
+        }
+
+        public async Task<EditHotelGalleryViewHtml> GetHotelGalleryForEdit(long id)
+        {
+            var hotelGallery = await _hotelRepository.GetHotelGalleryById(id);
+
+            if (hotelGallery == null)
+            {
+                return null;
+            }
+
+            return new EditHotelGalleryViewHtml()
+            {
+                ImageName = hotelGallery.ImageName,
+                Id = hotelGallery.Id,
+                HotelId= hotelGallery.Id
+            };
+        }
+
+        public async Task<EditHoteGallerylResult> EditHotelGallery(EditHotelGalleryViewHtml edit)
+        {
+            var hotelGallery = await _hotelRepository.GetHotelGalleryById(edit.Id);
+
+            if (hotelGallery == null)
+            {
+                return EditHoteGallerylResult.HasNotFound;
+            }
+
+            if (edit.AvatarImage != null)
+            {
+                string imageName = Guid.NewGuid() + Path.GetExtension(edit.AvatarImage.FileName);
+                edit.AvatarImage.AddImageToServer(imageName, SiteTools.HotelImageName, null, null, null, hotelGallery.ImageName);
+
+                hotelGallery.ImageName = imageName;
+
+                _hotelRepository.UpdateHotelGallery(hotelGallery);
+                await _hotelRepository.SaveChanges();
+
+                return EditHoteGallerylResult.Success;
+            }
+
+            return EditHoteGallerylResult.Failure;
+        }
+
+        public async Task<bool> DeleteHotelGallery(long id)
+        {
+            var hotelGallery = await _hotelRepository.GetHotelGalleryById(id);
+
+            if (hotelGallery == null)
+            {
+                return false;
+            }
+
+            hotelGallery.IsDelete = true;
+
+            _hotelRepository.UpdateHotelGallery(hotelGallery);
+            await _hotelRepository.SaveChanges();
+
+            return true;
+        }
 
         #endregion
 
