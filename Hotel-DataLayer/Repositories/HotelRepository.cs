@@ -102,6 +102,28 @@ namespace Hotel_DataLayer.Repositories
 
         #region Hotel Rule
 
+        public async Task<IQueryable<HotelRule>> GetAllHotelRules()
+        {
+            return _context.HotelRules.Include(g => g.Hotel).Where(g => !g.IsDelete).AsQueryable();
+        }
+
+        public async Task<HotelRule?> GetHotelRuleById(long id)
+        {
+            return await _context.HotelRules.Include(g => g.Hotel)
+                .Where(g => !g.IsDelete)
+                .FirstOrDefaultAsync(c => c.Id.Equals(id));
+        }
+
+        public async Task AddHotelRule(HotelRule hotelRule)
+        {
+            await _context.HotelRules.AddAsync(hotelRule);
+        }
+
+        public void UpdateHotelRule(HotelRule hotelRule)
+        {
+            _context.HotelRules.Update(hotelRule);
+        }
+
         #endregion
 
         #region Hotel Room

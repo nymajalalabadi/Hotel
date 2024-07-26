@@ -47,6 +47,14 @@ namespace Hotel_Domain.InterFaces
 
         #region Hotel Rule
 
+        Task<IQueryable<HotelRule>> GetAllHotelRules();
+
+        Task<HotelRule?> GetHotelRuleById(long id);
+
+        Task AddHotelRule(HotelRule hotelRule);
+
+        void UpdateHotelRule(HotelRule hotelRule);
+
         #endregion
 
         #region Hotel Room

@@ -20,7 +20,7 @@ namespace Hotel_Domain.ViewModels.HotelGalleries
         public IFormFile AvatarImage { get; set; }
     }
 
-    public enum EditHoteGallerylResult
+    public enum EditHoteGalleryResult
     {
         Success,
         Failure,

@@ -177,11 +177,11 @@ namespace Hotel_Web.Areas.Admin.Controllers
 
             switch (result)
             {
-                case CreateHoteGallerylResult.Success:
+                case CreateHoteGalleryResult.Success:
                     TempData[SuccessMessage] = "عملیات با موفقیت انجام شد";
                     return RedirectToAction("FilterHotels");
 
-                case CreateHoteGallerylResult.Failure:
+                case CreateHoteGalleryResult.Failure:
                     TempData[ErrorMessage] = "عملیات با شکست مواجه شد";
                     break;
             }
@@ -218,14 +218,14 @@ namespace Hotel_Web.Areas.Admin.Controllers
 
             switch (result)
             {
-                case EditHoteGallerylResult.Success:
+                case EditHoteGalleryResult.Success:
                     TempData[SuccessMessage] = "عملیات با موفقیت انجام شد";
                     return RedirectToAction("FilterHotels");
 
-                case EditHoteGallerylResult.Failure:
+                case EditHoteGalleryResult.Failure:
                     TempData[ErrorMessage] = "عملیات با شکست مواجه شد";
                     break;
-                case EditHoteGallerylResult.HasNotFound:
+                case EditHoteGalleryResult.HasNotFound:
                     TempData[WarningMessage] = "هتل مورد نظر یافت نشد";
                     break;
             }

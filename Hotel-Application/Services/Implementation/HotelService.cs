@@ -4,6 +4,7 @@ using Hotel_Application.Statics;
 using Hotel_Domain.Entities.Hotels;
 using Hotel_Domain.InterFaces;
 using Hotel_Domain.ViewModels.HotelGalleries;
+using Hotel_Domain.ViewModels.HotelRules;
 using Hotel_Domain.ViewModels.Hotels;
 using System;
 using System.Collections.Generic;
@@ -217,7 +218,7 @@ namespace Hotel_Application.Services.Implementation
             return filterViewModel;
         }
 
-        public async Task<CreateHoteGallerylResult> CreateHotelGallery(CreateHotelGalleryViewHtml create)
+        public async Task<CreateHoteGalleryResult> CreateHotelGallery(CreateHotelGalleryViewHtml create)
         {
             if (create.AvatarImage != null)
             {
@@ -233,10 +234,10 @@ namespace Hotel_Application.Services.Implementation
                 await _hotelRepository.AddHotelGallery(hotelGallery);
                 await _hotelRepository.SaveChanges();
 
-                return CreateHoteGallerylResult.Success;
+                return CreateHoteGalleryResult.Success;
             }
 
-            return CreateHoteGallerylResult.Failure;
+            return CreateHoteGalleryResult.Failure;
         }
 
         public async Task<EditHotelGalleryViewHtml> GetHotelGalleryForEdit(long id)
@@ -255,13 +256,13 @@ namespace Hotel_Application.Services.Implementation
             };
         }
 
-        public async Task<EditHoteGallerylResult> EditHotelGallery(EditHotelGalleryViewHtml edit)
+        public async Task<EditHoteGalleryResult> EditHotelGallery(EditHotelGalleryViewHtml edit)
         {
             var hotelGallery = await _hotelRepository.GetHotelGalleryById(edit.Id);
 
             if (hotelGallery == null)
             {
-                return EditHoteGallerylResult.HasNotFound;
+                return EditHoteGalleryResult.HasNotFound;
             }
 
             if (edit.AvatarImage != null)
@@ -274,10 +275,10 @@ namespace Hotel_Application.Services.Implementation
                 _hotelRepository.UpdateHotelGallery(hotelGallery);
                 await _hotelRepository.SaveChanges();
 
-                return EditHoteGallerylResult.Success;
+                return EditHoteGalleryResult.Success;
             }
 
-            return EditHoteGallerylResult.Failure;
+            return EditHoteGalleryResult.Failure;
         }
 
         public async Task<bool> DeleteHotelGallery(long id)
@@ -300,6 +301,96 @@ namespace Hotel_Application.Services.Implementation
         #endregion
 
         #region Hotel Rule
+
+        public async Task<FilterHotelRulesViewModel> FilterHotelRules(FilterHotelRulesViewModel filterViewModel)
+        {
+            var query = await _hotelRepository.GetAllHotelRules();
+
+            #region filter
+
+            query = query.Where(r => r.HotelId.Equals(filterViewModel.HotelId));
+
+            #endregion
+
+            query = query.OrderByDescending(r => r.CreateDate);
+
+            #region paging
+
+            await filterViewModel.SetPaging(query);
+
+            #endregion
+
+            return filterViewModel;
+        }
+
+        public async Task<CreateHoteRuleResult> CreateHoteRule(CreateHotelRuleViewModel create)
+        {
+            if (string.IsNullOrEmpty(create.Description))
+            {
+                return CreateHoteRuleResult.Failure;
+            }
+
+            var rule = new HotelRule()
+            {
+                HotelId = create.HotelId,
+                Description = create.Description,
+            };
+
+            await _hotelRepository.AddHotelRule(rule);
+            await _hotelRepository.SaveChanges();
+
+            return CreateHoteRuleResult.Success;
+        }
+
+        public async Task<EditHotelRuleViewModel> GetHoteRuleForEdit(long id)
+        {
+            var rule = await _hotelRepository.GetHotelRuleById(id);
+
+            if (rule == null)
+            {
+                return null;
+            }
+
+            return new EditHotelRuleViewModel()
+            {
+                Id = id,
+                Description = rule.Description
+            };
+        }
+
+        public async Task<EditHoteRuleResult> EditHoteRule(EditHotelRuleViewModel edit)
+        {
+            var rule = await _hotelRepository.GetHotelRuleById(edit.Id);
+
+            if (rule == null)
+            {
+                return EditHoteRuleResult.HasNotFound;
+            }
+
+            rule.Description = edit.Description;
+
+            _hotelRepository.UpdateHotelRule(rule);
+            await _hotelRepository.SaveChanges();
+
+            return EditHoteRuleResult.Success;
+        }
+
+        public async Task<bool> DeleteHoteRule(long id)
+        {
+            var rule = await _hotelRepository.GetHotelRuleById(id);
+
+            if (rule == null)
+            {
+                return false;
+            }
+
+            rule.IsDelete = true;
+
+            _hotelRepository.UpdateHotelRule(rule);
+            await _hotelRepository.SaveChanges();
+
+            return true;
+        }
 
         #endregion
 
