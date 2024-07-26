@@ -48,13 +48,13 @@ namespace Hotel_Application.Services.Interface
 
         Task<FilterHotelRulesViewModel> FilterHotelRules(FilterHotelRulesViewModel filterViewModel);
 
-        Task<CreateHoteRuleResult> CreateHoteRule(CreateHotelRuleViewModel create);
+        Task<CreateHoteRuleResult> CreateHotelRule(CreateHotelRuleViewModel create);
 
-        Task<EditHotelRuleViewModel> GetHoteRuleForEdit(long id);
+        Task<EditHotelRuleViewModel> GetHotelRuleForEdit(long id);
 
-        Task<EditHoteRuleResult> EditHoteRule(EditHotelRuleViewModel edit);
+        Task<EditHoteRuleResult> EditHotelRule(EditHotelRuleViewModel edit);
 
-        Task<bool> DeleteHoteRule(long id);
+        Task<bool> DeleteHotelRule(long id);
 
         #endregion
 

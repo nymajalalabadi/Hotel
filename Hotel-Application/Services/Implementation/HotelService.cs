@@ -323,7 +323,7 @@ namespace Hotel_Application.Services.Implementation
             return filterViewModel;
         }
 
-        public async Task<CreateHoteRuleResult> CreateHoteRule(CreateHotelRuleViewModel create)
+        public async Task<CreateHoteRuleResult> CreateHotelRule(CreateHotelRuleViewModel create)
         {
             if (string.IsNullOrEmpty(create.Description))
             {
@@ -342,7 +342,7 @@ namespace Hotel_Application.Services.Implementation
             return CreateHoteRuleResult.Success;
         }
 
-        public async Task<EditHotelRuleViewModel> GetHoteRuleForEdit(long id)
+        public async Task<EditHotelRuleViewModel> GetHotelRuleForEdit(long id)
         {
             var rule = await _hotelRepository.GetHotelRuleById(id);
 
@@ -358,7 +358,7 @@ namespace Hotel_Application.Services.Implementation
             };
         }
 
-        public async Task<EditHoteRuleResult> EditHoteRule(EditHotelRuleViewModel edit)
+        public async Task<EditHoteRuleResult> EditHotelRule(EditHotelRuleViewModel edit)
         {
             var rule = await _hotelRepository.GetHotelRuleById(edit.Id);
 
@@ -375,7 +375,7 @@ namespace Hotel_Application.Services.Implementation
             return EditHoteRuleResult.Success;
         }
 
-        public async Task<bool> DeleteHoteRule(long id)
+        public async Task<bool> DeleteHotelRule(long id)
         {
             var rule = await _hotelRepository.GetHotelRuleById(id);
 
