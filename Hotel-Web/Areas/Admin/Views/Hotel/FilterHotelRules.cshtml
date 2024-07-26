@@ -1,16 +1,16 @@
 ﻿@using Hotel_Application.Statics
 @using Hotel_Domain.Entities.Hotels
-@using Hotel_Domain.ViewModels.HotelGalleries
-@model FilterHotelGalleriesViewHtml
+@using Hotel_Domain.ViewModels.HotelRules
+@model FilterHotelRulesViewModel
 
 @{
-    ViewData["Title"] = "لیست تصاویر هتل";
+    ViewData["Title"] = "لیست قوانین هتل";
 
     var hotel = ViewBag.Hotel as Hotel;
 }
 
 <div class="mx-3">
-    <h2 class="py-3">لیست تصاویر هتل</h2>
+    <h2 class="py-3">لیست قوانین هتل</h2>
     <div class="row">
         <div class="col-12 w-50">
             <div class="mb-3">
@@ -23,14 +23,14 @@
             </div>
         </div>
         <div class="col-12 pb-3">
-            <a asp-area="Admin" asp-controller="Hotel" asp-action="CreateHotelGallery" asp-route-id="@Model.HotelId" class="btn btn-outline-primary">افزودن تصویر</a>
+            <a asp-area="Admin" asp-controller="Hotel" asp-action="CreateHotelRule" asp-route-id="@Model.HotelId" class="btn btn-outline-primary">افزودن تصویر</a>
         </div>
         <div class="col-12">
             <div class="admin-table">
                 <table class="table">
                     <thead>
                         <tr class="table-secondary">
-                            <th>تصویر</th>
+                            <th>قوانین</th>
                             <th>عملیات</th>
                         </tr>
                     </thead>
@@ -41,11 +41,11 @@
                             {
                                 <tr>
                                     <td class="col-4">
-                                        <img class="border" src=@(SiteTools.HotelImageName + item.ImageName) alt="item.ImageName" width="120px" height="120px">
+                                        <p class="fw-600 fs-6">@item.Description</p>
                                     </td>
                                     <td>
-                                        <a asp-area="Admin" asp-controller="Hotel" asp-action="EditHotelGallery" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning">ویرایش</a>
-                                        <a asp-area="Admin" asp-controller="Hotel" asp-action="DeleteHotelGallery" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger ms-2">حذف</a>
+                                        <a asp-area="Admin" asp-controller="Hotel" asp-action="EditHotelRule" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning">ویرایش</a>
+                                        <a asp-area="Admin" asp-controller="Hotel" asp-action="DeleteHotelRule" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger ms-2">حذف</a>
                                     </td>
                                 </tr>
                             }
@@ -54,7 +54,7 @@
                         {
                             <tr>
                                 <td>
-                                    <p class="fw-600 fs-6">در حال حاضر عکسی برای هتل یافت نشد لطفا از افزودن عکس استفاده کنید</p>
+                                    <p class="fw-600 fs-6">در حال حاضر قانونی برای هتل یافت نشد لطفا از افزودن قانون استفاده کنید</p>
                                 </td>
                             </tr>
                         }

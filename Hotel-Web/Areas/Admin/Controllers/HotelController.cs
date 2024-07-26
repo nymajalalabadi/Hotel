@@ -140,7 +140,7 @@ namespace Hotel_Web.Areas.Admin.Controllers
 
         #region Filter Hotel Gallery
 
-        public async Task<IActionResult> FilterHotelGallery(int id, FilterHotelGalleriesViewHtml filter)
+        public async Task<IActionResult> FilterHotelGallery(long id, FilterHotelGalleriesViewHtml filter)
         {
             ViewBag.Hotel = await _hotelService.GetHotelById(id);
 
@@ -156,7 +156,7 @@ namespace Hotel_Web.Areas.Admin.Controllers
         #region create Hotel Gallery
 
         [HttpGet]
-        public async Task<IActionResult> CreateHotelGallery(int id)
+        public async Task<IActionResult> CreateHotelGallery(long id)
         {
             var model = new CreateHotelGalleryViewHtml()
             {
@@ -195,7 +195,7 @@ namespace Hotel_Web.Areas.Admin.Controllers
         #region edit Hotel Gallery
 
         [HttpGet]
-        public async Task<IActionResult> EditHotelGallery(int id)
+        public async Task<IActionResult> EditHotelGallery(long id)
         {
             var model = await _hotelService.GetHotelGalleryForEdit(id);
 
@@ -262,7 +262,7 @@ namespace Hotel_Web.Areas.Admin.Controllers
 
         #region Filter Hotel Rule
 
-        public async Task<IActionResult> FilterHotelRule(int id, FilterHotelRulesViewModel filter)
+        public async Task<IActionResult> FilterHotelRules(long id, FilterHotelRulesViewModel filter)
         {
             ViewBag.Hotel = await _hotelService.GetHotelById(id);
 
@@ -278,7 +278,7 @@ namespace Hotel_Web.Areas.Admin.Controllers
         #region create Hotel Rule
 
         [HttpGet]
-        public async Task<IActionResult> CreateHotelRule(int id)
+        public async Task<IActionResult> CreateHotelRule(long id)
         {
             var model = new CreateHotelRuleViewModel()
             {
@@ -317,7 +317,7 @@ namespace Hotel_Web.Areas.Admin.Controllers
         #region edit Hotel Rule
 
         [HttpGet]
-        public async Task<IActionResult> EditHotelRule(int id)
+        public async Task<IActionResult> EditHotelRule(long id)
         {
             var model = await _hotelService.GetHotelRuleForEdit(id);
 
