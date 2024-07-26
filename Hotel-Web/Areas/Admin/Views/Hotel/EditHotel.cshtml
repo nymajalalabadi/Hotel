@@ -1,4 +1,5 @@
-﻿@using Hotel_Domain.ViewModels.Hotels
+﻿@using Hotel_Application.Statics
+@using Hotel_Domain.ViewModels.Hotels
 @model EditHotelViewModel
 
 @{
@@ -7,10 +8,10 @@
 
 <div class="container">
     <h2 class="py-3"> ایجاد هتل</h2>
-    <div asp-validation-summary="ModelOnly" class="text-bg-danger"></div>
-    <form asp-area="admin" asp-controller="Hotel" asp-action="EditHotel" method="post">
+    <form asp-area="admin" asp-controller="Hotel" asp-action="EditHotel" method="post" enctype="multipart/form-data">
         <div class="row ">
             <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="ImageName" />
             <div class="mb-3 col-6">
                 <label asp-for="Title" class="form-label"></label>
                 <input asp-for="Title" class="form-control">
@@ -53,6 +54,12 @@
                     </div>
                 </div>
                 <span asp-validation-for="IsActive" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="AvatarImage" class="form-label"></label>
+                <input type="file" asp-for="AvatarImage" class="form-control">
+                <img src="@(SiteTools.HotelPosterName + Model.ImageName)" class="border" width="150px" height="150px" />
+                <span asp-validation-for="AvatarImage" class="text-danger"></span>
             </div>
             <div class="mb-3 col-12">
                 <label asp-for="Description" class="form-label"></label>

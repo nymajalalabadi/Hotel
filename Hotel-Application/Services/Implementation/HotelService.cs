@@ -59,7 +59,8 @@ namespace Hotel_Application.Services.Implementation
                 PostalCode = h.HotelAddress.PostalCode,
                 Address = h.HotelAddress.Address,
                 City = h.HotelAddress.City,
-                IsActive = h.IsActive
+                IsActive = h.IsActive,
+                ImageName = h.ImageName
             });
 
             #region paging
@@ -73,38 +74,42 @@ namespace Hotel_Application.Services.Implementation
 
         public async Task<CreateHotelResult> CreateHotel(CreateHotelViewModel createHotel)
         {
-            if (createHotel.Title == null)
+            if (createHotel.AvatarImage != null)
             {
-                return CreateHotelResult.Failure;
+                string imageName = Guid.NewGuid() + Path.GetExtension(createHotel.AvatarImage.FileName);
+                createHotel.AvatarImage.AddImageToServer(imageName, SiteTools.HotelPosterName);
+
+                var hotel = new Hotel()
+                {
+                    Title = createHotel.Title,
+                    Description = createHotel.Description,
+                    EntryTime = createHotel.EntryTime,
+                    ExitTime = createHotel.ExitTime,
+                    RoomCount = createHotel.RoomCount,
+                    StageCount = createHotel.StageCount,
+                    IsActive = createHotel.IsActive,
+                    ImageName = imageName
+                };
+
+                await _hotelRepository.AddHotel(hotel);
+                await _hotelRepository.SaveChanges();
+
+                var address = new HotelAddress()
+                {
+                    HotelId = hotel.Id,
+                    Address = createHotel.Address,
+                    City = createHotel.City,
+                    State = createHotel.State,
+                    PostalCode = createHotel.PostalCode
+                };
+
+                await _hotelRepository.AddHotelAddress(address);
+                await _hotelRepository.SaveChanges();
+
+                return CreateHotelResult.Success;
             }
 
-            var hotel = new Hotel()
-            {
-                Title = createHotel.Title,
-                Description = createHotel.Description,
-                EntryTime = createHotel.EntryTime,
-                ExitTime = createHotel.ExitTime,
-                RoomCount = createHotel.RoomCount,
-                StageCount = createHotel.StageCount,
-                IsActive = createHotel.IsActive,
-            };
-
-            await _hotelRepository.AddHotel(hotel);
-            await _hotelRepository.SaveChanges();
-
-            var address = new HotelAddress()
-            {
-                HotelId = hotel.Id,
-                Address = createHotel.Address,
-                City = createHotel.City,
-                State = createHotel.State,
-                PostalCode = createHotel.PostalCode
-            };
-
-            await _hotelRepository.AddHotelAddress(address);
-            await _hotelRepository.SaveChanges();
-
-            return CreateHotelResult.Success;
+            return CreateHotelResult.Failure;
         }
 
         public async Task<EditHotelViewModel> GetHotelForEdit(long hotelId)
@@ -130,6 +135,7 @@ namespace Hotel_Application.Services.Implementation
                City = currentHotel.HotelAddress.City,
                PostalCode = currentHotel.HotelAddress.PostalCode,
                State = currentHotel!.HotelAddress.State,
+               ImageName = currentHotel.ImageName
             };
         }
 
@@ -147,6 +153,34 @@ namespace Hotel_Application.Services.Implementation
             if (currentHotelAdress == null)
             {
                 return EditHotelResult.HasNotFound;
+            }
+
+            if (editHotel.AvatarImage != null)
+            {
+                string imageName = Guid.NewGuid() + Path.GetExtension(editHotel.AvatarImage.FileName);
+                editHotel.AvatarImage.AddImageToServer(imageName, SiteTools.HotelPosterName, null, null, null , editHotel.ImageName);
+
+                currentHotel.Title = editHotel.Title;
+                currentHotel.Description = editHotel.Description;
+                currentHotel.ExitTime = editHotel.ExitTime;
+                currentHotel.EntryTime = editHotel.EntryTime;
+                currentHotel.IsActive = editHotel.IsActive;
+                currentHotel.RoomCount = editHotel.RoomCount;
+                currentHotel.StageCount = editHotel.StageCount;
+                currentHotel.ImageName = imageName;
+
+                _hotelRepository.UpdateHotel(currentHotel);
+
+                currentHotelAdress.Address = editHotel.Address;
+                currentHotelAdress.PostalCode = editHotel.PostalCode;
+                currentHotelAdress.State = editHotel.State;
+                currentHotelAdress.City = editHotel.City;
+
+                _hotelRepository.UpdateHotelAddress(currentHotelAdress);
+
+                await _hotelRepository.SaveChanges();
+
+                return EditHotelResult.Success;
             }
 
             currentHotel.Title = editHotel.Title;

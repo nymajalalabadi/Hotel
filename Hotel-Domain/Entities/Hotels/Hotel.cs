@@ -41,6 +41,10 @@ namespace Hotel_Domain.Entities.Hotels
         [Display(Name = "وضعیت")]
         public bool IsActive { get; set; }
 
+        [Display(Name = "تصویر")]
+        [Required(ErrorMessage = "لطفا {0} را کامل کنید")]
+        public string ImageName { get; set; }
+
         #endregion
 
         #region Relations

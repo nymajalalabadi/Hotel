@@ -40,6 +40,10 @@ namespace Hotel_Domain.ViewModels.Hotels
         [Display(Name = "وضعیت")]
         public bool IsActive { get; set; }
 
+        [Display(Name = "تصویر")]
+        [Required(ErrorMessage = "لطفا {0} را کامل کنید")]
+        public string ImageName { get; set; }
+
         #region Address
 
         [Display(Name = "آدرس هتل")]

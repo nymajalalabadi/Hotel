@@ -20,7 +20,13 @@ namespace Hotel_Application.Statics
 
         #endregion
 
-        #region hotel
+        #region hotel poster
+
+        public static string HotelPosterName { get; set; } = "/asset/img/HotelPoster/";
+
+        #endregion
+
+        #region hotel image
 
         public static string HotelImageName { get; set; } = "/asset/img/HotelImage/";
 
