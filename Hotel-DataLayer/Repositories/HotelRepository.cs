@@ -130,7 +130,10 @@ namespace Hotel_DataLayer.Repositories
 
         public async Task<IQueryable<HotelRoom>> GetAllHotelRooms()
         {
-            return _context.HotelRooms.Include(g => g.Hotel).Where(g => !g.IsDelete).AsQueryable();
+            return _context.HotelRooms
+                .Include(g => g.SelectedRoomToAdvantages)
+                .ThenInclude(r => r.AdvantageRoom)
+                .Where(g => !g.IsDelete).AsQueryable();
         }
 
         public async Task<HotelRoom?> GetHotelRoomById(long id)
