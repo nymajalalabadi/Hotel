@@ -80,10 +80,10 @@
                             </div>
                         </div>
                         <div class="col-lg-3 text-lg-end pe-5 reserve-btn">
-                            <a asp-action="EditHotelRoom" asp-route-id="@item.Id" class="btn btn-warning rounded-5 mt-3 col-6">
+                            <a asp-area="Admin" asp-controller="Hotel" asp-action="EditHotelRoom" asp-route-id="@item.Id" class="btn btn-warning rounded-5 mt-3 col-6">
                                 ویرایش
                             </a>
-                            <a asp-action="DeleteHotelRoom" asp-route-id="@item.Id" class="btn btn-danger rounded-5 mt-3 col-6">
+                            <a asp-area="Admin" asp-controller="Hotel" asp-action="DeleteHotelRoom" asp-route-id="@item.Id" class="btn btn-danger rounded-5 mt-3 col-6">
                                 حذف
                             </a>
                         </div>
