@@ -32,6 +32,7 @@
     <Folder Include="wwwroot\asset\img\custom\" />
     <Folder Include="wwwroot\asset\img\HotelImage\" />
     <Folder Include="wwwroot\asset\img\HotelPoster\" />
+    <Folder Include="wwwroot\asset\img\HotelRoomImage\" />
   </ItemGroup>
 
 </Project>

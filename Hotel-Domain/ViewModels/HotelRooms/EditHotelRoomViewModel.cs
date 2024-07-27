@@ -52,7 +52,7 @@ namespace Hotel_Domain.ViewModels.HotelRooms
         public IFormFile? AvatarImage { get; set; }
     }
 
-    public enum EditHoteRoomResult
+    public enum EditHotelRoomResult
     {
         HasNotFound,
         Success,

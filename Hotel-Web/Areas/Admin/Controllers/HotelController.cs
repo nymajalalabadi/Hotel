@@ -178,11 +178,11 @@ namespace Hotel_Web.Areas.Admin.Controllers
 
             switch (result)
             {
-                case CreateHoteGalleryResult.Success:
+                case CreateHotelGalleryResult.Success:
                     TempData[SuccessMessage] = "عملیات با موفقیت انجام شد";
                     return RedirectToAction("FilterHotels");
 
-                case CreateHoteGalleryResult.Failure:
+                case CreateHotelGalleryResult.Failure:
                     TempData[ErrorMessage] = "عملیات با شکست مواجه شد";
                     break;
             }
@@ -219,14 +219,14 @@ namespace Hotel_Web.Areas.Admin.Controllers
 
             switch (result)
             {
-                case EditHoteGalleryResult.Success:
+                case EditHotelGalleryResult.Success:
                     TempData[SuccessMessage] = "عملیات با موفقیت انجام شد";
                     return RedirectToAction("FilterHotels");
 
-                case EditHoteGalleryResult.Failure:
+                case EditHotelGalleryResult.Failure:
                     TempData[ErrorMessage] = "عملیات با شکست مواجه شد";
                     break;
-                case EditHoteGalleryResult.HasNotFound:
+                case EditHotelGalleryResult.HasNotFound:
                     TempData[WarningMessage] = "هتل مورد نظر یافت نشد";
                     break;
             }
@@ -300,11 +300,11 @@ namespace Hotel_Web.Areas.Admin.Controllers
 
             switch (result)
             {
-                case CreateHoteRuleResult.Success:
+                case CreateHotelRuleResult.Success:
                     TempData[SuccessMessage] = "عملیات با موفقیت انجام شد";
                     return RedirectToAction("FilterHotels");
 
-                case CreateHoteRuleResult.Failure:
+                case CreateHotelRuleResult.Failure:
                     TempData[ErrorMessage] = "عملیات با شکست مواجه شد";
                     break;
             }
@@ -341,14 +341,14 @@ namespace Hotel_Web.Areas.Admin.Controllers
 
             switch (result)
             {
-                case EditHoteRuleResult.Success:
+                case EditHotelRuleResult.Success:
                     TempData[SuccessMessage] = "عملیات با موفقیت انجام شد";
                     return RedirectToAction("FilterHotels");
 
-                case EditHoteRuleResult.Failure:
+                case EditHotelRuleResult.Failure:
                     TempData[ErrorMessage] = "عملیات با شکست مواجه شد";
                     break;
-                case EditHoteRuleResult.HasNotFound:
+                case EditHotelRuleResult.HasNotFound:
                     TempData[WarningMessage] = "هتل مورد نظر یافت نشد";
                     break;
             }

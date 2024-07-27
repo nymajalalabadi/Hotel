@@ -4,6 +4,7 @@ using Hotel_Application.Statics;
 using Hotel_Domain.Entities.Hotels;
 using Hotel_Domain.InterFaces;
 using Hotel_Domain.ViewModels.HotelGalleries;
+using Hotel_Domain.ViewModels.HotelRooms;
 using Hotel_Domain.ViewModels.HotelRules;
 using Hotel_Domain.ViewModels.Hotels;
 using System;
@@ -129,13 +130,13 @@ namespace Hotel_Application.Services.Implementation
                 EntryTime = currentHotel.EntryTime,
                 ExitTime = currentHotel.ExitTime,
                 IsActive = currentHotel.IsActive,
-               RoomCount = currentHotel.RoomCount!.Value,
-               StageCount = currentHotel.StageCount!.Value,
-               Address = currentHotel.HotelAddress.Address,
-               City = currentHotel.HotelAddress.City,
-               PostalCode = currentHotel.HotelAddress.PostalCode,
-               State = currentHotel!.HotelAddress.State,
-               ImageName = currentHotel.ImageName
+                RoomCount = currentHotel.RoomCount!.Value,
+                StageCount = currentHotel.StageCount!.Value,
+                Address = currentHotel.HotelAddress.Address,
+                City = currentHotel.HotelAddress.City,
+                PostalCode = currentHotel.HotelAddress.PostalCode,
+                State = currentHotel!.HotelAddress.State,
+                ImageName = currentHotel.ImageName
             };
         }
 
@@ -158,7 +159,7 @@ namespace Hotel_Application.Services.Implementation
             if (editHotel.AvatarImage != null)
             {
                 string imageName = Guid.NewGuid() + Path.GetExtension(editHotel.AvatarImage.FileName);
-                editHotel.AvatarImage.AddImageToServer(imageName, SiteTools.HotelPosterName, null, null, null , editHotel.ImageName);
+                editHotel.AvatarImage.AddImageToServer(imageName, SiteTools.HotelPosterName, null, null, null, editHotel.ImageName);
 
                 currentHotel.Title = editHotel.Title;
                 currentHotel.Description = editHotel.Description;
@@ -237,7 +238,7 @@ namespace Hotel_Application.Services.Implementation
 
             #region filter
 
-            query = query.Where(c => c.HotelId.Equals(filterViewModel.HotelId)); 
+            query = query.Where(c => c.HotelId.Equals(filterViewModel.HotelId));
 
             #endregion
 
@@ -252,7 +253,7 @@ namespace Hotel_Application.Services.Implementation
             return filterViewModel;
         }
 
-        public async Task<CreateHoteGalleryResult> CreateHotelGallery(CreateHotelGalleryViewHtml create)
+        public async Task<CreateHotelGalleryResult> CreateHotelGallery(CreateHotelGalleryViewHtml create)
         {
             if (create.AvatarImage != null)
             {
@@ -268,10 +269,10 @@ namespace Hotel_Application.Services.Implementation
                 await _hotelRepository.AddHotelGallery(hotelGallery);
                 await _hotelRepository.SaveChanges();
 
-                return CreateHoteGalleryResult.Success;
+                return CreateHotelGalleryResult.Success;
             }
 
-            return CreateHoteGalleryResult.Failure;
+            return CreateHotelGalleryResult.Failure;
         }
 
         public async Task<EditHotelGalleryViewHtml> GetHotelGalleryForEdit(long id)
@@ -290,13 +291,13 @@ namespace Hotel_Application.Services.Implementation
             };
         }
 
-        public async Task<EditHoteGalleryResult> EditHotelGallery(EditHotelGalleryViewHtml edit)
+        public async Task<EditHotelGalleryResult> EditHotelGallery(EditHotelGalleryViewHtml edit)
         {
             var hotelGallery = await _hotelRepository.GetHotelGalleryById(edit.Id);
 
             if (hotelGallery == null)
             {
-                return EditHoteGalleryResult.HasNotFound;
+                return EditHotelGalleryResult.HasNotFound;
             }
 
             if (edit.AvatarImage != null)
@@ -309,10 +310,10 @@ namespace Hotel_Application.Services.Implementation
                 _hotelRepository.UpdateHotelGallery(hotelGallery);
                 await _hotelRepository.SaveChanges();
 
-                return EditHoteGalleryResult.Success;
+                return EditHotelGalleryResult.Success;
             }
 
-            return EditHoteGalleryResult.Failure;
+            return EditHotelGalleryResult.Failure;
         }
 
         public async Task<bool> DeleteHotelGallery(long id)
@@ -357,11 +358,11 @@ namespace Hotel_Application.Services.Implementation
             return filterViewModel;
         }
 
-        public async Task<CreateHoteRuleResult> CreateHotelRule(CreateHotelRuleViewModel create)
+        public async Task<CreateHotelRuleResult> CreateHotelRule(CreateHotelRuleViewModel create)
         {
             if (string.IsNullOrEmpty(create.Description))
             {
-                return CreateHoteRuleResult.Failure;
+                return CreateHotelRuleResult.Failure;
             }
 
             var rule = new HotelRule()
@@ -373,7 +374,7 @@ namespace Hotel_Application.Services.Implementation
             await _hotelRepository.AddHotelRule(rule);
             await _hotelRepository.SaveChanges();
 
-            return CreateHoteRuleResult.Success;
+            return CreateHotelRuleResult.Success;
         }
 
         public async Task<EditHotelRuleViewModel> GetHotelRuleForEdit(long id)
@@ -392,13 +393,13 @@ namespace Hotel_Application.Services.Implementation
             };
         }
 
-        public async Task<EditHoteRuleResult> EditHotelRule(EditHotelRuleViewModel edit)
+        public async Task<EditHotelRuleResult> EditHotelRule(EditHotelRuleViewModel edit)
         {
             var rule = await _hotelRepository.GetHotelRuleById(edit.Id);
 
             if (rule == null)
             {
-                return EditHoteRuleResult.HasNotFound;
+                return EditHotelRuleResult.HasNotFound;
             }
 
             rule.Description = edit.Description;
@@ -406,7 +407,7 @@ namespace Hotel_Application.Services.Implementation
             _hotelRepository.UpdateHotelRule(rule);
             await _hotelRepository.SaveChanges();
 
-            return EditHoteRuleResult.Success;
+            return EditHotelRuleResult.Success;
         }
 
         public async Task<bool> DeleteHotelRule(long id)
@@ -429,6 +430,136 @@ namespace Hotel_Application.Services.Implementation
         #endregion
 
         #region Hotel Room
+
+        public async Task<FilterHotelRoomsViewModel> FilterHotelRooms(FilterHotelRoomsViewModel filterViewModel)
+        {
+            var query = await _hotelRepository.GetAllHotelRooms();
+
+            #region filter
+
+            query = query.Where(r => r.HotelId.Equals(filterViewModel.HotelId));
+
+            #endregion
+
+            query = query.OrderByDescending(r => r.CreateDate);
+
+            #region paging
+
+            await filterViewModel.SetPaging(query);
+
+            #endregion
+
+            return filterViewModel;
+        }
+
+        public async Task<CreateHotelRoomResult> CreateHotelRoom(CreateHotelRoomViewModel create)
+        {
+            if (create.AvatarImage != null)
+            {
+                string imageName = Guid.NewGuid() + Path.GetExtension(create.AvatarImage.FileName);
+                create.AvatarImage.AddImageToServer(imageName, SiteTools.HotelRoomImageName);
+
+                var room = new HotelRoom()
+                {
+                    HotelId = create.HotelId,
+                    Capacity = create.Capacity,
+                    Count = create.Count,
+                    BedCount = create.BedCount,
+                    Description = create.Description,
+                    ImageName = imageName,
+                    IsActive = create.IsActive,
+                    RoomPrice = create.RoomPrice,
+                    Title = create.Title
+                };
+
+                await _hotelRepository.AddHotelRoom(room);
+                await _hotelRepository.SaveChanges();
+
+                return CreateHotelRoomResult.Success;
+            }
+
+            return CreateHotelRoomResult.Failure;
+        }
+
+        public async Task<EditHotelRoomViewModel> GetHotelRoomForEdit(long id)
+        {
+            var room = await _hotelRepository.GetHotelRoomById(id);
+
+            if (room == null)
+            {
+                return null;
+            }
+
+            return new EditHotelRoomViewModel()
+            {
+                Id = room.Id,
+                Title = room.Title,
+                Description = room.Description,
+                ImageName = room.ImageName,
+                BedCount = room.BedCount,
+                Capacity = room.Capacity,
+                RoomPrice= room.RoomPrice,
+                Count = room.Count
+            };
+        }
+
+        public async Task<EditHotelRoomResult> EditHotelRoom(EditHotelRoomViewModel edit)
+        {
+            var room = await _hotelRepository.GetHotelRoomById(edit.Id);
+
+            if (room == null)
+            {
+                return EditHotelRoomResult.HasNotFound;
+            }
+
+            if (edit.AvatarImage != null)
+            {
+                string imageName = Guid.NewGuid() + Path.GetExtension(edit.AvatarImage.FileName);
+                edit.AvatarImage.AddImageToServer(imageName, SiteTools.HotelRoomImageName, null , null , null, room.ImageName);
+
+                room.ImageName = imageName;
+                room.Title = edit.Title;
+                room.Description = edit.Description;
+                room.RoomPrice = edit.RoomPrice;
+                room.Count = edit.Count;
+                room.BedCount = edit.BedCount;
+                room.Capacity = edit.Capacity;
+
+                _hotelRepository.UpdateHotelRoom(room);
+                await _hotelRepository.SaveChanges();
+
+                return EditHotelRoomResult.Success;
+            }
+
+            room.Title = edit.Title;
+            room.Description = edit.Description;
+            room.RoomPrice = edit.RoomPrice;
+            room.Count = edit.Count;
+            room.BedCount = edit.BedCount;
+            room.Capacity = edit.Capacity;
+
+            _hotelRepository.UpdateHotelRoom(room);
+            await _hotelRepository.SaveChanges();
+
+            return EditHotelRoomResult.Success;
+        }
+
+        public async Task<bool> DeleteHotelRoom(long id)
+        {
+            var room = await _hotelRepository.GetHotelRoomById(id);
+
+            if (room == null)
+            {
+                return false;
+            }
+
+            room.IsDelete = true;
+
+            _hotelRepository.UpdateHotelRoom(room);
+            await _hotelRepository.SaveChanges();
+
+            return true;
+        }
 
         #endregion
 

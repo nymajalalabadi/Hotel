@@ -49,7 +49,7 @@ namespace Hotel_Domain.ViewModels.HotelRooms
         public IFormFile AvatarImage { get; set; }
     }
 
-    public enum CreateHoteRoomResult
+    public enum CreateHotelRoomResult
     {
         Success,
         Failure

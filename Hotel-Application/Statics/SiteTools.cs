@@ -31,5 +31,11 @@ namespace Hotel_Application.Statics
         public static string HotelImageName { get; set; } = "/asset/img/HotelImage/";
 
         #endregion
+
+        #region hotel room image
+
+        public static string HotelRoomImageName { get; set; } = "/asset/img/HotelRoomImage/";
+
+        #endregion
     }
 }

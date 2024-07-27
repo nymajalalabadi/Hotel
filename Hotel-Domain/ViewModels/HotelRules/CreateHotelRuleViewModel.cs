@@ -18,7 +18,7 @@ namespace Hotel_Domain.ViewModels.HotelRules
         public string Description { get; set; }
     }
 
-    public enum CreateHoteRuleResult
+    public enum CreateHotelRuleResult
     {
         Success,
         Failure
