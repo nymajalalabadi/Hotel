@@ -1,6 +1,7 @@
 ﻿using Hotel_Application.Services.Interface;
 using Hotel_Domain.ViewModels.Baner;
 using Hotel_Domain.ViewModels.HotelGalleries;
+using Hotel_Domain.ViewModels.HotelRooms;
 using Hotel_Domain.ViewModels.HotelRules;
 using Hotel_Domain.ViewModels.Hotels;
 using Microsoft.AspNetCore.Mvc;
@@ -363,6 +364,128 @@ namespace Hotel_Web.Areas.Admin.Controllers
         public async Task<IActionResult> DeleteHotelRule(long Id)
         {
             var result = await _hotelService.DeleteHotelRule(Id);
+
+            if (result == true)
+            {
+                TempData[SuccessMessage] = "عملیات با موفقیت انجام شد";
+            }
+            else
+            {
+                TempData[ErrorMessage] = "عملیات با شکست مواجه شد";
+            }
+
+            return RedirectToAction("FilterHotels");
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Hotel room
+
+        #region Filter Hotel Room
+
+        public async Task<IActionResult> FilterHotelRooms(long id, FilterHotelRoomsViewModel filter)
+        {
+            ViewBag.Hotel = await _hotelService.GetHotelById(id);
+
+            filter.HotelId = id;
+
+            var result = await _hotelService.FilterHotelRooms(filter);
+
+            return View(result);
+        }
+
+        #endregion
+
+        #region create Hotel Room
+
+        [HttpGet]
+        public async Task<IActionResult> CreateHotelRoom(long id)
+        {
+            var model = new CreateHotelRoomViewModel()
+            {
+                HotelId = id,
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateHotelRoom(CreateHotelRoomViewModel create)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(create);
+            }
+
+            var result = await _hotelService.CreateHotelRoom(create);
+
+            switch (result)
+            {
+                case CreateHotelRoomResult.Success:
+                    TempData[SuccessMessage] = "عملیات با موفقیت انجام شد";
+                    return RedirectToAction("FilterHotels");
+
+                case CreateHotelRoomResult.Failure:
+                    TempData[ErrorMessage] = "عملیات با شکست مواجه شد";
+                    break;
+            }
+
+            return View(create);
+        }
+
+        #endregion
+
+        #region edit Hotel Room
+
+        [HttpGet]
+        public async Task<IActionResult> EditHotelRoom(long id)
+        {
+            var model = await _hotelService.GetHotelRoomForEdit(id);
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditHotelRoom(EditHotelRoomViewModel edit)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(edit);
+            }
+
+            var result = await _hotelService.EditHotelRoom(edit);
+
+            switch (result)
+            {
+                case EditHotelRoomResult.Success:
+                    TempData[SuccessMessage] = "عملیات با موفقیت انجام شد";
+                    return RedirectToAction("FilterHotels");
+
+                case EditHotelRoomResult.Failure:
+                    TempData[ErrorMessage] = "عملیات با شکست مواجه شد";
+                    break;
+                case EditHotelRoomResult.HasNotFound:
+                    TempData[WarningMessage] = "هتل مورد نظر یافت نشد";
+                    break;
+            }
+
+            return View(edit);
+        }
+
+        #endregion
+
+        #region delete Hotel Room
+
+        public async Task<IActionResult> DeleteHotelRoom(long Id)
+        {
+            var result = await _hotelService.DeleteHotelRoom(Id);
 
             if (result == true)
             {
