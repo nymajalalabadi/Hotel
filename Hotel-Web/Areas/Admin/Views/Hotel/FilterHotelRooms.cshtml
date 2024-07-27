@@ -20,7 +20,7 @@
                 <label asp-for="@hotel!.HotelAddress.Address" class="form-label"></label>
                 <input type="text" asp-for="@hotel!.HotelAddress.Address" class="form-control text-start" placeholder="تایتل">
             </div>
-            <a asp-area="Admin" asp-controller="Hotel" asp-action="CreateHotelRoom" asp-route-id="@Model.HotelId" class="btn btn-outline-primary">افزودن تصویر</a>
+            <a asp-area="Admin" asp-controller="Hotel" asp-action="CreateHotelRoom" asp-route-id="@Model.HotelId" class="btn btn-outline-primary"> ایجاد اتاق</a>
         </div>
         @if (Model.Entities!.Any() && Model.Entities != null)
         {
@@ -90,7 +90,6 @@
                     </div>
                 </div>
             }
-
         }
         else
         {
@@ -98,6 +97,5 @@
                 <h4> در حال حاضر اتاقی برای هتل وجود ندارد </h4>
             </div>
         }
-
     </div>
 </div>

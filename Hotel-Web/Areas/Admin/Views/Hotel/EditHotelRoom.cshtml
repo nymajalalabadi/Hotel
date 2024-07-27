@@ -1,16 +1,17 @@
 ﻿@using Hotel_Application.Statics
 @using Hotel_Domain.Entities.Hotels
 @using Hotel_Domain.ViewModels.HotelRooms
-@model CreateHotelRoomViewModel
+@model EditHotelRoomViewModel
 
 @{
-    ViewData["Title"] = "ایجاد اتاق";
+    ViewData["Title"] = "ویرایش اتاق";
 }
 
 <div class="container">
-    <h2 class="py-3"> ایجاد اتاق</h2>
-    <form asp-area="Admin" asp-controller="Hotel" asp-action="CreateHotelRoom" method="post" enctype="multipart/form-data">
-        <input asp-for="HotelId" type="hidden" />
+    <h2 class="py-3"> ویرایش اتاق</h2>
+    <form asp-area="Admin" asp-controller="Hotel" asp-action="EditHotelRoom" method="post" enctype="multipart/form-data">
+        <input asp-for="Id" type="hidden" />
+        <input asp-for="ImageName" type="hidden" />
         <div class="row ">
             <div class="mb-3 col-12">
                 <label asp-for="Title" class="form-label"></label>
@@ -20,6 +21,7 @@
             <div class="mb-3 col-6">
                 <label asp-for="AvatarImage" class="form-label"></label>
                 <input asp-for="AvatarImage" class="form-control">
+                <img src="@(SiteTools.HotelRoomImageName + Model.ImageName)" class="border" width="150px" height="150px" />
                 <span asp-validation-for="AvatarImage" class="text-danger"></span>
             </div>
             <div class="mb-3 col-6">
@@ -66,7 +68,7 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <button type="submit" class="btn btn-success"> ساخت اتاق </button>
+                <button type="submit" class="btn btn-success"> ویرایش اتاق </button>
             </div>
         </div>
     </form>
