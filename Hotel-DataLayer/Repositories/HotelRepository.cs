@@ -48,7 +48,7 @@ namespace Hotel_DataLayer.Repositories
 
         public void UpdateHotel(Hotel hotel)
         {
-            _context.Hotels.Update(hotel);  
+            _context.Hotels.Update(hotel);
         }
 
         #region Hotel Address
@@ -65,7 +65,7 @@ namespace Hotel_DataLayer.Repositories
 
         public void UpdateHotelAddress(HotelAddress hotelAddress)
         {
-             _context.HotelAddresses.Update(hotelAddress);
+            _context.HotelAddresses.Update(hotelAddress);
         }
 
         #endregion
@@ -127,6 +127,28 @@ namespace Hotel_DataLayer.Repositories
         #endregion
 
         #region Hotel Room
+
+        public async Task<IQueryable<HotelRoom>> GetAllHotelRooms()
+        {
+            return _context.HotelRooms.Include(g => g.Hotel).Where(g => !g.IsDelete).AsQueryable();
+        }
+
+        public async Task<HotelRoom?> GetHotelRoomById(long id)
+        {
+            return await _context.HotelRooms.Include(g => g.Hotel)
+                .Where(g => !g.IsDelete)
+                .FirstOrDefaultAsync(c => c.Id.Equals(id));
+        }
+
+        public async Task AddHotelRoom(HotelRoom hotelRoom)
+        {
+            await _context.HotelRooms.AddAsync(hotelRoom);
+        }
+
+        public void UpdateHotelRoom(HotelRoom hotelRoom)
+        {
+            _context.HotelRooms.Update(hotelRoom);
+        }
 
         #endregion
 
