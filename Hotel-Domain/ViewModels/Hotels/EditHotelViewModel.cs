@@ -1,10 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hotel_Domain.ViewModels.Hotels
 {
@@ -42,10 +37,10 @@ namespace Hotel_Domain.ViewModels.Hotels
         public bool IsActive { get; set; }
 
         [Display(Name = "تصویر")]
-        public string ImageName { get; set; }
+        public string? ImageName { get; set; }
 
         [Display(Name = "تصویر")]
-        public IFormFile? AvatarImage { get; set; }
+        public IFormFile AvatarImage { get; set; }
 
         #region Address
 
