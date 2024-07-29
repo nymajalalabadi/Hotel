@@ -36,6 +36,8 @@ namespace Hotel_Domain.InterFaces
 
         #endregion
 
+        Task SaveChnages();
+
         #endregion
     }
 }

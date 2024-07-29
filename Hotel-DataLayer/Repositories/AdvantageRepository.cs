@@ -73,6 +73,11 @@ namespace Hotel_DataLayer.Repositories
 
         #endregion
 
+        public async Task SaveChanges()
+        {
+            await _context.SaveChangesAsync();
+        }
+
         #endregion
     }
 }

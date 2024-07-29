@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Hotel_Domain.ViewModels.Advantage;
+using Hotel_Domain.ViewModels.HotelRooms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +13,16 @@ namespace Hotel_Application.Services.Interface
         #region Methods
 
         #region Advantage
+
+        Task<FilterAdvantageRoomViewModel> FilterAdvantageRooms(FilterAdvantageRoomViewModel filterViewModel);
+
+        Task<CreateAdvantageRoomResult> CreateAdvantageRoom(CreateAdvantageRoomViewModel create);
+
+        Task<EditAdvantageRoomViewModel> GetAdvantageRoomForEdit(long id);
+
+        Task<EditAdvantageRoomResult> EditAdvantageRoom(EditAdvantageRoomViewModel edit);
+
+        Task<bool> DeleteAdvantageRoom(long id);
 
         #endregion
 
