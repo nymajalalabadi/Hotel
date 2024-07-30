@@ -64,7 +64,7 @@ namespace Hotel_Application.Services.Implementation
             };
 
             await _advantageRepository.AddAdvantageRoom(advantage);
-            await _advantageRepository.SaveChnages();
+            await _advantageRepository.SaveChanges();
 
             return CreateAdvantageRoomResult.Success;
         }
@@ -97,7 +97,7 @@ namespace Hotel_Application.Services.Implementation
             advantage.Name = edit.Name;
 
             _advantageRepository.UpdateAdvantageRoom(advantage);
-            await _advantageRepository.SaveChnages();
+            await _advantageRepository.SaveChanges();
 
             return EditAdvantageRoomResult.Success;
         }
@@ -114,7 +114,7 @@ namespace Hotel_Application.Services.Implementation
             advantage.IsDelete = true;
 
             _advantageRepository.UpdateAdvantageRoom(advantage);
-            await _advantageRepository.SaveChnages();
+            await _advantageRepository.SaveChanges();
 
             return true;
         }
