@@ -65,6 +65,51 @@ namespace Hotel_Web.Areas.Admin.Controllers
 
         #endregion
 
+        #region Edit Advantage
+
+        [HttpGet]
+        public async Task<IActionResult> EditAdvantage(long id)
+        {
+            var model = await _advantageService.GetAdvantageRoomForEdit(id);
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditAdvantage(EditAdvantageRoomViewModel edit)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(edit);
+            }
+
+            var result = await _advantageService.EditAdvantageRoom(edit);
+
+            switch (result)
+            {
+                case EditAdvantageRoomResult.Success:
+                    TempData[SuccessMessage] = "عملیات با موفقیت انجام شد";
+                    return RedirectToAction("FilterAdvantages");
+
+                case EditAdvantageRoomResult.Failure:
+                    TempData[ErrorMessage] = "عملیات با شکست مواجه شد";
+                    break;
+
+                case EditAdvantageRoomResult.HasNotFound:
+                    TempData[ErrorMessage] = "پیدا نشد";
+                    break;
+            }
+
+            return View(edit);
+        }
+
+        #endregion
+
         #endregion
     }
 }

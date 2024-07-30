@@ -1,23 +1,23 @@
 ﻿@using Hotel_Domain.ViewModels.Advantage
-@model CreateAdvantageRoomViewModel
+@model EditAdvantageRoomViewModel
 
 @{
-    ViewData["Title"] = "افزودن ویژگی";
+    ViewData["Title"] = "ویرایش ویژگی";
 }
 
 <div class="container">
-    <h2 class="py-3"> افزودن ویژگی</h2>
-    <form asp-area="Admin" asp-controller="Advantage" asp-action="CreateAdvantage" method="post">
+    <h2 class="py-3"> ویرایش ویژگی</h2>
+    <form asp-area="Admin" asp-controller="Advantage" asp-action="EditAdvantage" method="post">
         <div class="row ">
+            <input type="hidden" asp-for="Id" />
             <div class="mb-3 col-6">
                 <label asp-for="Name" class="form-label"></label>
                 <input asp-for="Name" class="form-control">
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <button type="submit" class="btn btn-success"> افزودن ویژگی </button>
+                <button type="submit" class="btn btn-warning"> ویرایش ویژگی </button>
             </div>
         </div>
     </form>
 </div>
-
