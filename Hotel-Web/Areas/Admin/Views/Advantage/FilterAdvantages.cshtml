@@ -6,9 +6,23 @@
 }
 
 <h2 class="py-3">لیست ویژگی ها</h2>
+
+<div class="container">
+    <form asp-area="Admin" asp-controller="Advantage" asp-action="FilterAdvantages" method="get">
+        <div class="row ">
+            <div class="mb-3 col-6">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control">
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-success"> جست جو کردن </button>
+            </div>
+        </div>
+    </form>
+</div>
 <div class="row">
     <div class="col-12 pb-3">
-        <a asp-action="CreateAdvantage" class="btn btn-outline-primary">ایجاد ویژگی</a>
+        <a asp-area="Admin" asp-controller="Advantage" asp-action="CreateAdvantage" class="btn btn-outline-primary">ایجاد ویژگی</a>
     </div>
     <div class="col-12">
         <div class="admin-table ">
@@ -27,8 +41,8 @@
                             <tr>
                                 <td>@item.Name</td>
                                 <td>
-                                    <a asp-controller="Product" asp-action="UpdateAdvantage" asp-route-Id="@item.Id" class="btn btn-sm btn-outline-warning">ویرایش</a>
-                                    <a asp-controller="Product" asp-action="DeleteAdvantage" asp-route-Id="@item.Id" class="btn btn-sm btn-outline-danger ms-2">حذف</a>
+                                    <a asp-area="Admin" asp-controller="Advantage" asp-action="UpdateAdvantage" asp-route-Id="@item.Id" class="btn btn-sm btn-outline-warning">ویرایش</a>
+                                    <a asp-area="Admin" asp-controller="Advantage" asp-action="DeleteAdvantage" asp-route-Id="@item.Id" class="btn btn-sm btn-outline-danger ms-2">حذف</a>
                                 </td>
                             </tr>
                         }

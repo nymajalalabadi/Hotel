@@ -36,7 +36,10 @@ namespace Hotel_Application.Services.Implementation
 
             #region filter
 
-            query = query.Where(a => a.Name.Equals(filterViewModel.Title));
+            if (!string.IsNullOrEmpty(filterViewModel.Name))
+            {
+                query = query.Where(a => a.Name.Equals(filterViewModel.Name));
+            }
 
             #endregion
 
@@ -53,7 +56,7 @@ namespace Hotel_Application.Services.Implementation
 
         public async Task<CreateAdvantageRoomResult> CreateAdvantageRoom(CreateAdvantageRoomViewModel create)
         {
-            if (create.Name != null)
+            if (create.Name == null)
             {
                 return CreateAdvantageRoomResult.Failure;
             }
