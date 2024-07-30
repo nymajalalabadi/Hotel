@@ -1,4 +1,5 @@
-﻿using Hotel_Application.Services.Interface;
+﻿using Hotel_Application.Services.Implementation;
+using Hotel_Application.Services.Interface;
 using Hotel_Domain.ViewModels.Advantage;
 using Hotel_Domain.ViewModels.Hotels;
 using Microsoft.AspNetCore.Mvc;
@@ -106,6 +107,26 @@ namespace Hotel_Web.Areas.Admin.Controllers
             }
 
             return View(edit);
+        }
+
+        #endregion
+
+        #region Delete Advantage
+
+        public async Task<IActionResult> DeleteAdvantage(long Id)
+        {
+            var result = await _advantageService.DeleteAdvantageRoom(Id);
+
+            if (result == true)
+            {
+                TempData[SuccessMessage] = "عملیات با موفقیت انجام شد";
+            }
+            else
+            {
+                TempData[ErrorMessage] = "عملیات با شکست مواجه شد";
+            }
+
+            return RedirectToAction("FilterAdvantages");
         }
 
         #endregion
