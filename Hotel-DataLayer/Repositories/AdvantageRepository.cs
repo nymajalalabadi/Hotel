@@ -1,5 +1,6 @@
 ﻿using Hotel_DataLayer.Context;
 using Hotel_Domain.Entities.Advantage;
+using Hotel_Domain.Entities.Hotels;
 using Hotel_Domain.InterFaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -51,9 +52,11 @@ namespace Hotel_DataLayer.Repositories
 
         #region Selected Room To Advantage
 
-        public async Task<IQueryable<SelectedRoomToAdvantage>> GetAllSelectedRoomToAdvantage()
+        public async Task<IQueryable<HotelRoom>> GetAllSelectedRoomToAdvantage()
         {
-            return _context.SelectedRoomToAdvantages.Include(a => a.AdvantageRoom).Where(a => !a.IsDelete).AsQueryable();
+            return _context.HotelRooms
+                .Include(a => a.SelectedRoomToAdvantages).ThenInclude(a => a.AdvantageRoom)
+                .Where(a => !a.IsDelete).AsQueryable();
         }
 
         public async Task<SelectedRoomToAdvantage?> GetSelectedRoomToAdvantageById(long id)

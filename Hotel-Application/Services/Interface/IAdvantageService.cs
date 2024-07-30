@@ -28,6 +28,11 @@ namespace Hotel_Application.Services.Interface
 
         #region Selected Room To Advantage
 
+        Task<FilterSelectedRoomToAdvantageViewModel> FilterSelectedRoomToAdvantage(FilterSelectedRoomToAdvantageViewModel filterViewModel);
+
+        Task<EditOrCreateSelectedRoomToAdvantageResult> CreateOrEditSelectedRoomToAdvantage(CreateAdvantageRoomViewModel createOrEdit);
+
+
         #endregion
 
         #endregion

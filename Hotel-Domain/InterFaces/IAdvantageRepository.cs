@@ -26,7 +26,7 @@ namespace Hotel_Domain.InterFaces
 
         #region Selected Room To Advantage
 
-        Task<IQueryable<SelectedRoomToAdvantage>> GetAllSelectedRoomToAdvantage();
+        Task<IQueryable<HotelRoom>> GetAllSelectedRoomToAdvantage();
 
         Task<SelectedRoomToAdvantage?> GetSelectedRoomToAdvantageById(long id);
 

@@ -126,6 +126,16 @@ namespace Hotel_Application.Services.Implementation
 
         #region Selected Room To Advantage
 
+        public Task<FilterSelectedRoomToAdvantageViewModel> FilterSelectedRoomToAdvantage(FilterSelectedRoomToAdvantageViewModel filterViewModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<EditOrCreateSelectedRoomToAdvantageResult> CreateOrEditSelectedRoomToAdvantage(CreateAdvantageRoomViewModel createOrEdit)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #endregion
