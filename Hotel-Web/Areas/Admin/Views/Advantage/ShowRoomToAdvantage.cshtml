@@ -10,7 +10,7 @@
 <h2 class="py-3">لیست ویژگی ها @room!.Title</h2>
 <div class="row">
     <div class="col-12 pb-3">
-        <a asp-action="InsertAdvantageToRoom" asp-route-id="@Model.RoomId" class="btn btn-outline-primary">مدیریت ویژگی</a>
+        <a asp-area="admin" asp-controller="Advantage" asp-action="CreateOrEditRoomToAdvantage" asp-route-id="@Model.RoomId" class="btn btn-outline-primary">مدیریت ویژگی</a>
     </div>
     <div class="col-12">
         <div class="admin-table ">

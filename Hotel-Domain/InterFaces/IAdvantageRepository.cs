@@ -28,6 +28,8 @@ namespace Hotel_Domain.InterFaces
 
         Task<IQueryable<SelectedRoomToAdvantage>> GetAllSelectedRoomToAdvantage();
 
+        Task<List<long>> GetSelectedRoomToAdvantageByRoomId(long roomId);
+
         Task<SelectedRoomToAdvantage?> GetSelectedRoomToAdvantageById(long id);
 
         Task AddSelectedRoomToAdvantage(List<long> selectedRoomToAdvantage, long roomId);

@@ -139,13 +139,58 @@ namespace Hotel_Web.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> ShowRoomToAdvantage(long id, FilterSelectedRoomToAdvantageViewModel filter)
         {
-            ViewBag.room = await _hotelService.GetHotelRoomById(id);
-
             filter.RoomId = id;
 
             var result = await _advantageService.FilterSelectedRoomToAdvantage(filter);
 
+            ViewBag.room = await _hotelService.GetHotelRoomById(id);
+
             return View(result);
+        }
+
+        #endregion
+
+        #region Create Or Edit Room To Advantage
+
+        [HttpGet]
+        public async Task<IActionResult> CreateOrEditRoomToAdvantage(long id)
+        {
+            ViewData["Advantages"] = await _advantageService.GetAllAdvantageRooms();
+
+            var model = await _advantageService.GetSelectedRoomToAdvantage(id);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateOrEditRoomToAdvantage(EditOrCreateSelectedRoomToAdvantageViewModel editOrCreate)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewData["Advantages"] = await _advantageService.GetAllAdvantageRooms();
+                return View(editOrCreate);
+            }
+
+            var result = await _advantageService.CreateOrEditSelectedRoomToAdvantage(editOrCreate);
+
+            switch (result)
+            {
+                case EditOrCreateSelectedRoomToAdvantageResult.Success:
+                    TempData[SuccessMessage] = "عملیات با موفقیت انجام شد";
+                    return RedirectToAction("FilterHotels", "Hotel");
+
+                case EditOrCreateSelectedRoomToAdvantageResult.NotExistAdvantage:
+                    TempData[ErrorMessage] = "لطفا ویژگی های مورد نظر را انتخاب کنید";
+                    break;
+
+                case EditOrCreateSelectedRoomToAdvantageResult.HasNotFound:
+                    TempData[ErrorMessage] = "عملیات با شکست مواجه شد";
+                    break;
+            }
+
+            ViewData["Advantages"] = await _advantageService.GetAllAdvantageRooms();
+
+            return View(editOrCreate);
         }
 
         #endregion

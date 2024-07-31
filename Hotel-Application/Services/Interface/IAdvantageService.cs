@@ -33,6 +33,8 @@ namespace Hotel_Application.Services.Interface
 
         Task<FilterSelectedRoomToAdvantageViewModel> FilterSelectedRoomToAdvantage(FilterSelectedRoomToAdvantageViewModel filterViewModel);
 
+        Task<EditOrCreateSelectedRoomToAdvantageViewModel> GetSelectedRoomToAdvantage(long id);
+
         Task<EditOrCreateSelectedRoomToAdvantageResult> CreateOrEditSelectedRoomToAdvantage(EditOrCreateSelectedRoomToAdvantageViewModel createOrEdit);
 
 

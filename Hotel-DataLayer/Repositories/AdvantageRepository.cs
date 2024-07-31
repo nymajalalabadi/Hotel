@@ -59,6 +59,14 @@ namespace Hotel_DataLayer.Repositories
                 .Where(a => !a.IsDelete).AsQueryable();
         }
 
+        public async Task<List<long>> GetSelectedRoomToAdvantageByRoomId(long roomId)
+        {
+            return await _context.SelectedRoomToAdvantages
+                .Where(c => c.HotelRoomId.Equals(roomId))
+                .Select(c => c.AdvantageRoomId)
+                .ToListAsync();
+        }
+
         public async Task<SelectedRoomToAdvantage?> GetSelectedRoomToAdvantageById(long id)
         {
             return await _context.SelectedRoomToAdvantages.FirstOrDefaultAsync(c => c.Id.Equals(id));

@@ -155,6 +155,22 @@ namespace Hotel_Application.Services.Implementation
             return filterViewModel;
         }
 
+        public async Task<EditOrCreateSelectedRoomToAdvantageViewModel> GetSelectedRoomToAdvantage(long id)
+        {
+            var room = await _hotelRepository.GetHotelRoomById(id);
+
+            if (room == null)
+            {
+                return null;
+            }
+
+            return new EditOrCreateSelectedRoomToAdvantageViewModel()
+            {
+                RoomId = room.Id,
+                SelectedAdvantage = await _advantageRepository.GetSelectedRoomToAdvantageByRoomId(id),
+            };
+        }
+
         public async Task<EditOrCreateSelectedRoomToAdvantageResult> CreateOrEditSelectedRoomToAdvantage(EditOrCreateSelectedRoomToAdvantageViewModel createOrEdit)
         {
             await _advantageRepository.RomveAllSelectedRoomToAdvantage(createOrEdit.RoomId);
