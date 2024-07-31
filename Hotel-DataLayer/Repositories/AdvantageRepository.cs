@@ -52,10 +52,10 @@ namespace Hotel_DataLayer.Repositories
 
         #region Selected Room To Advantage
 
-        public async Task<IQueryable<HotelRoom>> GetAllSelectedRoomToAdvantage()
+        public async Task<IQueryable<SelectedRoomToAdvantage>> GetAllSelectedRoomToAdvantage()
         {
-            return _context.HotelRooms
-                .Include(a => a.SelectedRoomToAdvantages).ThenInclude(a => a.AdvantageRoom)
+            return _context.SelectedRoomToAdvantages
+                .Include(a => a.AdvantageRoom).Include(a => a.HotelRoom)
                 .Where(a => !a.IsDelete).AsQueryable();
         }
 
@@ -64,14 +64,33 @@ namespace Hotel_DataLayer.Repositories
             return await _context.SelectedRoomToAdvantages.FirstOrDefaultAsync(c => c.Id.Equals(id));
         }
 
-        public async Task AddSelectedRoomToAdvantage(SelectedRoomToAdvantage selectedRoomToAdvantage)
+        public async Task AddSelectedRoomToAdvantage(List<long> selectedRoomToAdvantage, long roomId)
         {
-            await _context.SelectedRoomToAdvantages.AddAsync(selectedRoomToAdvantage);
+            if (selectedRoomToAdvantage != null && selectedRoomToAdvantage.Any())
+            {
+                var selectedRoomToAdvantages = new List<SelectedRoomToAdvantage>();
+
+                foreach (var AdvantageId in selectedRoomToAdvantage)
+                {
+                    selectedRoomToAdvantages.Add(new SelectedRoomToAdvantage()
+                    {
+                        AdvantageRoomId = AdvantageId,
+                        HotelRoomId = roomId
+                    });
+                }
+
+                await _context.SelectedRoomToAdvantages.AddRangeAsync(selectedRoomToAdvantages);
+            }
         }
 
-        public void UpdateSelectedRoomToAdvantage(SelectedRoomToAdvantage selectedRoomToAdvantage)
+        public async Task RomveAllSelectedRoomToAdvantage(long roomId)
         {
-            _context.SelectedRoomToAdvantages.Update(selectedRoomToAdvantage);
+            var selectedRoomToAdvantage = await _context.SelectedRoomToAdvantages.Where(r => r.HotelRoomId == roomId).ToListAsync();
+
+            if (selectedRoomToAdvantage.Any())
+            {
+                _context.RemoveRange(selectedRoomToAdvantage);
+            }
         }
 
         #endregion

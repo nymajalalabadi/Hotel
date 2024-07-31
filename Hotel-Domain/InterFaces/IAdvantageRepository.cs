@@ -26,13 +26,13 @@ namespace Hotel_Domain.InterFaces
 
         #region Selected Room To Advantage
 
-        Task<IQueryable<HotelRoom>> GetAllSelectedRoomToAdvantage();
+        Task<IQueryable<SelectedRoomToAdvantage>> GetAllSelectedRoomToAdvantage();
 
         Task<SelectedRoomToAdvantage?> GetSelectedRoomToAdvantageById(long id);
 
-        Task AddSelectedRoomToAdvantage(SelectedRoomToAdvantage selectedRoomToAdvantage);
+        Task AddSelectedRoomToAdvantage(List<long> selectedRoomToAdvantage, long roomId);
 
-        void UpdateSelectedRoomToAdvantage(SelectedRoomToAdvantage selectedRoomToAdvantage);
+        Task RomveAllSelectedRoomToAdvantage(long roomId);
 
         #endregion
 

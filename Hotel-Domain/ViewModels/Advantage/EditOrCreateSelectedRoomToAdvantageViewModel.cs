@@ -9,7 +9,7 @@ namespace Hotel_Domain.ViewModels.Advantage
 {
     public class EditOrCreateSelectedRoomToAdvantageViewModel
     {
-        public int RoomId { get; set; }
+        public long RoomId { get; set; }
 
         public List<long> SelectedAdvantage { get; set; }
     }
@@ -17,7 +17,7 @@ namespace Hotel_Domain.ViewModels.Advantage
     public enum EditOrCreateSelectedRoomToAdvantageResult
     {
         Success,
-        Failure,
+        NotExistAdvantage,
         HasNotFound
     }
 }

@@ -1,4 +1,5 @@
-﻿using Hotel_Domain.ViewModels.Advantage;
+﻿using Hotel_Domain.Entities.Advantage;
+using Hotel_Domain.ViewModels.Advantage;
 using Hotel_Domain.ViewModels.HotelRooms;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,8 @@ namespace Hotel_Application.Services.Interface
 
         Task<FilterAdvantageRoomViewModel> FilterAdvantageRooms(FilterAdvantageRoomViewModel filterViewModel);
 
+        Task<List<AdvantageRoom>> GetAllAdvantageRooms();
+
         Task<CreateAdvantageRoomResult> CreateAdvantageRoom(CreateAdvantageRoomViewModel create);
 
         Task<EditAdvantageRoomViewModel> GetAdvantageRoomForEdit(long id);
@@ -30,7 +33,7 @@ namespace Hotel_Application.Services.Interface
 
         Task<FilterSelectedRoomToAdvantageViewModel> FilterSelectedRoomToAdvantage(FilterSelectedRoomToAdvantageViewModel filterViewModel);
 
-        Task<EditOrCreateSelectedRoomToAdvantageResult> CreateOrEditSelectedRoomToAdvantage(CreateAdvantageRoomViewModel createOrEdit);
+        Task<EditOrCreateSelectedRoomToAdvantageResult> CreateOrEditSelectedRoomToAdvantage(EditOrCreateSelectedRoomToAdvantageViewModel createOrEdit);
 
 
         #endregion

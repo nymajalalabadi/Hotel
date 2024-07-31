@@ -2,6 +2,7 @@
 using Hotel_Domain.Entities.Advantage;
 using Hotel_Domain.InterFaces;
 using Hotel_Domain.ViewModels.Advantage;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,7 +52,12 @@ namespace Hotel_Application.Services.Implementation
 
             #endregion
 
-            return filterViewModel; 
+            return filterViewModel;
+        }
+
+        public async Task<List<AdvantageRoom>> GetAllAdvantageRooms()
+        {
+            return await _advantageRepository.GetAllAdvantageRooms().Result.ToListAsync();
         }
 
         public async Task<CreateAdvantageRoomResult> CreateAdvantageRoom(CreateAdvantageRoomViewModel create)
@@ -126,14 +132,41 @@ namespace Hotel_Application.Services.Implementation
 
         #region Selected Room To Advantage
 
-        public Task<FilterSelectedRoomToAdvantageViewModel> FilterSelectedRoomToAdvantage(FilterSelectedRoomToAdvantageViewModel filterViewModel)
+        public async Task<FilterSelectedRoomToAdvantageViewModel> FilterSelectedRoomToAdvantage(FilterSelectedRoomToAdvantageViewModel filterViewModel)
         {
-            throw new NotImplementedException();
+            var query = await _advantageRepository.GetAllSelectedRoomToAdvantage();
+
+            #region filter
+
+            query = query.Where(s => s.HotelRoomId.Equals(filterViewModel.RoomId));
+
+            #endregion
+
+            query = query.OrderByDescending(s => s.CreateDate);
+
+            #region paging
+
+            await filterViewModel.SetPaging(query);
+
+            #endregion
+
+            return filterViewModel;
         }
 
-        public Task<EditOrCreateSelectedRoomToAdvantageResult> CreateOrEditSelectedRoomToAdvantage(CreateAdvantageRoomViewModel createOrEdit)
+        public async Task<EditOrCreateSelectedRoomToAdvantageResult> CreateOrEditSelectedRoomToAdvantage(EditOrCreateSelectedRoomToAdvantageViewModel createOrEdit)
         {
-            throw new NotImplementedException();
+            await _advantageRepository.RomveAllSelectedRoomToAdvantage(createOrEdit.RoomId);
+
+            if (createOrEdit.SelectedAdvantage == null)
+            {
+                return EditOrCreateSelectedRoomToAdvantageResult.NotExistAdvantage;
+            }
+
+            await _advantageRepository.AddSelectedRoomToAdvantage(createOrEdit.SelectedAdvantage, createOrEdit.RoomId);
+
+            await _advantageRepository.SaveChanges();
+
+            return EditOrCreateSelectedRoomToAdvantageResult.Success;
         }
 
         #endregion
