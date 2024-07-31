@@ -144,9 +144,11 @@ namespace Hotel_Application.Services.Implementation
 
             query = query.OrderByDescending(s => s.CreateDate);
 
+            var advantages = query.Select(a => a.AdvantageRoom);
+
             #region paging
 
-            await filterViewModel.SetPaging(query);
+            await filterViewModel.SetPaging(advantages);
 
             #endregion
 

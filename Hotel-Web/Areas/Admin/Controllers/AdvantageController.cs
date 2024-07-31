@@ -12,9 +12,12 @@ namespace Hotel_Web.Areas.Admin.Controllers
 
         private readonly IAdvantageService _advantageService;
 
-        public AdvantageController(IAdvantageService advantageService)
+        private readonly IHotelService _hotelService;
+
+        public AdvantageController(IAdvantageService advantageService, IHotelService hotelService)
         {
             _advantageService = advantageService;
+            _hotelService = hotelService;
         }
 
         #endregion
@@ -127,6 +130,22 @@ namespace Hotel_Web.Areas.Admin.Controllers
             }
 
             return RedirectToAction("FilterAdvantages");
+        }
+
+        #endregion
+
+        #region Selected Room To Advatange
+
+        [HttpGet]
+        public async Task<IActionResult> ShowRoomToAdvantage(long id, FilterSelectedRoomToAdvantageViewModel filter)
+        {
+            ViewBag.room = await _hotelService.GetHotelRoomById(id);
+
+            filter.RoomId = id;
+
+            var result = await _advantageService.FilterSelectedRoomToAdvantage(filter);
+
+            return View(result);
         }
 
         #endregion

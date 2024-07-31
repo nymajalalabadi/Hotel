@@ -452,6 +452,18 @@ namespace Hotel_Application.Services.Implementation
             return filterViewModel;
         }
 
+        public async Task<HotelRoom?> GetHotelRoomById(long id)
+        {
+            var room = await _hotelRepository.GetHotelRoomById(id);
+
+            if (room == null)
+            {
+                return null;
+            }
+
+            return room;
+        }
+
         public async Task<CreateHotelRoomResult> CreateHotelRoom(CreateHotelRoomViewModel create)
         {
             if (create.AvatarImage != null)

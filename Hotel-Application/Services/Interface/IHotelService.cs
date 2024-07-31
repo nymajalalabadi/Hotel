@@ -63,6 +63,8 @@ namespace Hotel_Application.Services.Interface
 
         Task<FilterHotelRoomsViewModel> FilterHotelRooms(FilterHotelRoomsViewModel filterViewModel);
 
+        Task<HotelRoom?> GetHotelRoomById(long id);
+
         Task<CreateHotelRoomResult> CreateHotelRoom(CreateHotelRoomViewModel create);
 
         Task<EditHotelRoomViewModel> GetHotelRoomForEdit(long id);

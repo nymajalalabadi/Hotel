@@ -1,0 +1,47 @@
+﻿@using Hotel_Domain.Entities.Hotels
+@using Hotel_Domain.ViewModels.Advantage
+@model FilterSelectedRoomToAdvantageViewModel
+
+@{
+    ViewData["Title"] = "لیست ویژگی ها";
+    var room = ViewBag.room as HotelRoom;
+}
+
+<h2 class="py-3">لیست ویژگی ها @room!.Title</h2>
+<div class="row">
+    <div class="col-12 pb-3">
+        <a asp-action="InsertAdvantageToRoom" asp-route-id="@Model.RoomId" class="btn btn-outline-primary">مدیریت ویژگی</a>
+    </div>
+    <div class="col-12">
+        <div class="admin-table ">
+            <table class="table">
+                <thead>
+                    <tr class="table-secondary">
+                        <th>عنوان</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Entities.Any())
+                    {
+                        @foreach (var item in Model.Entities)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td class="col-4">
+                                در حال حاضر ویژگی موجود نمیباشد
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
