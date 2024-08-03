@@ -13,7 +13,7 @@ namespace Hotel_Domain.Entities.Reserve
     {
         #region Propertis
 
-        public int RoomId { get; set; }
+        public long RoomId { get; set; }
 
         [Display(Name = "تاریخ رزرو")]
         [Required(ErrorMessage = "لطفا {0} را کامل کنید")]
