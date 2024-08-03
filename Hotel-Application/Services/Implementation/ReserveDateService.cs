@@ -51,7 +51,7 @@ namespace Hotel_Application.Services.Implementation
             return filter;
         }
 
-        public async Task<CreateReserveDateViewModel> GetReserveDateForCreat(long RoomId)
+        public async Task<CreateReserveDateViewModel> GetReserveDateForCreate(long RoomId)
         {
             var room = await _hotelRepository.GetHotelRoomById(RoomId);
 
@@ -69,7 +69,7 @@ namespace Hotel_Application.Services.Implementation
 
             return new CreateReserveDateViewModel()
             {
-                RoomId = RoomId,
+                RoomId = room.Id,
                 reserveDates = dateTimes
             };
         }

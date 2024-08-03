@@ -71,7 +71,7 @@
                                                     <span class=" w-100 "> قیمت برای هر شب : </span><span class="ps-3 fw-700 price-text "> @item.RoomPrice.ToString("##,###")  ریال</span>
                                                 </div>
                                                 <div class="fw-600 fs-6 col-md-12 col-lg-8 col-xl-7 mt-3">
-                                                    <a asp-action="ShowAllReserveDates" asp-route-id="@item.Id" class="btn btn-outline-success ">افزودن تاریخ رزرو</a>
+                                                    <a asp-area="admin" asp-controller="Advantage" asp-action="FilterReserveDates" asp-route-id="@item.Id" class="btn btn-outline-success ">افزودن تاریخ رزرو</a>
                                                 </div>
                                             </div>
                                         </div>

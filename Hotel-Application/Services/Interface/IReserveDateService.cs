@@ -13,7 +13,7 @@ namespace Hotel_Application.Services.Interface
 
         Task<FilterReserveDateViewModel> FilterReserveDate(FilterReserveDateViewModel filter);
 
-        Task<CreateReserveDateViewModel> GetReserveDateForCreat(long RoomId);
+        Task<CreateReserveDateViewModel> GetReserveDateForCreate(long RoomId);
 
         Task<CreateReserveDateResult> CreateReserveDate(CreateReserveDateViewModel create);
 

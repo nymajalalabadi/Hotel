@@ -34,7 +34,7 @@ namespace Hotel_Domain.Entities.Reserve
 
         #region Relations
 
-        public HotelRoom HotelRoom { get; set; }
+        public HotelRoom Room { get; set; }
 
         #endregion
     }

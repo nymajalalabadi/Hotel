@@ -2,6 +2,7 @@
 using Hotel_Application.Services.Interface;
 using Hotel_Domain.ViewModels.Advantage;
 using Hotel_Domain.ViewModels.Hotels;
+using Hotel_Domain.ViewModels.Reserve;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel_Web.Areas.Admin.Controllers
@@ -14,15 +15,20 @@ namespace Hotel_Web.Areas.Admin.Controllers
 
         private readonly IHotelService _hotelService;
 
-        public AdvantageController(IAdvantageService advantageService, IHotelService hotelService)
+        private readonly IReserveDateService _reserveDateService;
+
+        public AdvantageController(IAdvantageService advantageService, IHotelService hotelService, IReserveDateService reserveDateService)
         {
             _advantageService = advantageService;
             _hotelService = hotelService;
+            _reserveDateService = reserveDateService;
         }
 
         #endregion
 
         #region Actions
+
+        #region Advantage
 
         #region Filter Advantage
 
@@ -192,6 +198,72 @@ namespace Hotel_Web.Areas.Admin.Controllers
 
             return View(editOrCreate);
         }
+
+        #endregion
+
+        #endregion
+
+        #region Reserve Date
+
+        #region Filter Reserve Date
+
+        [HttpGet]
+        public async Task<IActionResult> FilterReserveDates(long id, FilterReserveDateViewModel filter)
+        {
+            filter.RoomId = id;
+
+            var result = await _reserveDateService.FilterReserveDate(filter);
+
+            return View(result);
+        }
+
+        #endregion
+
+        #region Create Reserve Date
+
+        [HttpGet]
+        public async Task<IActionResult> CreateReserveDate(long id)
+        {
+            var model = await _reserveDateService.GetReserveDateForCreate(id);
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateReserveDate(CreateReserveDateViewModel create)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(create);
+            }
+
+            var result = await _reserveDateService.CreateReserveDate(create);
+
+            switch (result)
+            {
+                case CreateReserveDateResult.Success:
+                    TempData[SuccessMessage] = "عملیات با موفقیت انجام شد";
+                    return RedirectToAction("FilterReserveDates", new { id = create.RoomId });
+
+                case CreateReserveDateResult.Failure:
+                    TempData[ErrorMessage] = "عملیات با شکست مواجه شد";
+                    break;
+
+                case CreateReserveDateResult.IsExit:
+                    TempData[ErrorMessage] = "عملیات با شکست مواجه شد";
+                    break;
+
+            }
+
+            return View(create); 
+        }
+
+        #endregion
 
         #endregion
 
