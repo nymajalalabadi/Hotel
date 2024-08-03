@@ -155,9 +155,7 @@ namespace Hotel_Application.Services.Implementation
                 return false;
             }
 
-            date.IsDelete = true;
-
-            _reserveDateRepository.UpdateReserveDate(date);
+            _reserveDateRepository.RomoveReserveDate(date);
             await _reserveDateRepository.SaveChanges();
 
             return true;

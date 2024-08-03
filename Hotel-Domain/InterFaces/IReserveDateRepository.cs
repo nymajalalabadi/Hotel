@@ -24,6 +24,8 @@ namespace Hotel_Domain.InterFaces
 
         void UpdateReserveDate(ReserveDate reserve);
 
+        void RomoveReserveDate(ReserveDate reserve);
+
         Task SaveChanges();
 
         #endregion

@@ -311,6 +311,27 @@ namespace Hotel_Web.Areas.Admin.Controllers
 
         #endregion
 
+        #region Delete Reserve Date
+
+        public async Task<IActionResult> DeleteReserveDate(long id)
+        {
+            var result = await _reserveDateService.DeleteReserveDate(id);
+
+            if (result == true)
+            {
+                TempData[SuccessMessage] = "عملیات با موفقیت انجام شد";
+            }
+            else
+            {
+                TempData[ErrorMessage] = "عملیات با شکست مواجه شد";
+            }
+
+            return RedirectToAction("FilterHotels", "Hotel");
+
+        }
+
+        #endregion
+
         #endregion
 
         #endregion

@@ -59,6 +59,11 @@ namespace Hotel_DataLayer.Repositories
             _context.ReserveDates.Update(reserve);
         }
 
+        public void RomoveReserveDate(ReserveDate reserve)
+        {
+            _context.ReserveDates.Remove(reserve);
+        }
+
         public async Task SaveChanges()
         {
             await _context.SaveChangesAsync();

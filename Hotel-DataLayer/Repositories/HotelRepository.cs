@@ -133,6 +133,7 @@ namespace Hotel_DataLayer.Repositories
             return _context.HotelRooms
                 .Include(g => g.SelectedRoomToAdvantages)
                 .ThenInclude(r => r.AdvantageRoom)
+                .Include(r => r.ReserveDates)
                 .Where(g => !g.IsDelete).AsQueryable();
         }
 
