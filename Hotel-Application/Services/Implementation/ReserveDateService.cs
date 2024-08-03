@@ -137,7 +137,6 @@ namespace Hotel_Application.Services.Implementation
             }
 
             date.Price = edit.Price;
-            date.ReserveTime = edit.ReserveTime!.ToMiladiDate();
             date.IsReserve = edit.IsReserve;
             date.Count = edit.Count;
 

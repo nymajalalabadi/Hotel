@@ -265,6 +265,52 @@ namespace Hotel_Web.Areas.Admin.Controllers
 
         #endregion
 
+        #region Edit Reserve Date
+
+        [HttpGet]
+        public async Task<IActionResult> EditReserveDate(long id)
+        {
+            var model = await _reserveDateService.GetReserveDateForEdit(id);
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditReserveDate(EditReserveDateViewModel edit)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(edit);
+            }
+
+            var result = await _reserveDateService.EditReserveDate(edit);
+
+            switch (result)
+            {
+                case EditReserveDateResult.Success:
+                    TempData[SuccessMessage] = "عملیات با موفقیت انجام شد";
+                    return RedirectToAction("FilterReserveDates", new { id = edit.RoomId });
+
+                case EditReserveDateResult.Failure:
+                    TempData[ErrorMessage] = "عملیات با شکست مواجه شد";
+                    break;
+
+                case EditReserveDateResult.HasNotFound:
+                    TempData[ErrorMessage] = "عملیات با شکست مواجه شد";
+                    break;
+
+            }
+
+            return View(edit);
+        }
+
+        #endregion
+
         #endregion
 
         #endregion
