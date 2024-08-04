@@ -164,6 +164,16 @@ namespace Hotel_DataLayer.Repositories
                 .FirstOrDefaultAsync(c => c.Id.Equals(id));
         }
 
+        public async Task<HotelRoom?> GetHotelRoomForShowById(long id)
+        {
+            return await _context.HotelRooms
+                .Include(g => g.Hotel)
+                .Include(g => g.ReserveDates)
+                .Include(g => g.SelectedRoomToAdvantages).ThenInclude(r => r.AdvantageRoom)
+                .Where(g => !g.IsDelete)
+                .FirstOrDefaultAsync(c => c.Id.Equals(id));
+        }
+
         public async Task AddHotelRoom(HotelRoom hotelRoom)
         {
             await _context.HotelRooms.AddAsync(hotelRoom);

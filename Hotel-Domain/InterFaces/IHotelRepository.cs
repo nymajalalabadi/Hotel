@@ -67,6 +67,8 @@ namespace Hotel_Domain.InterFaces
 
         Task<HotelRoom?> GetHotelRoomById(long id);
 
+        Task<HotelRoom?> GetHotelRoomForShowById(long id);
+
         Task AddHotelRoom(HotelRoom hotelRoom);
 
         void UpdateHotelRoom(HotelRoom hotelRoom);

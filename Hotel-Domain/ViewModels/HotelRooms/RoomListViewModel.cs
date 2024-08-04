@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hotel_Domain.ViewModels.Hotels
+namespace Hotel_Domain.ViewModels.HotelRooms
 {
     public class RoomListViewModel
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public string ImageName { get; set; }
 

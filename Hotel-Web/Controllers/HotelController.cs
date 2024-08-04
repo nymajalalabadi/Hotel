@@ -43,5 +43,17 @@ namespace Hotel_Web.Controllers
         }
 
         #endregion
+
+        #region MyRegion
+
+        [HttpGet]
+        public async Task<IActionResult> ReserveRoom(long roomId)
+        {
+            var result = await _hotelService.GetSingleRoomById(roomId);
+
+            return View(result);
+        }
+
+        #endregion
     }
 }

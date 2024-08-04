@@ -79,6 +79,8 @@ namespace Hotel_Application.Services.Interface
 
         Task<List<RoomListViewModel>> GetHotelRoomsByHotelId(long hotelId);
 
+        Task<SingleRoomViewModel?> GetSingleRoomById(long roomId);
+
         #endregion
 
         #endregion

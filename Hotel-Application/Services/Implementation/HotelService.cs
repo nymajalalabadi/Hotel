@@ -650,6 +650,7 @@ namespace Hotel_Application.Services.Implementation
 
             var rooms = HotelRooms.Select(r => new RoomListViewModel()
             {
+                Id = r.Id,
                 Title = r.Title,
                 BedCount = r.BedCount,
                 Capacity = r.Capacity,
@@ -662,6 +663,30 @@ namespace Hotel_Application.Services.Implementation
             }).ToList();
 
             return rooms;
+        }
+
+        public async Task<SingleRoomViewModel?> GetSingleRoomById(long roomId)
+        {
+            var room = await _hotelRepository.GetHotelRoomForShowById(roomId);
+
+            if (room == null)
+            {
+                return null;
+            }
+
+            return new SingleRoomViewModel()
+            {
+                Title = room.Title,
+                BedCount = room.BedCount,
+                Capacity = room.Capacity,
+                Description = room.Description,
+                ImageName = room.ImageName,
+                Id = room.Id,
+                HotelId = room.HotelId,
+                Price = room.RoomPrice,
+                ReserveDates = room.ReserveDates.Where(x => x.ReserveTime.Date >= DateTime.Now.Date).ToList(),
+                advantagesRoom = room.SelectedRoomToAdvantages.Where(x => x.HotelRoomId == room.Id).Select(x => x.AdvantageRoom).ToList()
+            };
         }
 
         #endregion
