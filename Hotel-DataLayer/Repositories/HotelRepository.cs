@@ -34,10 +34,30 @@ namespace Hotel_DataLayer.Repositories
                 .AsQueryable();
         }
 
+        public async Task<IQueryable<Hotel>> GetAllHotelsForShow()
+        {
+            return _context.Hotels
+               .Include(h => h.HotelAddress)
+               .Include(h => h.HotelGalleries)
+               .Include(h => h.HotelRooms)
+               .Include(h => h.HotelRules)
+               .Where(h => !h.IsDelete && h.IsActive)
+               .AsQueryable();
+        }
+
         public async Task<Hotel?> GetHotelById(long id)
         {
             return await _context.Hotels.Where(h => !h.IsDelete)
                 .Include(h => h.HotelAddress)
+                .FirstOrDefaultAsync(h => h.Id.Equals(id));
+        }
+
+        public async Task<Hotel?> GetDetailsHotelById(long id)
+        {
+            return await _context.Hotels.Where(h => !h.IsDelete)
+                .Include(h => h.HotelAddress)
+                .Include(h => h.HotelGalleries)
+                .Include(h => h.HotelRules)
                 .FirstOrDefaultAsync(h => h.Id.Equals(id));
         }
 
@@ -152,6 +172,11 @@ namespace Hotel_DataLayer.Repositories
         public void UpdateHotelRoom(HotelRoom hotelRoom)
         {
             _context.HotelRooms.Update(hotelRoom);
+        }
+
+        public async Task<List<HotelRoom>> GetHotelRoomsByHotelId(long hotelId)
+        {
+            return await _context.HotelRooms.Where(r => r.HotelId == hotelId & !r.IsDelete).ToListAsync();
         }
 
         #endregion

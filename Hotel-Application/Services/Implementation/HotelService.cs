@@ -7,6 +7,7 @@ using Hotel_Domain.ViewModels.HotelGalleries;
 using Hotel_Domain.ViewModels.HotelRooms;
 using Hotel_Domain.ViewModels.HotelRules;
 using Hotel_Domain.ViewModels.Hotels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,6 +73,48 @@ namespace Hotel_Application.Services.Implementation
 
             return filterViewModel;
         }
+
+        public async Task<FilterHotelViewModel> GetAllHotelForShow(FilterHotelViewModel filterViewModel)
+        {
+            var query = await _hotelRepository.GetAllHotelsForShow();
+
+            #region Filtert
+
+            if (!string.IsNullOrEmpty(filterViewModel.Title))
+            {
+                query = query.Where(h => h.Title.Contains(filterViewModel.Title));
+            }
+
+            #endregion
+
+            query = query.OrderByDescending(h => h.CreateDate);
+
+            var hotels = query.Select(h => new DetailsHotelViewModel()
+            {
+                Id = h.Id,
+                Description = h.Description,
+                Title = h.Title,
+                EntryTime = h.EntryTime,
+                ExitTime = h.ExitTime,
+                RoomCount = h.RoomCount!.Value,
+                StageCount = h.StageCount!.Value,
+                State = h.HotelAddress.State,
+                PostalCode = h.HotelAddress.PostalCode,
+                Address = h.HotelAddress.Address,
+                City = h.HotelAddress.City,
+                IsActive = h.IsActive,
+                ImageName = h.ImageName
+            });
+
+            #region paging
+
+            await filterViewModel.SetPaging(hotels);
+
+            #endregion
+
+            return filterViewModel;
+        }
+
 
         public async Task<CreateHotelResult> CreateHotel(CreateHotelViewModel createHotel)
         {
@@ -226,6 +269,34 @@ namespace Hotel_Application.Services.Implementation
         public async Task<Hotel?> GetHotelById(long hotelId)
         {
             return await _hotelRepository.GetHotelById(hotelId);
+        }
+
+        public async Task<DetailsHotelForShowViewModel?> GetDetailsHotel(long hotelId)
+        {
+            var hotel = await _hotelRepository.GetDetailsHotelById(hotelId);
+
+            if (hotel == null)
+            {
+                return null;
+            }
+
+            return new DetailsHotelForShowViewModel()
+            {
+                Id = hotel.Id,
+                Description = hotel.Description,
+                Title = hotel.Title,
+                EntryTime = hotel.EntryTime,
+                ExitTime = hotel.ExitTime,
+                ImageName = hotel.ImageName,
+                RoomCount = hotel.RoomCount ?? 0,
+                StageCount = hotel.StageCount ?? 0,
+                Address = hotel.HotelAddress.Address,
+                City = hotel.HotelAddress.City,
+                State = hotel.HotelAddress.State,
+                PostalCode = hotel.HotelAddress.PostalCode,
+                HotelGalleries = hotel.HotelGalleries.ToList(),
+                HotelRules = hotel.HotelRules.ToList(),
+            };
         }
 
         #endregion
@@ -571,6 +642,26 @@ namespace Hotel_Application.Services.Implementation
             await _hotelRepository.SaveChanges();
 
             return true;
+        }
+
+        public async Task<List<RoomListViewModel>> GetHotelRoomsByHotelId(long hotelId)
+        {
+            var HotelRooms = await _hotelRepository.GetHotelRoomsByHotelId(hotelId);
+
+            var rooms = HotelRooms.Select(r => new RoomListViewModel()
+            {
+                Title = r.Title,
+                BedCount = r.BedCount,
+                Capacity = r.Capacity,
+                Count = r.Count,
+                Description = r.Description,
+                ImageName = r.ImageName,
+                RoomPrice = r.RoomPrice,
+                ReserveDates = r.ReserveDates.Where(x => x.ReserveTime.Date >= DateTime.Now.Date).ToList(),
+                advantagesRoom = r.SelectedRoomToAdvantages.Where(a => a.HotelRoomId == r.Id).Select(a => a.AdvantageRoom).ToList()
+            }).ToList();
+
+            return rooms;
         }
 
         #endregion

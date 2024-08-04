@@ -19,6 +19,8 @@ namespace Hotel_Application.Services.Interface
 
         Task<FilterHotelViewModel> FilterHotel(FilterHotelViewModel filterViewModel);
 
+        Task<FilterHotelViewModel> GetAllHotelForShow(FilterHotelViewModel filterViewModel);
+
         Task<CreateHotelResult> CreateHotel(CreateHotelViewModel createHotel);
 
         Task<EditHotelViewModel> GetHotelForEdit(long hotelId);
@@ -28,6 +30,8 @@ namespace Hotel_Application.Services.Interface
         Task<bool> DeleteHotel(long hotelId);
 
         Task<Hotel?> GetHotelById(long hotelId);
+
+        Task<DetailsHotelForShowViewModel?> GetDetailsHotel(long hotelId);
 
         #endregion
 
@@ -72,6 +76,8 @@ namespace Hotel_Application.Services.Interface
         Task<EditHotelRoomResult> EditHotelRoom(EditHotelRoomViewModel edit);
 
         Task<bool> DeleteHotelRoom(long id);
+
+        Task<List<RoomListViewModel>> GetHotelRoomsByHotelId(long hotelId);
 
         #endregion
 
