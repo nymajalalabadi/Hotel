@@ -69,9 +69,8 @@
                             {
                                 @foreach (var item in Model.advantagesRoom)
                                 {
-                                    <span>@item.Name - </span>
+                                    <p class="badge badge-pill bg-success">@item.Name </p>
                                 }
-                                <span>@Model.advantagesRoom.Last().Name </span>
                             }
                         </div>
                         <div class="col-6"><span class="fw-600">هزینه پایه</span> : @Model.Price.ToString("##,###")</div>
