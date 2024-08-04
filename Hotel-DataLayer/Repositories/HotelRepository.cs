@@ -176,7 +176,12 @@ namespace Hotel_DataLayer.Repositories
 
         public async Task<List<HotelRoom>> GetHotelRoomsByHotelId(long hotelId)
         {
-            return await _context.HotelRooms.Where(r => r.HotelId == hotelId & !r.IsDelete).ToListAsync();
+            return await _context.HotelRooms
+                .Include(g => g.Hotel)
+                .Include(g => g.ReserveDates)
+                .Include(g => g.SelectedRoomToAdvantages).ThenInclude(s => s.AdvantageRoom)
+                .Where(r => r.HotelId == hotelId & !r.IsDelete)
+                .ToListAsync();
         }
 
         #endregion
