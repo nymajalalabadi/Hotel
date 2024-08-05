@@ -2,6 +2,7 @@
 using Hotel_Domain.Entities.Advantage;
 using Hotel_Domain.Entities.Baner;
 using Hotel_Domain.Entities.Hotels;
+using Hotel_Domain.Entities.Orders;
 using Hotel_Domain.Entities.Reserve;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -45,6 +46,12 @@ namespace Hotel_DataLayer.Context
 
         public DbSet<SelectedRoomToAdvantage> SelectedRoomToAdvantages { get; set; }
 
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<OrderDetail> OrderDetails { get; set; }
+
+        public DbSet<OrderReserveDate> OrderReserveDates { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -55,6 +62,42 @@ namespace Hotel_DataLayer.Context
                 .HasOne(a => a.Hotel)
                 .WithOne(a => a.HotelAddress)
                 .HasForeignKey<HotelAddress>(a => a.HotelId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Order>()
+                .HasOne(a => a.User)
+                .WithMany(a => a.Orders)
+                .HasForeignKey(a => a.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Order>()
+                .HasOne(a => a.Hotel)
+                .WithMany(a => a.Orders)
+                .HasForeignKey(a => a.HotelId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<OrderDetail>()
+                .HasOne(a => a.Order)
+                .WithMany(a => a.OrderDetails)
+                .HasForeignKey(a => a.OrderId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<OrderDetail>()
+                .HasOne(a => a.HotelRoom)
+                .WithMany(a => a.OrderDetails)
+                .HasForeignKey(a => a.HotelRoomId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<OrderReserveDate>()
+                .HasOne(a => a.OrderDetail)
+                .WithMany(a => a.OrderReserveDates)
+                .HasForeignKey(a => a.OrderDetailId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<OrderReserveDate>()
+                .HasOne(a => a.ReserveDate)
+                .WithMany(a => a.OrderReserveDates)
+                .HasForeignKey(a => a.ReserveDateId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             #endregion

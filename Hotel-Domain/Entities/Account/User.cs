@@ -1,4 +1,6 @@
 ﻿using Hotel_Domain.Entities.Common;
+using Hotel_Domain.Entities.Hotels;
+using Hotel_Domain.Entities.Orders;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,6 +12,8 @@ namespace Hotel_Domain.Entities.Account
 {
     public class User : BaseEntity
     {
+        #region Propertis
+
         [Display(Name = "ایمیل")]
         [Required(ErrorMessage = "لطفا {0} را کامل کنید")]
         [MaxLength(100, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
@@ -25,5 +29,14 @@ namespace Hotel_Domain.Entities.Account
 
         [Display(Name = "نام خانوادگی")]
         public string? LastName { get; set; }
+
+        #endregion
+
+
+        #region Relations
+
+        public ICollection<Order> Orders { get; set; }
+
+        #endregion
     }
 }

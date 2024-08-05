@@ -89,7 +89,7 @@
                 <div class="room-title row position-relative">
                     <h5 class="ps-4 fw-600 col-6">تاریخ رزرو در دسترس</h5>
                 </div>
-                <form id="OrderForm" method="post" asp-action="CreateOrder">
+                <form asp-controller="Hotel" asp-action="CreateOrder" id="OrderForm" method="post">
                     <div class="row pt-3 reserve-date px-5">
 
                         <input name="RoomId" type="hidden" value="@Model.Id" />

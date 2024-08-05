@@ -1,4 +1,5 @@
 ﻿using Hotel_Domain.Entities.Common;
+using Hotel_Domain.Entities.Orders;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -56,6 +57,8 @@ namespace Hotel_Domain.Entities.Hotels
         public ICollection<HotelRoom> HotelRooms { get; set; }
 
         public ICollection<HotelRule> HotelRules { get; set; }
+
+        public ICollection<Order> Orders { get; set; }
 
         #endregion
     }
