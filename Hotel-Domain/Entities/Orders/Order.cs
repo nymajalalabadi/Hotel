@@ -38,6 +38,8 @@ namespace Hotel_Domain.Entities.Orders
 
         public bool IsFinilly { get; set; }
 
+        public OrderState OrderState { get; set; }
+
         #endregion
 
         #region Relations
@@ -50,5 +52,17 @@ namespace Hotel_Domain.Entities.Orders
 
         #endregion
 
+    }
+
+    public enum OrderState
+    {
+        [Display(Name = "درخواست شده")]
+        Requested,
+        [Display(Name = "در حال بررسی")]
+        Processing,
+        [Display(Name = "ثبت شده")]
+        Sent,
+        [Display(Name = "لغو شده")]
+        Cancel
     }
 }

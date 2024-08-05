@@ -28,7 +28,7 @@ namespace Hotel_DataLayer.Repositories
 
         public async Task<IQueryable<ReserveDate>> GetAllReserveDates()
         {
-            return _context.ReserveDates.Where(r => !r.IsDelete & r.ReserveTime.Date >= DateTime.Now.Date).AsQueryable();
+            return _context.ReserveDates.Where(r => !r.IsDelete && r.ReserveTime.Date >= DateTime.Now.Date).AsQueryable();
         }
 
         public bool IsExistReserveDateById(DateTime date, long id)
