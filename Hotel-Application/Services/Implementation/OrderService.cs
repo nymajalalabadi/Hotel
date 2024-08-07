@@ -109,22 +109,25 @@ namespace Hotel_Application.Services.Implementation
 
                             if (orderReserveDate != null)
                             {
-                                reserve.Count -= 1;
+                                if (reserve.Count != 0)
+                                {
+                                    reserve.Count -= 1;
 
-                                _reserveDateRepository.UpdateReserveDate(reserve);
+                                    _reserveDateRepository.UpdateReserveDate(reserve);
 
-                                order.OrderSum += reserve.Price;
-                                detail.Price += reserve.Price;
+                                    order.OrderSum += reserve.Price;
+                                    detail.Price += reserve.Price;
 
-                                _orderRepository.UpdateOrderDetail(detail);
-                                _orderRepository.UpdateOrder(order);
+                                    _orderRepository.UpdateOrderDetail(detail);
+                                    _orderRepository.UpdateOrder(order);
 
-                                orderReserveDate!.Count += 1;
-                                orderReserveDate.Price *= 2;
+                                    orderReserveDate!.Count += 1;
+                                    orderReserveDate.Price *= 2;
 
-                                _orderRepository.UpdateOrderReserveDate(orderReserveDate);
+                                    _orderRepository.UpdateOrderReserveDate(orderReserveDate);
 
-                                await _orderRepository.SaveChanges();
+                                    await _orderRepository.SaveChanges();
+                                }
                             }
                             else
                             {
