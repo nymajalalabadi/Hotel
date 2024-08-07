@@ -15,6 +15,10 @@ namespace Hotel_Domain.InterFaces
 
         Task<OrderDetail?> CheckOrderDetail(long orderId, long hotelRoomId);
 
+        Task<OrderDetail?> GetOrderDetailByRoomId(long hotelRoomId);
+
+        Task<OrderReserveDate?> GetOrderReserveDateByReserveId(long ReserveId);
+
         Task<Order?> GetOrderById(long OrderId);
 
         Task<Order?> GetOrderById(long OrderId, long userId);
@@ -23,7 +27,11 @@ namespace Hotel_Domain.InterFaces
 
         Task AddOrder(Order order);
 
+        Task OrderReserveDateRange(List<OrderReserveDate> orderReserveDates);
+
         Task AddOrderDetail(OrderDetail orderDetail);
+
+        void UpdateOrderReserveDate(OrderReserveDate orderReserveDate);
 
         Task SaveChanges();
 

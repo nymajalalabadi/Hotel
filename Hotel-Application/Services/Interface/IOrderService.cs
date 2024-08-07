@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hotel_Domain.ViewModels.Order;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace Hotel_Application.Services.Interface
     {
         #region Methods
 
-
+        Task<long> CreateOrder(CreateOrderViewModel create);
 
         #endregion
     }

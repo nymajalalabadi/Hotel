@@ -1,6 +1,10 @@
-﻿using Hotel_Application.Services.Interface;
+﻿using Hotel_Application.Extensions;
+using Hotel_Application.Services.Interface;
 using Hotel_Domain.ViewModels.Hotels;
+using Hotel_Domain.ViewModels.Order;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Hotel_Web.Controllers
 {
@@ -9,10 +13,12 @@ namespace Hotel_Web.Controllers
         #region constractor
 
         private readonly IHotelService _hotelService;
+        private readonly IOrderService _orderService;
 
-        public HotelController(IHotelService hotelService)
+        public HotelController(IHotelService hotelService, IOrderService orderService)
         {
             _hotelService = hotelService;
+            _orderService = orderService;
         }
 
         #endregion
@@ -44,7 +50,7 @@ namespace Hotel_Web.Controllers
 
         #endregion
 
-        #region MyRegion
+        #region Reserve Room
 
         [HttpGet]
         public async Task<IActionResult> ReserveRoom(long roomId)
@@ -55,5 +61,21 @@ namespace Hotel_Web.Controllers
         }
 
         #endregion
+
+        #region Create Order
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> CreateOrder(CreateOrderViewModel create)
+        {
+            create.UserId = User.GetUserId();
+
+            long orderId = await _orderService.CreateOrder(create);
+
+            return Redirect("/UserPanel/Account/UserBasket/" + orderId);
+        }
+
+        #endregion
+
     }
 }

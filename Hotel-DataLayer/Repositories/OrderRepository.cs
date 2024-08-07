@@ -1,5 +1,6 @@
 ﻿using Hotel_DataLayer.Context;
 using Hotel_Domain.Entities.Orders;
+using Hotel_Domain.Entities.Reserve;
 using Hotel_Domain.InterFaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -39,11 +40,23 @@ namespace Hotel_DataLayer.Repositories
                 .FirstOrDefaultAsync();
         }
 
+        public async Task<OrderDetail?> GetOrderDetailByRoomId(long hotelRoomId)
+        {
+            return await _context.OrderDetails.FirstOrDefaultAsync(o => o.HotelRoomId.Equals(hotelRoomId));
+        }
+
+        public async Task<OrderReserveDate?> GetOrderReserveDateByReserveId(long ReserveId)
+        {
+            return await _context.OrderReserveDates.FirstOrDefaultAsync(o => o.ReserveDateId == ReserveId);
+        }
+
         public async Task<Order?> GetOrderById(long OrderId)
         {
             return await _context.Orders
                 .AsQueryable()
-                .SingleOrDefaultAsync(o => o.Id == OrderId);
+                .Include(o => o.OrderDetails)
+                .ThenInclude(o => o.OrderReserveDates)
+                .SingleOrDefaultAsync(o => o.Id == OrderId && !o.IsFinilly);
         }
 
         public async Task<Order?> GetOrderById(long OrderId, long userId)
@@ -66,9 +79,22 @@ namespace Hotel_DataLayer.Repositories
             await _context.Orders.AddAsync(order);
         }
 
+        public async Task OrderReserveDateRange(List<OrderReserveDate> orderReserveDates)
+        {
+            foreach (var reserveDate in orderReserveDates)
+            {
+                await _context.OrderReserveDates.AddRangeAsync(reserveDate);
+            }
+        }
+
         public async Task AddOrderDetail(OrderDetail orderDetail)
         {
             await _context.OrderDetails.AddAsync(orderDetail);
+        }
+
+        public void UpdateOrderReserveDate(OrderReserveDate orderReserveDate)
+        {
+            _context.OrderReserveDates.Update(orderReserveDate);
         }
 
         public async Task SaveChanges()

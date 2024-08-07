@@ -41,6 +41,12 @@ namespace Hotel_DataLayer.Repositories
             return await _context.ReserveDates.FirstOrDefaultAsync(r => r.Id.Equals(reserveId));
         }
 
+        public async Task<ReserveDate?> GetReserDateByRoomId(long id, long roomId)
+        {
+           return await  _context.ReserveDates
+                .FirstOrDefaultAsync(r => !r.IsReserve && r.RoomId == roomId && r.Id == id && r.Count > 0);
+        }
+
         public async Task CreateReserveDate(ReserveDate reserveDate)
         {
             await _context.ReserveDates.AddAsync(reserveDate);
