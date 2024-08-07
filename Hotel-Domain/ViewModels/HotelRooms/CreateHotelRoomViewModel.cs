@@ -28,7 +28,7 @@ namespace Hotel_Domain.ViewModels.HotelRooms
         [Required(ErrorMessage = "لطفا {0} را کامل کنید")]
         public int RoomPrice { get; set; }
 
-        [Display(Name = "تعداد")]
+        [Display(Name = "اتاق تعداد")]
         [Required(ErrorMessage = "لطفا {0} را کامل کنید")]
         public int Count { get; set; }
 

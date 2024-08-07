@@ -60,9 +60,9 @@ namespace Hotel_Application.Services.Implementation
 
                 var reserveDates = new List<OrderReserveDate>();
 
-                foreach (var item in create.Dates)
+                foreach (var dateId in create.Dates)
                 {
-                    var reserve = await _reserveDateRepository.GetReserDateByRoomId(item, room.Id);
+                    var reserve = await _reserveDateRepository.GetReserDateByRoomId(dateId, room.Id);
 
                     if (reserve != null)
                     {
@@ -99,9 +99,9 @@ namespace Hotel_Application.Services.Implementation
                 {
                     var reserveDates = new List<OrderReserveDate>();
 
-                    foreach (var item in create.Dates)
+                    foreach (var dateId in create.Dates)
                     {
-                        var reserve = await _reserveDateRepository.GetReserDateByRoomId(item, room.Id);
+                        var reserve = await _reserveDateRepository.GetReserDateByRoomId(dateId, room.Id);
 
                         if (reserve != null)
                         {
@@ -167,9 +167,9 @@ namespace Hotel_Application.Services.Implementation
 
                     var reserveDates = new List<OrderReserveDate>();
 
-                    foreach (var item in create.Dates)
+                    foreach (var dateId in create.Dates)
                     {
-                        var reserve = await _reserveDateRepository.GetReserDateByRoomId(item, room.Id);
+                        var reserve = await _reserveDateRepository.GetReserDateByRoomId(dateId, room.Id);
 
                         if (reserve != null)
                         {
