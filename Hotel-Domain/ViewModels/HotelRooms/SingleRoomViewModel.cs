@@ -10,7 +10,7 @@ namespace Hotel_Domain.ViewModels.HotelRooms
 {
     public class SingleRoomViewModel
     {
-        public long Id { get; set; }
+        public long RoomId { get; set; }
 
         public long HotelId { get; set; }
 

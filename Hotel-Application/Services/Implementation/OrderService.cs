@@ -1,6 +1,7 @@
 ﻿using Hotel_Application.Services.Interface;
 using Hotel_Domain.Entities.Account;
 using Hotel_Domain.Entities.Orders;
+using Hotel_Domain.Entities.Reserve;
 using Hotel_Domain.InterFaces;
 using Hotel_Domain.ViewModels.Order;
 using Microsoft.EntityFrameworkCore;
@@ -60,9 +61,9 @@ namespace Hotel_Application.Services.Implementation
 
                 var reserveDates = new List<OrderReserveDate>();
 
-                foreach (var dateId in create.Dates)
+                foreach (var reserveDateId in create.ReserveDateId)
                 {
-                    var reserve = await _reserveDateRepository.GetReserDateByRoomId(dateId, room.Id);
+                    var reserve = await _reserveDateRepository.GetReserDateByRoomId(reserveDateId, room.Id);
 
                     if (reserve != null)
                     {
@@ -99,9 +100,9 @@ namespace Hotel_Application.Services.Implementation
                 {
                     var reserveDates = new List<OrderReserveDate>();
 
-                    foreach (var dateId in create.Dates)
+                    foreach (var reserveDateId in create.ReserveDateId)
                     {
-                        var reserve = await _reserveDateRepository.GetReserDateByRoomId(dateId, room.Id);
+                        var reserve = await _reserveDateRepository.GetReserDateByRoomId(reserveDateId, room.Id);
 
                         if (reserve != null)
                         {
@@ -115,9 +116,9 @@ namespace Hotel_Application.Services.Implementation
 
                                     _reserveDateRepository.UpdateReserveDate(reserve);
 
-                                    order.OrderSum += reserve.Price;
                                     detail.Price += reserve.Price;
-
+                                    order.OrderSum += reserve.Price;
+                                    
                                     _orderRepository.UpdateOrderDetail(detail);
                                     _orderRepository.UpdateOrder(order);
 
@@ -142,10 +143,9 @@ namespace Hotel_Application.Services.Implementation
                                     Count = 1
                                 });
 
-
-                                order.OrderSum += reserve.Price;
                                 detail.Price += reserve.Price;
-
+                                order.OrderSum += reserve.Price;
+                                
                                 _orderRepository.UpdateOrderDetail(detail);
                                 _orderRepository.UpdateOrder(order);
 
@@ -170,9 +170,9 @@ namespace Hotel_Application.Services.Implementation
 
                     var reserveDates = new List<OrderReserveDate>();
 
-                    foreach (var dateId in create.Dates)
+                    foreach (var reserveDateId in create.ReserveDateId)
                     {
-                        var reserve = await _reserveDateRepository.GetReserDateByRoomId(dateId, room.Id);
+                        var reserve = await _reserveDateRepository.GetReserDateByRoomId(reserveDateId, room.Id);
 
                         if (reserve != null)
                         {
@@ -205,6 +205,37 @@ namespace Hotel_Application.Services.Implementation
             }
 
             return order.Id;
+        }
+
+        public async Task<BasketViewModel> GetUserBasket(long userId)
+        {
+            var order = await _orderRepository.GetOrderByUserId(userId);
+
+            if (order == null)
+            {
+                return null;
+            }
+
+            return new BasketViewModel()
+            {
+                OrderSum = order.OrderSum,
+
+                BasketDetailViewModels = order.OrderDetails.Select(b => new BasketDetailViewModel()
+                {
+                    DetailId = b.Id,
+                    BasePrice = b.HotelRoom.RoomPrice,
+                    HotelName = b.HotelRoom.Hotel.Title,
+                    RoomName = b.HotelRoom.Title,
+                    TotalPrice = b.Price,
+                    ReserveDates = b.OrderReserveDates.Select(r => new ReserveDate()
+                    {
+                        Id = r.ReserveDate.Id,
+                        Price = r.ReserveDate.Price,
+                        ReserveTime = r.ReserveDate.ReserveTime,
+                    }).ToList(),
+                }).ToList()
+
+            };
         }
 
         #endregion

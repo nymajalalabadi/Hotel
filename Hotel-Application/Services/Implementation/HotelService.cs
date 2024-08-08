@@ -681,7 +681,7 @@ namespace Hotel_Application.Services.Implementation
                 Capacity = room.Capacity,
                 Description = room.Description,
                 ImageName = room.ImageName,
-                Id = room.Id,
+                RoomId = room.Id,
                 HotelId = room.HotelId,
                 Price = room.RoomPrice,
                 ReserveDates = room.ReserveDates.Where(x => x.ReserveTime.Date >= DateTime.Now.Date).ToList(),

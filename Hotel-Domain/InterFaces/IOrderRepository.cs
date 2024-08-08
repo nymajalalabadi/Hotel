@@ -21,6 +21,8 @@ namespace Hotel_Domain.InterFaces
 
         Task<Order?> GetOrderById(long OrderId);
 
+        Task<Order?> GetOrderByUserId(long userId);
+
         Task<Order?> GetOrderById(long OrderId, long userId);
 
         Task<int> OrderSum(long OrderId);

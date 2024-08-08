@@ -13,6 +13,8 @@ namespace Hotel_Application.Services.Interface
 
         Task<long> CreateOrder(CreateOrderViewModel create);
 
+        Task<BasketViewModel> GetUserBasket(long userId);
+
         #endregion
     }
 }

@@ -72,7 +72,7 @@ namespace Hotel_Web.Controllers
 
             long orderId = await _orderService.CreateOrder(create);
 
-            return Redirect("/UserPanel/Account/UserBasket/" + orderId);
+            return Redirect("/UserPanel/Basket/" + orderId);
         }
 
         #endregion

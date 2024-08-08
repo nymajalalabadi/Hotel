@@ -89,25 +89,26 @@
                 <div class="room-title row position-relative">
                     <h5 class="ps-4 fw-600 col-6">تاریخ رزرو در دسترس</h5>
                 </div>
-                <form asp-controller="Hotel" asp-action="CreateOrder" id="OrderForm" method="post">
+                <form asp-area="" asp-controller="Hotel" asp-action="CreateOrder" id="OrderForm" method="post">
                     <div class="row pt-3 reserve-date px-5">
 
-                        <input name="RoomId" type="hidden" value="@Model.Id" />
+                        <input name="RoomId" type="hidden" value="@Model.RoomId" />
+
                         @if (Model.ReserveDates.Any())
                         {
-                            foreach (var item in Model.ReserveDates)
+                            foreach (var reserveDate in Model.ReserveDates)
                             {
                                 <div class="col-xl-3 col-lg-4 col-md-6 my-3">
                                     <div class="card">
                                         <div class="form-check text-center justify-content-center d-flex">
-                                            <input name="Dates" class="form-check-input me-2" type="checkbox" value="@item.Id">
+                                            <input name="Dates" class="form-check-input me-2" type="checkbox" value="@reserveDate.Id">
                                             <label class="form-check-label"> انتخاب تاریخ </label>
                                         </div>
                                         <div class="row">
-                                            <span class="fw-600 col-6">تاریخ رزرو </span> <span class="col-6">@item.ReserveTime.ToShamsi()</span>
+                                            <span class="fw-600 col-6">تاریخ رزرو </span> <span class="col-6">@reserveDate.ReserveTime.ToShamsi()</span>
                                         </div>
                                         <div class="row">
-                                            <span class="fw-600 col-6">مبلغ </span> <span class="col-6">@item.Price.ToString("##,###") تومان</span>
+                                            <span class="fw-600 col-6">مبلغ </span> <span class="col-6">@reserveDate.Price.ToString("##,###") تومان</span>
                                         </div>
                                     </div>
                                 </div>

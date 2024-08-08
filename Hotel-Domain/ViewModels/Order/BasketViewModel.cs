@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 
 namespace Hotel_Domain.ViewModels.Order
 {
-    public class CreateOrderViewModel
+    public class BasketViewModel
     {
-        public long UserId { get; set; }
+        public List<BasketDetailViewModel> BasketDetailViewModels { get; set; }
 
-        public long RoomId { get; set; }
-
-        public List<long> ReserveDateId { get; set; }
+        public long OrderSum { get; set; }
     }
-
 }

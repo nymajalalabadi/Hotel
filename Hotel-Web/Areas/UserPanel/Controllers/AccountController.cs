@@ -11,10 +11,12 @@ namespace Hotel_Web.Areas.UserPanel.Controllers
         #region constractor
 
         private readonly IUserService _userService;
+        private readonly IOrderService _orderService;
 
-        public AccountController(IUserService userService)
+        public AccountController(IUserService userService, IOrderService orderService)
         {
             _userService = userService;
+            _orderService = orderService;
         }
 
         #endregion
@@ -101,6 +103,20 @@ namespace Hotel_Web.Areas.UserPanel.Controllers
                 }
             }
             return View(changePassword);
+        }
+
+        #endregion
+
+        #region Basket
+
+        [HttpGet("Basket/{orderId}")]
+        public async Task<IActionResult> UserBasket(long orderId)
+        {
+            var userId = User.GetUserId();
+
+            var basket = await _orderService.GetUserBasket(userId);
+
+            return View(basket);
         }
 
         #endregion

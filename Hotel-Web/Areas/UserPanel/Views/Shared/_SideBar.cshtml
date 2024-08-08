@@ -4,7 +4,7 @@
             <li class="user-active-link"><a asp-area="UserPanel" asp-controller="Home" asp-action="Index" ><span class="bi bi-border-outer"><span class="px-3">داشبورد</span></span></a></li>
             <li><a asp-area="UserPanel" asp-controller="Account" asp-action="EditUserProfile"><span class="bi bi-archive"><span class="px-3">مشحصات شما</span></span></a></li>
             <li><a asp-area="UserPanel" asp-controller="Account" asp-action="ChangePassword"><span class="bi bi-archive"><span class="px-3">ویرایش رمز عبور شما</span></span></a></li>
-            <li><a asp-action="UserOrders"><span class="bi bi-bag-check"><span class="px-3">سفارشات</span></span></a></li>
+            <li><a asp-area="UserPanel" asp-controller="Account" asp-action="UserOrders"><span class="bi bi-bag-check"><span class="px-3">سفارشات</span></span></a></li>
             <li><a href=""><span class="bi bi-bag-heart"><span class="px-3">مورد علاقه ها</span></span></a></li>
             <li><a href=""><span class="bi bi-geo-alt"><span class="px-3">آدرس ها</span></span></a></li>
             <li><a href=""><span class="bi bi-arrow-return-left"><span class="px-3">خروج</span></span></a></li>
