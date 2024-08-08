@@ -1,5 +1,6 @@
 ﻿using Hotel_Application.Extensions;
 using Hotel_Application.Services.Interface;
+using Hotel_Domain.Entities.Orders;
 using Hotel_Domain.ViewModels.Account;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
@@ -117,6 +118,26 @@ namespace Hotel_Web.Areas.UserPanel.Controllers
             var basket = await _orderService.GetUserBasket(userId);
 
             return View(basket);
+        }
+
+        #endregion
+
+        #region Remove Order Detail
+
+        public async Task<IActionResult> RemoveOrderDetail(long orderDetailId)
+        {
+            var result = await _orderService.RemoveOrderDetailFromOrder(orderDetailId);
+
+            if (result)
+            {
+                TempData[SuccessMessage] = "عملیات با موفقیت انجام شد";
+            }
+            else
+            {
+                TempData[ErrorMessage] = "عملیات با موفقیت انجام نشد";
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
         #endregion

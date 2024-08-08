@@ -238,6 +238,50 @@ namespace Hotel_Application.Services.Implementation
             };
         }
 
+        public async Task<bool> RemoveOrderDetailFromOrder(long detailId)
+        {
+            var orderDetail = await _orderRepository.GetOrderDetailById(detailId);
+
+            if (orderDetail == null)
+            {
+                return false;
+            }
+
+            var order = await _orderRepository.GetOrderById(orderDetail!.OrderId);
+
+            if (order == null)
+            {
+                return false;
+            }
+
+            if (orderDetail != null)
+            {
+                foreach (var orderReserveDate in orderDetail.OrderReserveDates)
+                {
+                    var reserveDate = await _reserveDateRepository.GetReserDateById(orderReserveDate.ReserveDateId);
+
+                    if (reserveDate != null)
+                    {
+                        reserveDate.Count += orderReserveDate.Count;
+
+                        _reserveDateRepository.UpdateReserveDate(reserveDate);
+                    }
+                }
+
+                orderDetail.IsDelete = true;
+                _orderRepository.UpdateOrderDetail(orderDetail);
+
+                order.OrderSum = (await _orderRepository.OrderSum(order.Id) - orderDetail.Price);
+                _orderRepository.UpdateOrder(order);
+
+                await _orderRepository.SaveChanges();
+
+                return true;
+            }
+
+            return false;
+        }
+
         #endregion
     }
 }

@@ -150,7 +150,7 @@ namespace Hotel_DataLayer.Repositories
         public async Task<OrderDetail?> GetOrderDetailById(long detailId)
         {
             return await _context.OrderDetails.AsQueryable()
-                .Include(o => o.OrderReserveDates)
+                .Include(o => o.OrderReserveDates).ThenInclude(r => r.ReserveDate)
                 .SingleOrDefaultAsync(d => d.Id == detailId);
         }
 

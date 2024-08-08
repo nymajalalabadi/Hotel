@@ -20,6 +20,8 @@ namespace Hotel_Domain.InterFaces
 
         Task<ReserveDate?> GetReserDateByRoomId(long id, long roomId);
 
+        Task<ReserveDate?> GetReserDateById(long id);
+
         Task CreateReserveDate(ReserveDate reserveDate);
 
         Task CreateReserveDateRange(List<ReserveDate> reserveDates);

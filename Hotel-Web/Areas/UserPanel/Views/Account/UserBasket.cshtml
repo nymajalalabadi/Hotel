@@ -52,7 +52,7 @@
                                     </td>
                                     <td class="fw-600 ps-3">@item.BasePrice.ToString("##,###")</td>
                                     <td class="fw-600">@item.TotalPrice.ToString("##,###")</td>
-                                    <td> <a asp-area="UserPanel" asp-controller="Account" asp-action="RemoveDetail" asp-route-id="@item.DetailId"><i class="bi bi-x-square text-danger pe-2 fs-7"></i></a></td>
+                                    <td> <a asp-area="UserPanel" asp-controller="Account" asp-action="RemoveOrderDetail" asp-route-orderDetailId="@item.DetailId"><i class="bi bi-x-square text-danger pe-2 fs-7"></i></a></td>
                                 </tr>
                             }
                         </tbody>

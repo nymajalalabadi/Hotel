@@ -15,6 +15,8 @@ namespace Hotel_Application.Services.Interface
 
         Task<BasketViewModel> GetUserBasket(long userId);
 
+        Task<bool> RemoveOrderDetailFromOrder(long detailId);
+
         #endregion
     }
 }
