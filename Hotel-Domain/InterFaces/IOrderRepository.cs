@@ -19,6 +19,8 @@ namespace Hotel_Domain.InterFaces
 
         Task<OrderReserveDate?> GetOrderReserveDateByReserveId(long ReserveId);
 
+        Task<List<Order>> GetOrdersById(long userId);
+
         Task<Order?> GetOrderById(long OrderId);
 
         Task<Order?> GetOrderByUserId(long userId);

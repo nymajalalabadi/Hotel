@@ -50,6 +50,13 @@ namespace Hotel_DataLayer.Repositories
             return await _context.OrderReserveDates.FirstOrDefaultAsync(o => o.ReserveDateId == ReserveId);
         }
 
+        public async Task<List<Order>> GetOrdersById(long userId)
+        {
+            return await _context.Orders
+                .Include(r => r.Hotel)
+                .Where(o => o.UserId.Equals(userId) && o.IsFinilly).ToListAsync();
+        }
+
         public async Task<Order?> GetOrderById(long OrderId)
         {
             return await _context.Orders

@@ -187,5 +187,18 @@ namespace Hotel_Web.Areas.UserPanel.Controllers
         }
 
         #endregion
+
+        #region User Orders
+
+        public async Task<IActionResult> UserOrders()
+        {
+            var userId = User.GetUserId();
+
+            var model = await _orderService.GetUserOrders(userId);
+
+            return View(model);
+        }
+
+        #endregion
     }
 }

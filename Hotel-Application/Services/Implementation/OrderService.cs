@@ -345,6 +345,23 @@ namespace Hotel_Application.Services.Implementation
             return CheckoutResult.Success;
         }
 
+        public async Task<List<UserOrdersViewModel>> GetUserOrders(long userId)
+        {
+            var order = await _orderRepository.GetOrdersById(userId);
+
+            if (order == null)
+            {
+                return null;
+            }
+
+            return order.Select(r => new UserOrdersViewModel()
+            {
+                OrderId = r.Id,
+                OrderSum = r.OrderSum,
+                HotelName = r.Hotel.Title
+            }).ToList();
+        }
+
         #endregion
     }
 }

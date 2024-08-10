@@ -21,6 +21,8 @@ namespace Hotel_Application.Services.Interface
 
         Task<CheckoutResult> Checkout(long userId, CheckoutViewModel checkout);
 
+        Task<List<UserOrdersViewModel>> GetUserOrders(long userId); 
+
         #endregion
     }
 }
