@@ -159,7 +159,7 @@ namespace Hotel_Web.Areas.UserPanel.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("UserBasket", "account", new { orderId = orderId });
         }
 
         #endregion
@@ -178,11 +178,11 @@ namespace Hotel_Web.Areas.UserPanel.Controllers
             {
                 case CheckoutResult.Success:
                     TempData[SuccessMessage] = "عملیات با موفق انجام شد";
-                    return RedirectToAction("Checkout", "account", new { orderId = checkout.OrderId});
+                    return RedirectToAction("UserOrders", "account");
 
                 case CheckoutResult.Failure:
                     TempData[ErrorMessage] = "عملیات با شکست انجام شد";
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Checkout", "account", new { orderId = checkout.OrderId });
             }
 
             return RedirectToAction("Index", "Home");
