@@ -134,7 +134,25 @@ namespace Hotel_Web.Areas.UserPanel.Controllers
             }
             else
             {
-                TempData[ErrorMessage] = "عملیات با موفقیت انجام نشد";
+                TempData[ErrorMessage] = "عملیات با شکست انجام شد";
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        #endregion
+
+        #region Checkout
+
+        public async Task<IActionResult> Checkout()
+        {
+            var userId = User.GetUserId();
+
+            var viewModel = await _orderService.GetUserCheckout(userId);
+
+            if (viewModel != null)
+            {
+                return View(viewModel);
             }
 
             return RedirectToAction("Index", "Home");

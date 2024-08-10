@@ -21,12 +21,14 @@ namespace Hotel_Application.Services.Implementation
         private readonly IOrderRepository _orderRepository;
         private readonly IHotelRepository _hotelRepository;
         private readonly IReserveDateRepository _reserveDateRepository;
+        private readonly IUserRepository _userRepository;
 
-        public OrderService(IOrderRepository orderRepository, IHotelRepository hotelRepository, IReserveDateRepository reserveDateRepository)
+        public OrderService(IOrderRepository orderRepository, IHotelRepository hotelRepository, IReserveDateRepository reserveDateRepository, IUserRepository userRepository)
         {
             _orderRepository = orderRepository;
             _hotelRepository = hotelRepository;
             _reserveDateRepository = reserveDateRepository;
+            _userRepository = userRepository;
         }
 
         #endregion
@@ -39,12 +41,19 @@ namespace Hotel_Application.Services.Implementation
 
             var order = await _orderRepository.GetOrderById(create.UserId);
 
+            var user = await _userRepository.GetUserById(create.UserId);
+
             if (order == null)
             {
                 order = new Order()
                 {
                     HotelId = room!.HotelId,
-                    UserId = create.UserId
+                    UserId = create.UserId,
+                    PassCode = create.UserId,
+                    Name = user.Name,
+                    LastName = user.LastName,
+                    Count = 1,
+                    OrderState = OrderState.Requested,
                 };
 
                 await _orderRepository.AddOrder(order);
@@ -69,6 +78,8 @@ namespace Hotel_Application.Services.Implementation
                     {
                         reserve.Count -= 1;
 
+                        _reserveDateRepository.UpdateReserveDate(reserve);
+
                         reserveDates.Add(new OrderReserveDate()
                         {
                             OrderDetailId = detail.Id,
@@ -77,7 +88,6 @@ namespace Hotel_Application.Services.Implementation
                             Count = 1
                         });
 
-                         _reserveDateRepository.UpdateReserveDate(reserve);
                     }
                 }
 
@@ -280,6 +290,46 @@ namespace Hotel_Application.Services.Implementation
             }
 
             return false;
+        }
+
+        public async Task<CheckoutViewModel> GetUserCheckout(long userId)
+        {
+            var user = await _userRepository.GetUserById(userId);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            var order = await _orderRepository.GetOrderByUserId(userId);
+
+            if (order == null)
+            {
+                return null;
+            }
+
+            return new CheckoutViewModel()
+            {
+                OrderSum = order.OrderSum,
+                Count = order.Count,
+                LastName = user.LastName,
+                Name = user.Name,
+                PassCode = order.PassCode,
+                BasketDetailViewModels = order.OrderDetails.Select(b => new BasketDetailViewModel()
+                {
+                    DetailId = b.Id,
+                    BasePrice = b.HotelRoom.RoomPrice,
+                    HotelName = b.HotelRoom.Hotel.Title,
+                    RoomName = b.HotelRoom.Title,
+                    TotalPrice = b.Price,
+                    ReserveDates = b.OrderReserveDates.Select(r => new ReserveDate()
+                    {
+                        Id = r.ReserveDate.Id,
+                        Price = r.ReserveDate.Price,
+                        ReserveTime = r.ReserveDate.ReserveTime,
+                    }).ToList(),
+                }).ToList()
+            };
         }
 
         #endregion
