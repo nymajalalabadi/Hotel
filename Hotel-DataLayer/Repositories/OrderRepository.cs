@@ -67,6 +67,14 @@ namespace Hotel_DataLayer.Repositories
                     .SingleOrDefaultAsync(o => o.UserId == userId && !o.IsFinilly);
         }
 
+        public async Task<Order?> GetOrderByOrderIdUserId(long userId, long orderId)
+        {
+            return await _context.Orders
+                .Include(o => o.OrderDetails).ThenInclude(o => o.OrderReserveDates).ThenInclude(o => o.ReserveDate)
+                .Include(o => o.OrderDetails).ThenInclude(o => o.HotelRoom).ThenInclude(o => o.Hotel)
+                    .SingleOrDefaultAsync(o => o.UserId == userId && o.Id == orderId && !o.IsFinilly);
+        }
+
         public async Task<Order?> GetOrderById(long OrderId, long userId)
         {
             return await _context.Orders

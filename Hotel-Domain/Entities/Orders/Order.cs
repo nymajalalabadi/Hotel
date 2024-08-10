@@ -24,11 +24,9 @@ namespace Hotel_Domain.Entities.Orders
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public long OrderSum { get; set; }
 
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-        public long PassCode { get; set; }
+        public long? PassCode { get; set; }
 
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-        public int Count { get; set; }
+        public int? Count { get; set; }
 
         public string? Name { get; set; }
 

@@ -13,11 +13,13 @@ namespace Hotel_Application.Services.Interface
 
         Task<long> CreateOrder(CreateOrderViewModel create);
 
-        Task<BasketViewModel> GetUserBasket(long userId);
+        Task<BasketViewModel> GetUserBasket(long userId, long orderId);
 
         Task<bool> RemoveOrderDetailFromOrder(long detailId);
 
-        Task<CheckoutViewModel> GetUserCheckout(long userId);
+        Task<CheckoutViewModel> GetUserCheckout(long userId, long orderId);
+
+        Task<CheckoutResult> Checkout(long userId, CheckoutViewModel checkout);
 
         #endregion
     }

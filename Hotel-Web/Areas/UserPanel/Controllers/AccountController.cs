@@ -2,8 +2,10 @@
 using Hotel_Application.Services.Interface;
 using Hotel_Domain.Entities.Orders;
 using Hotel_Domain.ViewModels.Account;
+using Hotel_Domain.ViewModels.Order;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Hotel_Web.Areas.UserPanel.Controllers
 {
@@ -115,7 +117,7 @@ namespace Hotel_Web.Areas.UserPanel.Controllers
         {
             var userId = User.GetUserId();
 
-            var basket = await _orderService.GetUserBasket(userId);
+            var basket = await _orderService.GetUserBasket(userId, orderId);
 
             return View(basket);
         }
@@ -144,15 +146,41 @@ namespace Hotel_Web.Areas.UserPanel.Controllers
 
         #region Checkout
 
-        public async Task<IActionResult> Checkout()
+        public async Task<IActionResult> Checkout(long orderId)
         {
             var userId = User.GetUserId();
 
-            var viewModel = await _orderService.GetUserCheckout(userId);
+            var model = await _orderService.GetUserCheckout(userId, orderId);
 
-            if (viewModel != null)
+            if (model != null)
             {
-                return View(viewModel);
+                return View(model);
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        #endregion
+
+        #region Payment
+
+        public async Task<IActionResult> Payment(CheckoutViewModel checkout)
+        {
+            var userId = User.GetUserId();
+
+            //Payment Method
+
+            var result = await _orderService.Checkout(userId, checkout);
+
+            switch (result)
+            {
+                case CheckoutResult.Success:
+                    TempData[SuccessMessage] = "عملیات با موفق انجام شد";
+                    return RedirectToAction("Checkout", "Store", new { orderId = checkout.OrderId});
+
+                case CheckoutResult.Failure:
+                    TempData[ErrorMessage] = "عملیات با شکست انجام شد";
+                    return RedirectToAction("Index", "Home");
             }
 
             return RedirectToAction("Index", "Home");

@@ -41,18 +41,12 @@ namespace Hotel_Application.Services.Implementation
 
             var order = await _orderRepository.GetOrderById(create.UserId);
 
-            var user = await _userRepository.GetUserById(create.UserId);
-
             if (order == null)
             {
                 order = new Order()
                 {
                     HotelId = room!.HotelId,
                     UserId = create.UserId,
-                    PassCode = create.UserId,
-                    Name = user.Name,
-                    LastName = user.LastName,
-                    Count = 1,
                     OrderState = OrderState.Requested,
                 };
 
@@ -217,9 +211,9 @@ namespace Hotel_Application.Services.Implementation
             return order.Id;
         }
 
-        public async Task<BasketViewModel> GetUserBasket(long userId)
+        public async Task<BasketViewModel> GetUserBasket(long userId, long orderId)
         {
-            var order = await _orderRepository.GetOrderByUserId(userId);
+            var order = await _orderRepository.GetOrderByOrderIdUserId(userId, orderId);
 
             if (order == null)
             {
@@ -228,6 +222,7 @@ namespace Hotel_Application.Services.Implementation
 
             return new BasketViewModel()
             {
+                OrderId = orderId,
                 OrderSum = order.OrderSum,
 
                 BasketDetailViewModels = order.OrderDetails.Select(b => new BasketDetailViewModel()
@@ -292,7 +287,7 @@ namespace Hotel_Application.Services.Implementation
             return false;
         }
 
-        public async Task<CheckoutViewModel> GetUserCheckout(long userId)
+        public async Task<CheckoutViewModel> GetUserCheckout(long userId, long orderId)
         {
             var user = await _userRepository.GetUserById(userId);
 
@@ -301,7 +296,7 @@ namespace Hotel_Application.Services.Implementation
                 return null;
             }
 
-            var order = await _orderRepository.GetOrderByUserId(userId);
+            var order = await _orderRepository.GetOrderByOrderIdUserId(userId, orderId);
 
             if (order == null)
             {
@@ -310,11 +305,8 @@ namespace Hotel_Application.Services.Implementation
 
             return new CheckoutViewModel()
             {
+                OrderId = order.Id,
                 OrderSum = order.OrderSum,
-                Count = order.Count,
-                LastName = user.LastName,
-                Name = user.Name,
-                PassCode = order.PassCode,
                 BasketDetailViewModels = order.OrderDetails.Select(b => new BasketDetailViewModel()
                 {
                     DetailId = b.Id,
@@ -330,6 +322,27 @@ namespace Hotel_Application.Services.Implementation
                     }).ToList(),
                 }).ToList()
             };
+        }
+
+        public async Task<CheckoutResult> Checkout(long userId, CheckoutViewModel checkout)
+        {
+            var order = await _orderRepository.GetOrderByOrderIdUserId(userId, checkout.OrderId);
+
+            if (order == null)
+            {
+                return CheckoutResult.Failure;
+            }
+
+            order.IsFinilly = true;
+            order.Count = checkout.Count;
+            order.LastName = checkout.LastName;
+            order.Name = checkout.Name;
+            order.PassCode = checkout.PassCode;
+
+            _orderRepository.UpdateOrder(order);
+            await _orderRepository.SaveChanges();
+
+            return CheckoutResult.Success;
         }
 
         #endregion

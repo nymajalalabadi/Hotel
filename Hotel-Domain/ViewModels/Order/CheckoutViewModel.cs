@@ -9,21 +9,26 @@ namespace Hotel_Domain.ViewModels.Order
 {
     public class CheckoutViewModel
     {
+        public long OrderId { get; set; }
+
         [Required]
         public long OrderSum { get; set; }
 
-        [Required]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
-        [Required]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
 
-        [Required]
-        public long PassCode { get; set; }
+        public long? PassCode { get; set; }
 
-        [Required]
-        public int Count { get; set; }
+        public int? Count { get; set; }
 
         public ICollection<BasketDetailViewModel> BasketDetailViewModels { get; set; }
     }
+
+    public enum CheckoutResult
+    {
+        Success,
+        Failure
+    }
+
 }

@@ -110,7 +110,7 @@
                     <a href="#" class="btn btn-secondary"> بازگشت به صفحه اصلی</a>
                 </div>
                 <div class="col-6 d-flex justify-content-end">
-                    <a asp-area="UserPanel" asp-controller="Account" asp-action="Checkout" class="btn btn-success">پرداخت سبد خرید </a>
+                    <a asp-area="UserPanel" asp-controller="Account" asp-action="Checkout" asp-route-orderId="@Model!.OrderId" class="btn btn-success">پرداخت سبد خرید </a>
                 </div>
             </div>
         </div>

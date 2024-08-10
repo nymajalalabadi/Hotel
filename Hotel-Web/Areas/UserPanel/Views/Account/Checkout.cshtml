@@ -52,6 +52,7 @@
             <div class="row pb-3 pt-2">
                 <form asp-area="UserPanel" asp-controller="Account" asp-action="Payment" method="post" id="CheckoutForm">
                     <div class="col-lg-6 col-6 row">
+                        <input type="hidden" asp-for="OrderId" />
                         <div class="col-6">
                             <div class="mb-3">
                                 <label class="form-label">نام</label>
@@ -66,7 +67,7 @@
                         </div>
                         <div class="col-6">
                             <div class="mb-3">
-                                <label class="form-label">کد</label>
+                                <label class="form-label">کد ملی</label>
                                 <input asp-for="PassCode" class="form-control text-start">
                             </div>
                         </div>

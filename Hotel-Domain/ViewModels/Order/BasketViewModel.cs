@@ -8,8 +8,11 @@ namespace Hotel_Domain.ViewModels.Order
 {
     public class BasketViewModel
     {
-        public List<BasketDetailViewModel> BasketDetailViewModels { get; set; }
+        public long OrderId { get; set; }
 
         public long OrderSum { get; set; }
+
+        public List<BasketDetailViewModel> BasketDetailViewModels { get; set; }
+
     }
 }
