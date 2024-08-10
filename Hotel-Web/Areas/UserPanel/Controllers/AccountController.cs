@@ -128,6 +128,8 @@ namespace Hotel_Web.Areas.UserPanel.Controllers
 
         public async Task<IActionResult> RemoveOrderDetail(long orderDetailId)
         {
+            var orderId = await _orderService.GetOrderDetail(orderDetailId);
+
             var result = await _orderService.RemoveOrderDetailFromOrder(orderDetailId);
 
             if (result)
@@ -139,7 +141,7 @@ namespace Hotel_Web.Areas.UserPanel.Controllers
                 TempData[ErrorMessage] = "عملیات با شکست انجام شد";
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("UserBasket", "account", new { orderId = orderId });
         }
 
         #endregion
@@ -176,7 +178,7 @@ namespace Hotel_Web.Areas.UserPanel.Controllers
             {
                 case CheckoutResult.Success:
                     TempData[SuccessMessage] = "عملیات با موفق انجام شد";
-                    return RedirectToAction("Checkout", "Store", new { orderId = checkout.OrderId});
+                    return RedirectToAction("Checkout", "account", new { orderId = checkout.OrderId});
 
                 case CheckoutResult.Failure:
                     TempData[ErrorMessage] = "عملیات با شکست انجام شد";

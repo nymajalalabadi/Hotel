@@ -17,6 +17,8 @@ namespace Hotel_Application.Services.Interface
 
         Task<bool> RemoveOrderDetailFromOrder(long detailId);
 
+        Task<long> GetOrderDetail(long detailId);
+
         Task<CheckoutViewModel> GetUserCheckout(long userId, long orderId);
 
         Task<CheckoutResult> Checkout(long userId, CheckoutViewModel checkout);

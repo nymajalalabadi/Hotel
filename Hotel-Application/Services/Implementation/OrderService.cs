@@ -287,6 +287,25 @@ namespace Hotel_Application.Services.Implementation
             return false;
         }
 
+        public async Task<long> GetOrderDetail(long detailId)
+        {
+            var orderDetail = await _orderRepository.GetOrderDetailById(detailId);
+
+            if (orderDetail == null)
+            {
+                return 0;
+            }
+
+            var order = await _orderRepository.GetOrderById(orderDetail!.OrderId);
+
+            if (order == null)
+            {
+                return 0;
+            }
+
+            return order.Id;
+        }
+
         public async Task<CheckoutViewModel> GetUserCheckout(long userId, long orderId)
         {
             var user = await _userRepository.GetUserById(userId);
